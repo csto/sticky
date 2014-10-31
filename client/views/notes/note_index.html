@@ -1,0 +1,152 @@
+<template name='notes'>
+  <div id='notes-wrapper'>
+    <header class='navbar navbar-default'>
+      <div class='container-fluid'>
+        <div class='nav navbar-nav'>
+          <a href='/notes'>
+            <div id='logo'>Notes</div>
+          </a>
+        </div>
+      
+        <div id='searchForm' class="form-group">
+          <input id='search' type='text' name='search' placeholder='Search' class='form-control' />
+        </div>
+      
+        <ul class='nav navbar-nav navbar-right'>
+          <li id='searchButton'>
+            <a>
+              <i class='fa fa-search'></i>
+            </a>  
+          </li>
+          <li id='menu'>
+            <a>
+              <i class='fa fa-bars'></i>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </header>
+  
+    <header id='note-header' class='navbar navbar-fixed-top {{notePresent}}'>
+      <div class='container-fluid'>
+        <ul class='nav navbar-nav'>
+          <li>
+            <a id='close-note'>X</a>
+          </li>
+        </ul>
+        <ul class='nav navbar-nav navbar-right'>
+          <li>
+            <a>
+              <i class='fa fa-camera'></i>
+            </a>
+          </li>
+          <li>
+            <a id='dropdown-toggle' class='no-select'>
+              <i class='fa fa-sort-desc'></i>
+            </a>
+            <ul id='dropdown-menu'>
+              <li id='share'>Share</li>
+              {{#if archive}}
+                <li id='archive'>Unarchive</li>
+              {{else}}
+                <li id='archive'>Archive</li>  
+              {{/if}}
+              <li id='delete'>Delete</li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </header>
+  
+    <div id='content' class='{{activeClass}}'>
+      
+      {{#unless archive}}
+        <div id='actions'>
+          <a id='build-note' data-kind='note'>Note</a>
+          <a id='build-note' data-kind='list'>List</a>
+        </div>
+      {{/unless}}
+
+      <div id='new-note' class='{{showNew}}'>
+        {{#with newNote}}
+          {{> note_item}}
+        {{/with}}
+      </div>
+  
+      <div id='notes'> 
+        {{#each notes}}
+          {{#Animate}}
+            <div class='note-animate animate'>
+              {{> note_item}}
+            </div>
+          {{/Animate}}
+        {{/each}}
+      </div>
+    </div>
+  </div>
+  <sidebar>
+    <ul class='list-group'>
+      <li class='list-group-item'><a id='account'>Account</a></li>
+      <li class='list-group-item'><a id='notes-list'>Notes</a></li>
+      <li class='list-group-item'><a id='archive-list'>Archive</a></li>
+      <li class='list-group-item'><a id='terms'>Terms</a></li>
+    </ul>
+  </sidebar>
+</template>
+
+<template name='note_item'>
+  <div class='note well noselect {{activeClass}}' data-id='{{_id}}'>
+    <form>
+      <div class='form-group'>
+        <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
+        {{#if title}}
+          <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='title form-control' />
+        {{/if}}
+      </div>
+      {{#if kindMatches 'note'}}
+        <div class='form-group'>
+          <textarea name='content' placeholder='Note' tabindex='-1' class='form-control' >{{content}}</textarea>
+        </div>
+      {{/if}}
+    </form>
+    {{#if kindMatches 'list'}}
+      <div class='tasks'>
+        {{#each tasks}}
+          <div class='task {{activeClass ..}}' data-id={{_id}}>
+            <form>
+              <i class='fa fa-bars {{activeClass ..}}'></i>
+              {{#if note}}
+                <input type='checkbox' name='completed' checked='{{completed}}' tabindex='-1' class='checkbox' />
+              {{else}}
+                {{#if completed}}
+                  <i class='fa fa-check-square-o'></i>
+                {{else}}
+                  <i class='fa fa-square-o'></i>
+                {{/if}}
+              {{/if}}
+              <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control {{completedClass}}'>
+              {{#if active ..}}
+                <span class='delete hide'>
+                  X
+                </span>
+              {{/if}}
+            </form>
+          </div>
+        {{/each}}
+      </div>
+      {{#if active}}
+        <div class='form-group'>
+          <i class='fa fa-plus'></i>
+          <form class='create-task'>
+            <input type='text' name='create' placeholder='Add Task' class='task-input form-control' />
+          </form>
+        </div>
+        <span class='small'>Edited {{timeInWords updatedAt}}</span>
+      {{else}}
+        {{#if moreTasks}}
+          <div>...</div>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+  </div>
+</template>

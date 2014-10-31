@@ -1,0 +1,166 @@
+body
+  position:absolute
+  top:0px
+  left:0px
+  right:0px
+  bottom:0px
+  overflow:hidden
+  
+#content
+  position:absolute
+  z-index:1
+  top:60px
+  left:0px
+  right:0px
+  bottom:0px
+  overflow:auto
+  transition: 0.1s ease-out
+  background:#C2C2C2
+  &.active
+    overflow:hidden
+    
+#notes-wrapper
+  position:absolute
+  top:0px
+  left:0px
+  right:0px
+  bottom:0px
+  transform: translateX(0px)
+  z-index:1
+  &.slide
+    transition: 0.3s ease-out
+    transform: translateX(-300px)
+  
+a, a:visited, a:hover
+  text-decoration:none
+  
+.noselect
+  -webkit-touch-callout: none
+  -webkit-user-select: none
+  -khtml-user-select: none
+  -moz-user-select: none
+  -ms-user-select: none
+  user-select: none
+  
+header.navbar
+  position:absolute
+  left:0px
+  right:0px
+  height:60px
+  line-height:60px
+  background:gray
+  #logo
+    color:white
+    font-size:24px
+  .nav
+    color:red
+    > li
+      line-height:60px
+      > a
+        padding:0px 0px 0px 15px 
+        cursor:pointer
+        i.fa
+          font-size:28px
+          color:white
+          text-shadow:none
+
+  .navbar-left
+    float:left
+  .nav.navbar-nav.navbar-right
+    float:right
+  #searchForm
+    display:none
+    position:absolute
+    left:100px
+    right:200px
+    input
+      width:100%
+      
+sidebar
+  position:absolute
+  right:0px
+  top:0px
+  bottom:0px
+  width:100%
+  max-width:300px
+
+#dropdown-menu
+  transform: scale(0.5, 0)
+  opacity:0
+  background:white
+  list-style:none
+  position:absolute
+  right:0px
+  &.active
+    transition: 0.2s ease-out
+    transform-origin: right 0px
+    transform: scale(1, 1)
+    opacity:1
+
+.new.show
+  margin:0px 15px
+
+#notes, #new-note
+  margin:0px 15px
+  .note
+    overflow:auto
+    position:relative
+    input, textarea
+      background:none
+      border:0
+      box-shadow:none
+      &.title
+        font-weight:bold
+      &.completed
+        text-decoration:line-through
+        opacity:.4
+    textarea
+      height:auto
+      width:100%
+    &.active
+      position:relative
+      z-index:2
+      font-size:18px
+      input, textarea
+        font-size:18px
+      textarea
+        resize:auto
+    &:not(.active)
+      textarea
+        resize:none
+    .task
+      transform: translate(0px, 0px)
+      &.active
+        transition: 0.3s ease-out
+        transform: translate(18px, 0px)
+      &.ui-sortable-helper
+        transition: 0s
+      .fa-bars
+        margin-left:-18px
+        transform: scale(0,1)
+        font-size:18px
+        &.active
+          transition: 0.3s ease-out
+          transform: scale(1,1)
+          -webkit-transform-origin: 100% 50%
+          
+.note-animate
+  opacity:1
+  transition: 1s
+  &.animate
+    opacity:0
+          
+#messages
+  position:absolute
+  left:0px
+  right:0px
+  bottom:0px
+  padding:30px
+  .message
+    position:relative
+    z-index:2
+    margin-top:10px
+    padding:20px
+    background:#383838
+    border-radius:30px
+    color:white
