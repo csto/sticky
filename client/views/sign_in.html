@@ -1,4 +1,32 @@
 <template name='signIn'>
-  <h1>Sign in</h1>
-  {{> loginButtons }}
+  <div class='container-fluid'>
+    <div class='well'>
+      <form id="login-form" action="action">
+        <div>
+          <input type="email" placeholder='Email' id="login-email" class='form-control' />
+          <input type="password" placeholder='Password' id="login-password" class='form-control' />
+          <input type="submit" id="login-button" value="Sign in" class='btn btn-primary' />
+        </div>
+      </form>
+    </div>
+    {{> sessionLinks}}
+  </div>
+</template>
+
+<template name='sessionLinks'>
+  {{#if show 'sign-in'}}
+    <div>
+      Already a member? <a href='{{pathFor "signIn"}}'>Sign in here.</a>
+    </div>
+  {{/if}}
+  {{#if show 'register'}}
+    <div>
+      Don't have an account? <a href='{{pathFor "register"}}'>Create one here.</a>
+    </div>
+  {{/if}}
+  {{#if show 'forgot-password'}}
+    <div>
+      Forgot your password? <a href='{{pathFor "forgotPassword"}}'>Reset it here.</a>
+    </div>
+  {{/if}}
 </template>

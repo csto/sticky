@@ -13,8 +13,8 @@ stylus
 natestrauser:font-awesome
 cfs:standard-packages
 mrt:smart-publish
-ian:accounts-ui-bootstrap-3
 mrt:moment
 frozeman:animation-helper
 email
-
+accounts-google
+accounts-facebook

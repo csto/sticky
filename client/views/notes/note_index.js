@@ -251,6 +251,14 @@ Template.notes.events({
   //   $textarea = $(e.target);
   //   $textarea.height($textarea[0].scrollHeight);
   // }
+  
+  'click #sign-out': function (e) {
+    e.preventDefault();
+    Meteor.logout(function () {
+      Router.go('/');
+      Messages.insert({ content: 'Signed out successfully.' });
+    });
+  }
 });
 
 Template.notes.created = function () {

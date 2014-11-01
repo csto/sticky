@@ -84,14 +84,17 @@
       </div>
     </div>
   </div>
+  
   <sidebar>
     <ul class='list-group'>
       <li class='list-group-item'><a id='account'>Account</a></li>
       <li class='list-group-item'><a id='notes-list'>Notes</a></li>
       <li class='list-group-item'><a id='archive-list'>Archive</a></li>
       <li class='list-group-item'><a id='terms'>Terms</a></li>
+      <li class='list-group-item'><a id='sign-out'>Signout</a></li>
     </ul>
   </sidebar>
+  
 </template>
 
 <template name='note_item'>
@@ -99,7 +102,7 @@
     <form>
       <div class='form-group'>
         <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
-        {{#if title}}
+        {{#if title}} <!-- this needs to only hide if not active -->
           <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='title form-control' />
         {{/if}}
       </div>
