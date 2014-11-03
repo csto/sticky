@@ -244,7 +244,7 @@ Template.notes.events({
   'click #share': function (e) {
     e.preventDefault();
     var email = 'coreystout@gmail.com';
-    Meteor.call('share', Session.get('note') || Session.get('newNote'), email);
+    Meteor.call('share', currentNote(), email);
   },
   
   // 'keyup textarea': function (e) {
@@ -285,7 +285,7 @@ Template.notes.helpers({
   
   notes: function () {
     var search = Session.get('search');
-    return Notes.find(
+    var notes = Notes.find(
       { 
         archived: Session.get('archive'),
         $or: [
@@ -296,6 +296,13 @@ Template.notes.helpers({
       }, 
       { sort: { position: 1 } }
     );
+    Session.set('notesCount', notes.count());
+    return notes;
+  },
+  
+  noNotes: function () {
+    var notesCount = Session.get('notesCount');
+    return !notesCount || notesCount == 0;
   },
   
   search: function () {
@@ -397,6 +404,10 @@ Template.note_item.helpers({
     if ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id))) {
       return 'active';
     }
+  },
+  
+  showTitle: function () {
+    return this.title || currentNote();
   },
   
   note: function () {

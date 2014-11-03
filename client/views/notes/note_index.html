@@ -81,6 +81,9 @@
             </div>
           {{/Animate}}
         {{/each}}
+        {{#if noNotes}}
+          No notes
+        {{/if}}
       </div>
     </div>
   </div>
@@ -102,7 +105,7 @@
     <form>
       <div class='form-group'>
         <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
-        {{#if title}} <!-- this needs to only hide if not active -->
+        {{#if showTitle}} <!-- this needs to only hide if not active -->
           <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='title form-control' />
         {{/if}}
       </div>

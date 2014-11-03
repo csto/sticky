@@ -1,0 +1,12 @@
+<template name='notifications'>
+  <div id='notifications'>
+    {{#each notifications}}
+      {{> notification}}
+    {{/each}}
+  </div>
+</template>
+
+<template name='notification'>
+  <a class='accept btn btn-primary'>Accept</a>
+  <a class='decline btn btn-primary'>Decline</a>
+</template>

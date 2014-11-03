@@ -35,24 +35,25 @@ Template.register.events({
     if (! email) {
       return Messages.insert({ content: 'Please enter an email address.' });
     }
-    
+
     if (! emailRegex.test(email)) {
       return Messages.insert({ content: 'Invalid email format.' });
     }
-    
+
     if (! password) {
       return Messages.insert({ content: 'Please enter a password.' });
     }
-    
+
     if (password.length < 6) {
       return Messages.insert({ content: 'Password must contain at least 6 characters.' });
     }
-    
+
     if (password.length > 48) {
       return Messages.insert({ content: 'Password must contain less than 48 characters.' });
     }
 
-    Accounts.createUser({email: email, password : password}, function(error){
+    Accounts.createUser({ email: email, password : password }, function(error){
+      console.log(error)
       if (error) {
         Messages.insert({ content: error.reason });
       } else {
@@ -68,7 +69,7 @@ Template.register.events({
 Template.sessionLinks.helpers({
   show: function (template) {
     path = Router.current().route._path;
-    if (template === 'sign-in' && path !== '/') {
+    if (template === 'sign-in' && path !== '/sign-in') {
       return true;
     }
     if (template === 'register' && path !== '/register') {

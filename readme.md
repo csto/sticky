@@ -1,27 +1,28 @@
 TODO
 
-auth in templates
-
-messages (note destroyed, etc)
-notes menu
-  notes
-  archived
-  terms
-note dropdown
-  archive
-  delete
-  share
-
+resizing
+finish notifications
 sortable notes
-  
-sharing tokens
+loading
+design
 
 images
 mobile
+  groundDB
+  push notifications
+  publish mobile
+kadira
 
-shareToken
-noteId
-token
 
-email goes to register url and stores session variable
-after registration, userNote is created
+Sharing
+note shared
+  if user exists
+    creates userNote with accepted false
+  else
+    prompts for email
+    sends token
+    after registration, userNote is created
+notifications
+  userNotes where accepted is false
+  accept and decline buttons
+  decline deletes userNote
