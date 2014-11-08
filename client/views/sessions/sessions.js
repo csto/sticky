@@ -1,14 +1,20 @@
 Template.signIn.events({
   'submit #login-form' : function(e, t){
     e.preventDefault();
+    console.log('signing in');
     // retrieve the input field values
+    console.log('new');
     var email = t.find('#login-email').value;
     var password = t.find('#login-password').value;
+    var p2 = $('#login-password').val();
+    console.log(password);
+    console.log(p2);
 
     // Trim and validate your fields here.... 
 
     // If validation passes, supply the appropriate fields to the
     // Meteor.loginWithPassword() function.
+    console.log(email, password);
     Meteor.loginWithPassword(email, password, function(error){
       if (error) {
         console.log(error);
@@ -17,10 +23,12 @@ Template.signIn.events({
         // could be incorrect. Inform the user that their
         // login attempt has failed. 
       }else{
+        console.log('success')
         Messages.insert({ content: 'Signed in successfully.' });
         Router.go('/notes');
       }
     });
+    console.log('wtf')
     return false; 
   }
 });
@@ -51,6 +59,8 @@ Template.register.events({
     if (password.length > 48) {
       return Messages.insert({ content: 'Password must contain less than 48 characters.' });
     }
+    
+    console.log(email, password, !! password);
 
     Accounts.createUser({ email: email, password : password }, function(error){
       console.log(error)
@@ -61,6 +71,8 @@ Template.register.events({
         Router.go('/notes');
       }
     });
+    
+    console.log('wtf');
 
     return false;
   }

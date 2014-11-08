@@ -8,13 +8,11 @@ bootstrap
 iron:router
 accounts-password
 spiderable
-fastclick
 stylus
 natestrauser:font-awesome
-cfs:standard-packages
 mrt:smart-publish
 mrt:moment
 frozeman:animation-helper
 email
-accounts-facebook
 aldeed:collection2
+ground:db

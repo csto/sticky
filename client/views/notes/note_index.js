@@ -82,25 +82,21 @@ Template.notes.events({
     var note = Session.get('note');
     var newNote = Session.get('newNote');
     
-    if (newNote) {
-      if (_.contains(['note', 'list'], newNote)) {
-        noteAttributes = _.extend(noteAttributes, { kind: newNote })
-        
-        Meteor.call('createNote', noteAttributes, function (error, noteId) {
-          if (error) {
-            console.log('error2')
-            // throwError(error);
-          }else{
-            Session.set('newNote', noteId);
-          }
-        });
-      }else{
-        Notes.update(newNote, { $set: noteAttributes });
-      }
+    if (newNote && _.contains(['note', 'list'], newNote)) {
+      noteAttributes = _.extend(noteAttributes, { kind: newNote })
+      
+      Meteor.call('createNote', noteAttributes, function (error, noteId) {
+        if (error) {
+          console.log('error2')
+          // throwError(error);
+        }else{
+          Session.set('newNote', noteId);
+        }
+      });
     }else{
-      Notes.update(note, { $set: noteAttributes });
+      // Notes.update(note, { $set: noteAttributes });
+      Meteor.call('updateNote', this._id, noteAttributes);
     }
-
   },
   
   'click #close-note ': function (e) {
@@ -206,6 +202,7 @@ Template.notes.events({
   'click #delete': function (e) {
     e.preventDefault();
     var note = Session.get('note');
+    console.log('deleting', note);
     if (note) {
       Session.set('note', null);
       Notes.remove({ _id: note });
@@ -226,9 +223,10 @@ Template.notes.events({
   
   'click #menu': function (e) {
     e.preventDefault();
+    e.stopPropagation();
     console.log('menuclick')
     $('#notes-wrapper').toggleClass('slide');
-    return false;
+    // return false;
   },
   
   'click #notes-list': function (e) {

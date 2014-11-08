@@ -1,3 +1,6 @@
+header
+  margin:0px 15px !important
+
 body
   position:absolute
   top:0px
@@ -25,11 +28,15 @@ body
   left:0px
   right:0px
   bottom:0px
-  transform: translateX(0px)
+  transform: translate3d(0px, 0px, 0px)
+  transform: scale(.5, .5)
   z-index:1
+  transition: 0.3s ease-out
   &.slide
+    opacity:.9
     transition: 0.3s ease-out
-    transform: translateX(-300px)
+    transform: translate3d(-300px, 0px, 0px)
+    transform: scale(.5, .5)
   
 a, a:visited, a:hover
   text-decoration:none
@@ -48,7 +55,7 @@ header.navbar
   right:0px
   height:60px
   line-height:60px
-  background:gray
+  background:#191D26
   #logo
     color:white
     font-size:24px

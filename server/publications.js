@@ -1,18 +1,18 @@
-Meteor.publish('userNotes', function (options) {
-  return UserNotes.find({}, options);
-});
-
-Meteor.publish('notes', function (options) {
-  return Notes.find({}, options);
-});
-
-Meteor.publish('tasks', function (options) {
-  return Tasks.find({}, options);
-});
-
-Meteor.publish('images', function (options) {
-  return Images.find({}, options);
-});
+// Meteor.publish('userNotes', function (options) {
+//   return UserNotes.find({}, options);
+// });
+//
+// Meteor.publish('notes', function (options) {
+//   return Notes.find({}, options);
+// });
+//
+// Meteor.publish('tasks', function (options) {
+//   return Tasks.find({}, options);
+// });
+//
+// Meteor.publish('images', function (options) {
+//   return Images.find({}, options);
+// });
 
 Meteor.publish('shareTokens', function (options) {
   return ShareTokens.find({}, options);
