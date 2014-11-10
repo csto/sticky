@@ -1,3 +1,13 @@
+Template.notes.rendered = function () {
+  $(window).resize(function () {
+    $activeNote = $('.note.active');
+    if ($activeNote.length > 0) {
+      console.log($(window).height() - 60);
+      $activeNote.height($(window).height() - 98);
+    }
+  });
+}
+
 Template.notes.events({
   'click #notes-wrapper': function (e) {
     e.preventDefault();
@@ -13,14 +23,18 @@ Template.notes.events({
     }
   },
   
-  'click #searchButton': function (e) {
-    $('#searchForm').show();
-    $('#searchForm input').focus();
+  'click #search-button': function (e) {
+    $('#search-wrapper').addClass('search');
+    $('#search-form input').focus();
   },
   
-  'click #build-note': function (e) {
+  'click #close-search': function (e) {
+    $('#search-wrapper').removeClass('search');
+  },
+  
+  'click .build-note': function (e) {
     e.preventDefault();
-    var kind = $(e.target).data('kind');
+    var kind = $(e.currentTarget).data('kind');
     Session.set('newNote', kind);
     setTimeout( function () {
       var $currentTarget = $('#new-note .note');
@@ -29,8 +43,8 @@ Template.notes.events({
         {
           top: pageTop,
           left: -15,
-          height: ($('#content').height() -40),
-          width: $currentTarget.width() + 30
+          height: ($('#content').height()),
+          width: $currentTarget.width() + 67
         }, 200, 'ease-out'
       );
       if (kind === 'note') {
@@ -58,8 +72,8 @@ Template.notes.events({
         {
           top: pageTop,
           left: -15,
-          height: ($('#content').height() -40),
-          width: $currentTarget.width() + 30
+          height: ($('#content').height()),
+          width: $currentTarget.width() + 67
         }, 200, 'ease-out'
       );
     }
@@ -262,7 +276,7 @@ Template.notes.events({
 Template.notes.created = function () {
   Session.set('note', null);
   Session.set('newNote', null);
-  Session.set('archive', false)
+  Session.set('archive', false);
 };
 
 currentNote = function () {
@@ -342,6 +356,9 @@ Meteor.active = function () {
 }
 
 Template.note_item.rendered = function () {
+  
+  $('textarea').autosize();
+  
   var self = this;
   self.$('.tasks').sortable({
     axis: 'y',

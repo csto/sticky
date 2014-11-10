@@ -1,0 +1,13 @@
+<template name='messages'>
+  <div id='messages'>
+    {{#each messages}}
+      {{> message}}
+    {{/each}}
+  </div>
+</template>
+
+<template name='message'>
+  <div class='message'>
+    {{content}}
+  </div>
+</template>

@@ -1,5 +1,6 @@
-header
-  margin:0px 15px !important
+dark = #2D2E3B
+light = white
+gold = #E4A100
 
 body
   position:absolute
@@ -8,6 +9,47 @@ body
   right:0px
   bottom:0px
   overflow:hidden
+  font-size:16px
+  
+input:focus
+  outline:0
+  
+#simple-layout
+  background:url('pw_maze_white.png')
+  min-height:100%
+  .panel
+    margin:0 auto
+    max-width:500px
+    margin-top:80px
+    border:1px solid #B8B8BC
+    box-shadow:inset #FCFCFF 0px 0px 0px 1px, #8C8E90 0px 1px 3px
+    border-radius:2px
+    .panel-heading
+      background:#fafafc
+      font-weight:bold
+      text-transform:uppercase
+    .panel-body
+      background:#f1f1f3
+    .form-control
+      box-shadow:none
+    .form-group
+      position:relative
+      i.fa
+        position:absolute
+        right:14px
+        top:33px
+        color:#CDCDD0
+        font-size:18px
+
+#session-links
+  margin-top:20px
+  font-size:14px
+  color:#717480
+
+.btn-primary
+  min-width:200px
+  border:0
+  background:gold
   
 #content
   position:absolute
@@ -28,15 +70,19 @@ body
   left:0px
   right:0px
   bottom:0px
+  -webkit-transform: translate3d(0px, 0px, 0px)
+  -khtml-transform: translate3d(0px, 0px, 0px)
+  -moz-user-transform: translate3d(0px, 0px, 0px)
+  -ms-user-transform: translate3d(0px, 0px, 0px)
   transform: translate3d(0px, 0px, 0px)
-  transform: scale(.5, .5)
   z-index:1
-  transition: 0.3s ease-out
   &.slide
-    opacity:.9
     transition: 0.3s ease-out
-    transform: translate3d(-300px, 0px, 0px)
-    transform: scale(.5, .5)
+    -webkit-transform: translate3d(300px, 0px, 0px)
+    -khtml-transform: translate3d(300px, 0px, 0px)
+    -moz-user-transform: translate3d(300px, 0px, 0px)
+    -ms-user-transform: translate3d(300px, 0px, 0px)
+    transform: translate3d(300px, 0px, 0px)
   
 a, a:visited, a:hover
   text-decoration:none
@@ -49,47 +95,79 @@ a, a:visited, a:hover
   -ms-user-select: none
   user-select: none
   
-header.navbar
+header
   position:absolute
   left:0px
   right:0px
   height:60px
   line-height:60px
-  background:#191D26
+  background:dark
+  border-radius:0
+  border:0
   #logo
     color:white
     font-size:24px
-  .nav
-    color:red
-    > li
+  #search-wrapper
+    position:relative
+    height:120px
+    top:-60px
+    transition:0.3s ease-out
+    transform: translate3d(0px, 0px, 0px)
+    &.search
+      transform: translate3d(0px, 60px, 0px)
+    .nav-link, .search-link
       line-height:60px
+      padding:0px 15px
+      position:absolute
+      top:60px
+      &.nav-left
+        left:0px
+      &.nav-right
+        right:0px
+      &.centered
+        right:56px
+        left:56px
+        text-align:center
+        > a
+          top:0px
       > a
-        padding:0px 0px 0px 15px 
         cursor:pointer
+        position:relative
+        top:3px
         i.fa
           font-size:28px
           color:white
           text-shadow:none
-
-  .navbar-left
-    float:left
-  .nav.navbar-nav.navbar-right
-    float:right
-  #searchForm
-    display:none
-    position:absolute
-    left:100px
-    right:200px
-    input
-      width:100%
+    .search-link
+      position:absolute
+      top:0px
+      &.search-left
+        left:0px
+      &.search-right
+        right:0px
+    #search-form
+      height:60px
+      left:60px
+      right:60px
+      input
+        width:100%
+        background:none
+        border:none
+        border-radius:0px
+        outline:none
       
 sidebar
   position:absolute
-  right:0px
+  left:0px
   top:0px
   bottom:0px
   width:100%
   max-width:300px
+  
+#actions
+  margin:15px 15px 15px 15px
+  box-shadow:none
+  border:0
 
 #dropdown-menu
   transform: scale(0.5, 0)
@@ -111,16 +189,35 @@ sidebar
   margin:0px 15px
   .note
     overflow:auto
+    -webkit-overflow-scrolling: touch
     position:relative
+    box-shadow:none
+    border:0
+    border-radius:2px
+    .cover
+      position:absolute
+      top:0px
+      left:0px
+      right:0px
+      bottom:0px
+      z-index:2
+      cursor:pointer
+    .title
+      position:relative
+      margin-bottom:0px
+      input
+        font-weight:bold
+    .form-group, .content
+      margin:0px -10px
+    .content
+      margin-bottom:-18px
     input, textarea
-      background:none
+      background:#C9C9C9
       border:0
       box-shadow:none
-      &.title
-        font-weight:bold
       &.completed
         text-decoration:line-through
-        opacity:.4
+        opacity:0.4
     textarea
       height:auto
       width:100%
@@ -131,19 +228,30 @@ sidebar
       input, textarea
         font-size:18px
       textarea
-        resize:auto
-    &:not(.active)
-      textarea
-        resize:none
+        resize:none !important
     .task
+      height:34px
+      position:relative
       transform: translate(0px, 0px)
+      margin:0px 40px 0px 10px
       &.active
+        height:40px
         transition: 0.3s ease-out
         transform: translate(18px, 0px)
       &.ui-sortable-helper
         transition: 0s
+      i.fa
+        position:absolute
+        top:10px
+        left:-10px
+        z-index:2
+      .fa-check-square
+        color:blue
+      .task-input
+        opacity:1
       .fa-bars
-        margin-left:-18px
+        top:0px
+        left:0px
         transform: scale(0,1)
         font-size:18px
         &.active

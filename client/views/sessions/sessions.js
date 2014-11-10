@@ -1,14 +1,9 @@
 Template.signIn.events({
   'submit #login-form' : function(e, t){
     e.preventDefault();
-    console.log('signing in');
-    // retrieve the input field values
-    console.log('new');
-    var email = t.find('#login-email').value;
-    var password = t.find('#login-password').value;
-    var p2 = $('#login-password').val();
-    console.log(password);
-    console.log(p2);
+
+    var email = $('#email').val();
+    var password = $('#password').val();
 
     // Trim and validate your fields here.... 
 
@@ -28,7 +23,6 @@ Template.signIn.events({
         Router.go('/notes');
       }
     });
-    console.log('wtf')
     return false; 
   }
 });
@@ -36,8 +30,8 @@ Template.signIn.events({
 Template.register.events({
   'submit #register-form' : function(e, t) {
     e.preventDefault();
-    var email = $('#account-email').val().replace(' ','');
-    var password = $('#account-password').val();
+    var email = $('#email').val().replace(' ','');
+    var password = $('#password').val();
     var emailRegex = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
     if (! email) {
@@ -81,7 +75,7 @@ Template.register.events({
 Template.sessionLinks.helpers({
   show: function (template) {
     path = Router.current().route._path;
-    if (template === 'sign-in' && path !== '/sign-in') {
+    if (template === 'sign-in' && path !== '/sign-in' && path !== 'landing') {
       return true;
     }
     if (template === 'register' && path !== '/register') {

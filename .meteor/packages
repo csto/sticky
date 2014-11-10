@@ -4,11 +4,9 @@
 # but you can also edit it by hand.
 
 meteor-platform
-bootstrap
 iron:router
 accounts-password
 spiderable
-stylus
 natestrauser:font-awesome
 mrt:smart-publish
 mrt:moment
@@ -16,3 +14,6 @@ frozeman:animation-helper
 email
 aldeed:collection2
 ground:db
+mizzao:bootstrap-3
+stylus
+
