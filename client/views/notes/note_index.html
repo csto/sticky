@@ -26,7 +26,14 @@
       
         <div class='nav-link centered'>
           <a href='/notes'>
-            <div id='logo'>Notes</div>
+            <div id='logo'>
+              {{#unless archive}}
+                Notes
+              {{/unless}}
+              {{#if archive}}
+                Archive
+              {{/if}}
+            </div>
           </a>
         </div>
       
@@ -39,32 +46,21 @@
     </header>
   
     <header id='note-header' class='navbar navbar-fixed-top {{notePresent}}'>
-      <div class='container-fluid'>
-        <ul class='nav navbar-nav'>
-          <li>
-            <a id='close-note'>X</a>
-          </li>
-        </ul>
-        <ul class='nav navbar-nav navbar-right'>
-          <li>
-            <a>
-              <i class='fa fa-camera'></i>
-            </a>
-          </li>
-          <li>
-            <a id='dropdown-toggle' class='no-select'>
-              <i class='fa fa-sort-desc'></i>
-            </a>
-            <ul id='dropdown-menu'>
-              <li id='share'>Share</li>
-              {{#if archive}}
-                <li id='archive'>Unarchive</li>
-              {{else}}
-                <li id='archive'>Archive</li>  
-              {{/if}}
-              <li id='delete'>Delete</li>
-            </ul>
-          </li>
+      <div class='nav-link nav-left'>
+        <a id='close-note'>X</a>
+      </div>
+      <div class='nav-link nav-right'>
+        <a id='dropdown-toggle' class='no-select'>
+          <i class='fa fa-sort-desc'></i>
+        </a>
+        <ul id='dropdown-menu'>
+          <li id='share'>Share</li>
+          {{#if archive}}
+            <li id='archive'>Unarchive</li>
+          {{else}}
+            <li id='archive'>Archive</li>  
+          {{/if}}
+          <li id='delete'>Delete</li>
         </ul>
       </div>
     </header>
@@ -91,11 +87,11 @@
   
       <div id='notes'> 
         {{#each notes}}
-          <!-- {{#Animate}} -->
-            <!-- <div class='note-animate animate'> -->
+          {{#Animate}}
+            <div class='note-animate animate'>
               {{> note_item}}
-            <!-- </div> -->
-          <!-- {{/Animate}} -->
+            </div>
+          {{/Animate}}
         {{/each}}
         {{#if noNotes}}
           No notes
@@ -129,7 +125,7 @@
         </div>
       {{/if}}
       {{#if kindMatches 'note'}}
-        <textarea name='content' placeholder='Note' rows='1' tabindex='-1' class='content form-control' >{{content}}</textarea>
+        <textarea name='content' placeholder='Note' rows='1' tabindex='-1' class='content form-control'>{{content}}</textarea>
       {{/if}}
     </form>
     {{#if kindMatches 'list'}}
@@ -146,7 +142,7 @@
               {{/if}}
               <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{completedClass}}'>
               {{#if active ..}}
-                <span class='delete hide'>
+                <span class='delete'>
                   X
                 </span>
               {{/if}}
@@ -155,18 +151,20 @@
         {{/each}}
       </div>
       {{#if active}}
-        <div class='form-group'>
+        <div class='form-group create'>
           <i class='fa fa-plus'></i>
           <form class='create-task'>
-            <input type='text' name='create' placeholder='Add Task' class='task-input form-control' />
+            <input type='text' name='create' placeholder='Add Task' class='form-control' />
           </form>
         </div>
-        <span class='small'>Edited {{timeInWords updatedAt}}</span>
       {{else}}
         {{#if moreTasks}}
           <div>...</div>
         {{/if}}
       {{/if}}
+    {{/if}}
+    {{#if active}}
+      <span class='small pull-right'>Edited {{timeInWords updatedAt}}</span>
     {{/if}}
   </div>
 </template>

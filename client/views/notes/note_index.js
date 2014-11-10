@@ -36,7 +36,7 @@ Template.notes.events({
     e.preventDefault();
     var kind = $(e.currentTarget).data('kind');
     Session.set('newNote', kind);
-    setTimeout( function () {
+    Meteor.setTimeout( function () {
       var $currentTarget = $('#new-note .note');
       var pageTop = -$currentTarget.offset().top + 60
       $currentTarget.animate(
@@ -62,8 +62,7 @@ Template.notes.events({
     if (!Session.get('note') && !Session.get('newNote')) {
       e.preventDefault();
       var $currentTarget = $(e.currentTarget);
-      var id = $currentTarget.data('id');
-      Session.set('note', id);
+      Session.set('note', this._id);
       $(e.target).blur();
       var pageTop = -$currentTarget.offset().top + 60
       $currentTarget.height($currentTarget.height());
@@ -74,8 +73,11 @@ Template.notes.events({
           left: -15,
           height: ($('#content').height()),
           width: $currentTarget.width() + 67
-        }, 200, 'ease-out'
+        }, 200, 'ease-out', function () {
+          $('textarea').trigger('autosize.resizeIncludeStyle');
+        }
       );
+      
     }
   },
   
@@ -120,8 +122,11 @@ Template.notes.events({
     }
     Session.set('note', null);
     Session.set('newNote', null);
-    $('input, textarea').prop('disabled', false);
     $('.note').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
+    Meteor.setTimeout(function () {
+      $('textarea').trigger('autosize.resizeIncludeStyle');
+    }, 0);
+    
   },
   
   'submit .create-task, blur .create-task': function (e) {
@@ -192,8 +197,7 @@ Template.notes.events({
     e.preventDefault();
 
     var task = {
-      content: $(e.target).closest('form').find('[name=content]').val(),
-      completed: $(e.target).closest('form').find('[name=completed]').prop('checked')
+      content: $(e.target).closest('form').find('[name=content]').val()
     }
 
     Meteor.call('updateTask', this._id, task);
@@ -201,6 +205,7 @@ Template.notes.events({
   
   'focus .task input': function (e) {
     e.preventDefault();
+    $('.delete').hide();
     $(e.target).parent().find('.delete').show();
   },
   
@@ -270,6 +275,16 @@ Template.notes.events({
       Router.go('/');
       Messages.insert({ content: 'Signed out successfully.' });
     });
+  },
+  
+  'click .fa-check-square, click .fa-square-o': function (e) {
+    e.preventDefault();
+    
+    var task = {
+      completed: !this.completed
+    }
+
+    Meteor.call('updateTask', this._id, task);
   }
 });
 
@@ -360,9 +375,12 @@ Template.note_item.rendered = function () {
   $('textarea').autosize();
   
   var self = this;
+  
+  $(this.firstNode).closest('.note-animate').removeClass('animate');
   self.$('.tasks').sortable({
     axis: 'y',
     handle: '.fa-bars',
+    placeholder: 'task-placeholder',
     stop: function(e, ui) {
       // get the dragged html element and the one before
       //   and after it

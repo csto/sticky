@@ -59,6 +59,7 @@ input:focus
   right:0px
   bottom:0px
   overflow:auto
+  -webkit-overflow-scrolling: touch
   transition: 0.1s ease-out
   background:#C2C2C2
   &.active
@@ -104,6 +105,25 @@ header
   background:dark
   border-radius:0
   border:0
+  .nav-link, .search-link
+    line-height:60px
+    padding:0px 15px
+    position:absolute
+    &.nav-left
+      left:0px
+    &.nav-right
+      right:0px
+    > a
+      cursor:pointer
+      position:relative
+      top:3px
+      font-size:28px
+      color:white
+      text-shadow:none
+      i.fa
+        font-size:28px
+        color:white
+        text-shadow:none
   #logo
     color:white
     font-size:24px
@@ -116,28 +136,14 @@ header
     &.search
       transform: translate3d(0px, 60px, 0px)
     .nav-link, .search-link
-      line-height:60px
-      padding:0px 15px
-      position:absolute
       top:60px
-      &.nav-left
-        left:0px
-      &.nav-right
-        right:0px
       &.centered
         right:56px
         left:56px
         text-align:center
         > a
           top:0px
-      > a
-        cursor:pointer
-        position:relative
-        top:3px
-        i.fa
-          font-size:28px
-          color:white
-          text-shadow:none
+      
     .search-link
       position:absolute
       top:0px
@@ -185,15 +191,16 @@ sidebar
 .new.show
   margin:0px 15px
 
+
 #notes, #new-note
   margin:0px 15px
   .note
     overflow:auto
-    -webkit-overflow-scrolling: touch
     position:relative
     box-shadow:none
     border:0
     border-radius:2px
+    -webkit-overflow-scrolling: touch
     .cover
       position:absolute
       top:0px
@@ -212,7 +219,7 @@ sidebar
     .content
       margin-bottom:-18px
     input, textarea
-      background:#C9C9C9
+      background:none
       border:0
       box-shadow:none
       &.completed
@@ -221,43 +228,72 @@ sidebar
     textarea
       height:auto
       width:100%
+      resize:none !important
     &.active
       position:relative
       z-index:2
       font-size:18px
       input, textarea
         font-size:18px
-      textarea
-        resize:none !important
+    .form-group.create
+      position:relative
+      margin-top:20px
+      input
+        padding-left:70px
+      .fa
+        position:absolute
+        top:10px
+        left:38px
+    .small
+      color:gray
+      font-size:14px
+      margin-top:20px
+    .task-placeholder
+      height:40px
+      background:#FBFBFB
+      margin:0 -15px
     .task
       height:34px
       position:relative
       transform: translate(0px, 0px)
-      margin:0px 40px 0px 10px
+      margin:0px 40px 0px 32px
       &.active
         height:40px
         transition: 0.3s ease-out
         transform: translate(18px, 0px)
+        margin-left:38px
+        i.fa
+          font-size:22px
       &.ui-sortable-helper
         transition: 0s
       i.fa
         position:absolute
-        top:10px
-        left:-10px
+        top:4px
+        left:-34px
         z-index:2
+        padding:4px
+        cursor:pointer
       .fa-check-square
         color:blue
       .task-input
         opacity:1
-      .fa-bars
-        top:0px
-        left:0px
+        padding-left:2px
+      i.fa.fa-bars
+        top:7px
+        left:-56px
         transform: scale(0,1)
-        font-size:18px
+        font-size:14px
+        color:#CECECE
+        z-index:3
         &.active
           transition: 0.3s ease-out
           transform: scale(1,1)
           -webkit-transform-origin: 100% 50%
+      .delete
+        position:absolute
+        display:none
+        top:4px
+        right:-20px
           
 .note-animate
   opacity:1
