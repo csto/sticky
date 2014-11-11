@@ -1,0 +1,46 @@
+<template name='header'>
+  <header>
+    <div id='search-wrapper'>
+      <div class='search-link search-left'>
+        <a>
+          <i class='fa fa-search'></i>
+        </a>
+      </div>
+      
+      <div id='search-form' class='search-link'>
+        <input id='search' type='text' name='search' placeholder='Search' class='form-control' />
+      </div>
+      
+      <div id='close-search' class='search-link search-right'>
+        <a>
+          <i class='fa fa-times'></i>
+        </a>
+      </div>
+
+      <div id='menu' class='nav-link nav-left'>
+        <a>
+          <i class='fa fa-bars'></i>
+        </a>
+      </div>
+    
+      <div class='nav-link centered'>
+        <a href='/notes'>
+          <div id='logo'>
+            {{#unless archive}}
+              Notes
+            {{/unless}}
+            {{#if archive}}
+              Archive
+            {{/if}}
+          </div>
+        </a>
+      </div>
+    
+      <div id='search-button' class='nav-link nav-right'>
+        <a>
+          <i class='fa fa-search'></i>
+        </a>  
+      </div>
+    </div>
+  </header>
+</template>

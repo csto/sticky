@@ -1,0 +1,32 @@
+<template name='note_header'>
+  <header id='note-header' class='navbar navbar-fixed-top {{notePresent}}'>
+    <div class='nav-link nav-left'>
+      <a id='close-note'>X</a>
+    </div>
+    <div class='nav-link nav-right'>
+      <a class='dropdown-toggle no-select'>
+        <i class='fa fa-ellipsis-v no-select'></i>
+      </a>
+      <ul class='dropdown-menu'>
+        <li id='share'>
+          <a>Share</a>
+        </li>
+        {{#if archive}}
+          <li id='archive'>
+            <a>Unarchive</a>
+          </li>
+        {{else}}
+          <li id='archive'>
+            <a>Archive</a>
+          </li>  
+        {{/if}}
+        <li id='delete'>
+          <a>Delete</a>
+        </li>
+        <li id='delete-completed'>
+          <a>Remove Completed</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+</template>

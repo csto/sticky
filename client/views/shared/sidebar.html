@@ -1,0 +1,25 @@
+<template name='sidebar'>
+  <sidebar>
+    <ul class='list-group'>
+      <li class='list-group-item'>
+        <a id='account' href="{{pathFor 'account'}}"><i class='fa fa-cog'></i>Account</a>
+      </li>
+
+      <li class='list-group-item'>
+        <a id='notes-list' href="{{pathFor 'notes'}}"><i class='fa fa-file-text-o'></i>Notes</a>
+      </li>
+
+      <li class='list-group-item'>
+        <a id='archive-list' href="{{pathFor route='notes' query='archive=true'}}"><i class='fa fa-archive'></i>Archive</a>
+      </li>
+
+      <li class='list-group-item'>
+        <small><a id='terms'>Terms</a></small>
+      </li>
+
+      <li class='list-group-item'>
+        <a id='sign-out'>Signout</a>
+      </li>
+    </ul>
+  </sidebar>
+</template>

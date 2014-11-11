@@ -2,35 +2,12 @@ Template.notes.rendered = function () {
   $(window).resize(function () {
     $activeNote = $('.note.active');
     if ($activeNote.length > 0) {
-      console.log($(window).height() - 60);
       $activeNote.height($(window).height() - 98);
     }
   });
 }
 
 Template.notes.events({
-  'click #notes-wrapper': function (e) {
-    e.preventDefault();
-    if ($(e.currentTarget).hasClass('slide')) {
-      $(e.currentTarget).toggleClass('slide');
-      return false;
-    }
-  },
-  
-  'keyup #search': function (e) {
-    if (Meteor.isClient) {
-      Session.set('search', $(e.target).val())
-    }
-  },
-  
-  'click #search-button': function (e) {
-    $('#search-wrapper').addClass('search');
-    $('#search-form input').focus();
-  },
-  
-  'click #close-search': function (e) {
-    $('#search-wrapper').removeClass('search');
-  },
   
   'click .build-note': function (e) {
     e.preventDefault();
@@ -44,7 +21,7 @@ Template.notes.events({
           top: pageTop,
           left: -15,
           height: ($('#content').height()),
-          width: $currentTarget.width() + 67
+          width: $(window).width()
         }, 200, 'ease-out'
       );
       if (kind === 'note') {
@@ -69,7 +46,7 @@ Template.notes.events({
         {
           top: pageTop,
           left: -15,
-          width: $currentTarget.width() + 67
+          width: $(window).width()
         }, 200, 'ease-out', function () {
           $('textarea').trigger('autosize.resizeIncludeStyle');
         }
@@ -79,7 +56,6 @@ Template.notes.events({
   },
   
   'blur .note input:not(.task-input), blur .note textarea': function (e) {
-    console.log('blur .note input / textarea')
     e.preventDefault();
     
     var noteAttributes = {
@@ -107,23 +83,8 @@ Template.notes.events({
         }
       });
     }else{
-      // Notes.update(note, { $set: noteAttributes });
       Meteor.call('updateNote', this._id, noteAttributes);
     }
-  },
-  
-  'click #close-note ': function (e) {
-    e.preventDefault();
-    if (newNote && (newNote === 'note' || newNote === 'list')) {
-      Messages.insert({content: 'Empty note discarded.'});
-    }
-    Session.set('note', null);
-    Session.set('newNote', null);
-    $('.note').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
-    Meteor.setTimeout(function () {
-      $('textarea').trigger('autosize.resizeIncludeStyle');
-    }, 0);
-    
   },
   
   'submit .create-task, blur .create-task': function (e) {
@@ -188,8 +149,21 @@ Template.notes.events({
       });
     }
     
-  },
+  }
   
+  // 'click #notes-list': function (e) {
+  //   Session.set('archive', false);
+  //   $('#notes-wrapper').removeClass('slide');
+  // },
+  
+  // 'click #archive-list': function (e) {
+  //   Session.set('archive', true);
+  //   $('#notes-wrapper').removeClass('slide');
+  // },
+  
+});
+
+Template.note_item.events({
   'change .task input, blur .task input': function (e) {
     e.preventDefault();
 
@@ -206,75 +180,11 @@ Template.notes.events({
     $(e.target).parent().find('.delete').show();
   },
   
-  'click .delete': function (e) {
+  'click .task .delete': function (e) {
     Tasks.remove(this._id);
   },
-  
-  'click #dropdown-toggle': function (e) {
-    e.preventDefault();
-    $(e.currentTarget).next().toggleClass('active');
-  },
-  
-  'click #delete': function (e) {
-    e.preventDefault();
-    var note = Session.get('note');
-    console.log('deleting', note);
-    if (note) {
-      Session.set('note', null);
-      Notes.remove({ _id: note });
-      Messages.insert({content: 'Note deleted.'});
-      
-    }
-  },
-  
-  'click #archive': function (e) {
-    e.preventDefault();
-    var note = Session.get('note');
-    if (note) {
-      Session.set('note', null);
-      Meteor.call('archive', note);
-      Messages.insert({content: 'Note archived.'});
-    }
-  },
-  
-  'click #menu': function (e) {
-    e.preventDefault();
-    e.stopPropagation();
-    console.log('menuclick')
-    $('#notes-wrapper').toggleClass('slide');
-    // return false;
-  },
-  
-  'click #notes-list': function (e) {
-    Session.set('archive', false);
-    $('#notes-wrapper').removeClass('slide');
-  },
-  
-  'click #archive-list': function (e) {
-    Session.set('archive', true);
-    $('#notes-wrapper').removeClass('slide');
-  },
-  
-  'click #share': function (e) {
-    e.preventDefault();
-    var email = 'coreystout@gmail.com';
-    Meteor.call('share', currentNote(), email);
-  },
-  
-  // 'keyup textarea': function (e) {
-  //   $textarea = $(e.target);
-  //   $textarea.height($textarea[0].scrollHeight);
-  // }
-  
-  'click #sign-out': function (e) {
-    e.preventDefault();
-    Meteor.logout(function () {
-      Router.go('/');
-      Messages.insert({ content: 'Signed out successfully.' });
-    });
-  },
-  
-  'click .fa-check-square, click .fa-square-o': function (e) {
+
+  'click .task .fa-check-square, click .task .fa-square-o': function (e) {
     e.preventDefault();
     
     var task = {
@@ -299,12 +209,6 @@ Template.notes.helpers({
   showNew: function () {
     var newNote = Session.get('newNote');
     return newNote ? 'show' : 'hide';
-  },
-  
-  notePresent: function () {
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    return (note || newNote) ? 'show' : 'hide';
   },
   
   notes: function () {
@@ -373,7 +277,7 @@ Template.note_item.rendered = function () {
   
   var self = this;
   
-  $(this.firstNode).closest('.note-animate').removeClass('animate');
+  // $(this.firstNode).closest('.note-animate').removeClass('animate');
   self.$('.tasks').sortable({
     axis: 'y',
     handle: '.fa-bars',
@@ -419,6 +323,7 @@ Template.note_item.helpers({
     if (context) {
       self = context;
     }
+    // User currentNote() here
     var note = Session.get('note');
     var newNote = Session.get('newNote');
     return ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id)));
@@ -429,6 +334,7 @@ Template.note_item.helpers({
     if (context) {
       self = context;
     }
+    // User currentNote() here
     var note = Session.get('note');
     var newNote = Session.get('newNote');
     if ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id))) {
@@ -437,14 +343,14 @@ Template.note_item.helpers({
   },
   
   showTitle: function () {
-    return this.title || currentNote() === this._id;
+    return this.title || currentNote() === this._id || currentNote() === 'note' || currentNote() === 'list';
   },
   
-  note: function () {
-    if (!! Session.get('note')) {
-      return Session.get('note');
-    }
-  },
+  // note: function () {
+  //   if (!! Session.get('note')) {
+  //     return Session.get('note');
+  //   }
+  // },
   
   kindMatches: function (kind) {
     var note = Session.get('note');
@@ -481,15 +387,3 @@ Template.note_item.helpers({
   }
 });
 
-Template.message.rendered = function() {
-	  var message = this.data;
-	  Meteor.setTimeout(function () {
-    Messages.remove(message._id);
-  }, 3000);
-};
-
-Template.messages.helpers({
-  messages: function () {
-    return Messages.find();
-  }
-});

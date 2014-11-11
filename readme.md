@@ -4,8 +4,10 @@ note needs to not get pushed down when new note is added from other user
 
 account
   sign in only with google?
+  change password
+  change email settings?
 
-sidebar background color
+sidebar background color and icons
 sidebar X
 dropdown
 message undo

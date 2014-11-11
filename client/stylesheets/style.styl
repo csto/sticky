@@ -66,7 +66,7 @@ input:focus
   &.active
     overflow:hidden
     
-#notes-wrapper
+#wrapper
   position:absolute
   top:0px
   left:0px
@@ -307,9 +307,15 @@ sidebar
           
 .note-animate
   opacity:1
-  transition: 1s
+  transition: 0.3s
+  transform: translate3d(0px, 0px, 0px) scale(1, 1)
   &.animate
     opacity:0
+    transform: translate3d(500px, 100px, 0px) scale(1, 0.5)
+
+for num in (0..20)
+  .note-animate:nth-child({num})
+    transition-delay: 0.05s * num
           
 #messages
   position:absolute
@@ -328,7 +334,9 @@ sidebar
     animation: fadeOut 2700ms ease-in 0s 1 forwards
     -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards
     -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards
-    
+
+
+
 @-webkit-keyframes fadeOut {
   0% {opacity: 0;}
   10% {opacity: 1;}
