@@ -10,6 +10,7 @@ body
   bottom:0px
   overflow:hidden
   font-size:16px
+  font-family:'merriweather'
   
 input:focus
   outline:0
@@ -161,6 +162,13 @@ header
         border:none
         border-radius:0px
         outline:none
+        box-shadow:none
+        font-size:18px
+        padding:18px 12px
+        margin-top:10px
+        color:white
+        &:focus
+          border-bottom:2px solid #473A53
       
 sidebar
   position:absolute
@@ -174,18 +182,20 @@ sidebar
   margin:15px 15px 15px 15px
   box-shadow:none
   border:0
+  
+#dropdown-toggle
+  line-height:50px
+  padding:0px 20px
 
-#dropdown-menu
-  transform: scale(0.5, 0)
+.dropdown-menu
+  display:block
+  transform: scale(0.5, 0) translate(40px, -40px)
   opacity:0
-  background:white
-  list-style:none
-  position:absolute
-  right:0px
+  left:-150px
   &.active
     transition: 0.2s ease-out
     transform-origin: right 0px
-    transform: scale(1, 1)
+    transform: scale(1, 1) translate(0px, 0px)
     opacity:1
 
 .new.show
@@ -315,3 +325,24 @@ sidebar
     background:#383838
     border-radius:30px
     color:white
+    animation: fadeOut 2700ms ease-in 0s 1 forwards
+    -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards
+    -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards
+    
+@-webkit-keyframes fadeOut {
+  0% {opacity: 0;}
+  10% {opacity: 1;}
+  90% {opacity: 1;}
+  100% {opacity: 0;}
+}
+
+@keyframes fadeOut {
+  0% {opacity: 0;}
+  10% {opacity: 1;}
+  90% {opacity: 1;}
+  100% {opacity: 0;}
+}
+    
+    
+    
+    

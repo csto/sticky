@@ -51,16 +51,27 @@
       </div>
       <div class='nav-link nav-right'>
         <a id='dropdown-toggle' class='no-select'>
-          <i class='fa fa-sort-desc'></i>
+          <i class='fa fa-ellipsis-v no-select'></i>
         </a>
-        <ul id='dropdown-menu'>
-          <li id='share'>Share</li>
+        <ul class='dropdown-menu'>
+          <li id='share'>
+            <a>Share</a>
+          </li>
           {{#if archive}}
-            <li id='archive'>Unarchive</li>
+            <li id='archive'>
+              <a>Unarchive</a>
+            </li>
           {{else}}
-            <li id='archive'>Archive</li>  
+            <li id='archive'>
+              <a>Archive</a>
+            </li>  
           {{/if}}
-          <li id='delete'>Delete</li>
+          <li id='delete'>
+            <a>Delete</a>
+          </li>
+          <li id='delete-completed'>
+            <a>Remove Completed</a>
+          </li>
         </ul>
       </div>
     </header>
@@ -102,7 +113,7 @@
   
   <sidebar>
     <ul class='list-group'>
-      <li class='list-group-item'><a id='account'>Account</a></li>
+      <li class='list-group-item'><a id='account' href="{{pathFor 'account'}}">Account</a></li>
       <li class='list-group-item'><a id='notes-list'>Notes</a></li>
       <li class='list-group-item'><a id='archive-list'>Archive</a></li>
       <li class='list-group-item'><a id='terms'>Terms</a></li>

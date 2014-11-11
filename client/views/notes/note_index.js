@@ -63,15 +63,12 @@ Template.notes.events({
       e.preventDefault();
       var $currentTarget = $(e.currentTarget);
       Session.set('note', this._id);
-      $(e.target).blur();
-      var pageTop = -$currentTarget.offset().top + 60
-      $currentTarget.height($currentTarget.height());
-      
+      var pageTop = -$currentTarget.offset().top + 60;
+      $currentTarget.height($('#content').height());
       $currentTarget.animate(
         {
           top: pageTop,
           left: -15,
-          height: ($('#content').height()),
           width: $currentTarget.width() + 67
         }, 200, 'ease-out', function () {
           $('textarea').trigger('autosize.resizeIncludeStyle');
@@ -440,7 +437,7 @@ Template.note_item.helpers({
   },
   
   showTitle: function () {
-    return this.title || currentNote();
+    return this.title || currentNote() === this._id;
   },
   
   note: function () {

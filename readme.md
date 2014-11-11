@@ -1,8 +1,10 @@
 TODO
 
-note needs to expand and not push bottom note down
 note needs to not get pushed down when new note is added from other user
-message fade in/out
+
+account
+  sign in only with google?
+
 sidebar background color
 sidebar X
 dropdown
@@ -14,32 +16,22 @@ loading
 animate - slide sideways
 sortable notes
 notifications??
+  userNote where accepted = false
+  create notification when you share if user exists
+  left of search, notificaitons button
+  dropdown with notifications
+    [Image] Corey shared Title with you [√][x]
 shared user list at bottom of note
+delete completed tasks
+close sidebar on outside click
+email
+  - share
+    if user exists
+      send invite
+    else
+      send
+  - task added
+    wait 10 minutes and add task?
+resizing width
 
-
-resizing
-finish notifications
-sortable notes
-loading
-design
-
-images
-mobile
-  groundDB
-  push notifications
-  publish mobile
 kadira
-
-
-Sharing
-note shared
-  if user exists
-    creates userNote with accepted false
-  else
-    prompts for email
-    sends token
-    after registration, userNote is created
-notifications
-  userNotes where accepted is false
-  accept and decline buttons
-  decline deletes userNote
