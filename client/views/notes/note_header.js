@@ -42,8 +42,18 @@ Template.note_header.events({
 
   'click #share': function (e) {
     e.preventDefault();
-    var email = 'coreystout@gmail.com';
-    Meteor.call('share', currentNote(), email);
+
+    $('.modal').modal('show');  
+    // close modal and display message
+  },
+
+  'click #send-share': function (e) {
+    var email = $('#share-email').val();
+    // validate email in call, error if invalid email or share token exists
+
+    Meteor.call('sendShare', currentNote(), email);
+    $('#share-email').val('');
+    $('.modal').modal('hide');
   }
 });
 

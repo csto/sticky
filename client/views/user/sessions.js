@@ -53,8 +53,6 @@ Template.register.events({
     if (password.length > 48) {
       return Messages.insert({ content: 'Password must contain less than 48 characters.' });
     }
-    
-    console.log(email, password, !! password);
 
     Accounts.createUser({ email: email, password : password }, function(error){
       console.log(error)
@@ -65,8 +63,6 @@ Template.register.events({
         Router.go('/notes');
       }
     });
-    
-    console.log('wtf');
 
     return false;
   }

@@ -1,0 +1,20 @@
+<template name='modal'>
+  <div class="modal fade">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Modal title</h4>
+        </div>
+        <div class="modal-body">
+          <label for='email'>Email</label>
+          <input id='share-email' type='email' placeholder='Email' class='form-control' />
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <button type="button" id='send-share' class="btn btn-primary"><i class='fa fa-send'></i> Send</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>

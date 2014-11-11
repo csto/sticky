@@ -8,13 +8,12 @@ account
   change email settings?
 
 sidebar background color and icons
-sidebar X
 dropdown
 message undo
 slide for menu
 slide to archive
 share - modal for email
-loading
+loading style
 animate - slide sideways
 sortable notes
 notifications??
