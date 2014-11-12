@@ -213,17 +213,21 @@ Template.notes.helpers({
   
   notes: function () {
     var search = Session.get('search');
+    
+    var noteIds = _.pluck(Tasks.find({ content: new RegExp(search, 'i') }, {  _id: 1 } ).fetch(), 'noteId');
+    
     var notes = Notes.find(
       { 
         archived: Session.get('archive'),
         $or: [
           { title: new RegExp(search, 'i') }, 
           { content: new RegExp(search, 'i') }, 
-          { tasks: { $elemMatch: { content: new RegExp(search, 'i') } } }
+          { _id: { $in: noteIds } }
         ]
       }, 
       { sort: { position: 1 } }
     );
+    
     Session.set('notesCount', notes.count());
     return notes;
   },

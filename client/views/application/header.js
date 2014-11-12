@@ -3,6 +3,7 @@ Template.header.events({
     e.preventDefault();
     e.stopPropagation();
     $('#wrapper').toggleClass('slide');
+    $('#sidebar-cover').show();
   },
 
   'keyup #search': function (e) {

@@ -8,11 +8,10 @@ account
   change email settings?
 
 sidebar background color and icons
-dropdown
+dropdown close on click elsewhere
 message undo
 slide for menu
 slide to archive
-share - modal for email
 loading style
 animate - slide sideways
 sortable notes
@@ -24,7 +23,7 @@ notifications??
     [Image] Corey shared Title with you [√][x]
 shared user list at bottom of note
 delete completed tasks
-close sidebar on outside click
+
 email
   - share
     if user exists
@@ -36,3 +35,5 @@ email
 resizing width
 
 kadira
+
+Take (name)

@@ -15,6 +15,9 @@ body
 input:focus
   outline:0
   
+a
+  cursor:pointer
+  
 #simple-layout
   background:url('pw_maze_white.png')
   min-height:100%
@@ -72,6 +75,7 @@ input:focus
   left:0px
   right:0px
   bottom:0px
+  transition: 0.1s ease-out
   -webkit-transform: translate3d(0px, 0px, 0px)
   -khtml-transform: translate3d(0px, 0px, 0px)
   -moz-user-transform: translate3d(0px, 0px, 0px)
@@ -79,7 +83,7 @@ input:focus
   transform: translate3d(0px, 0px, 0px)
   z-index:1
   &.slide
-    transition: 0.3s ease-out
+    transition: 0.15s ease-out
     -webkit-transform: translate3d(300px, 0px, 0px)
     -khtml-transform: translate3d(300px, 0px, 0px)
     -moz-user-transform: translate3d(300px, 0px, 0px)
@@ -175,17 +179,43 @@ sidebar
   left:0px
   top:0px
   bottom:0px
-  width:100%
+  width:80%
   max-width:300px
+  background:darken(dark, 15%)
+  box-shadow:inset -10px 0px 10px -10px black
+  .list-group
+    .list-group-item
+      border-radius:0px
+      padding:0px
+      border:0px
+      background:none
+      a
+        display:block
+        line-height:60px
+        padding:0px 15px
+        &:hover
+          background:gray
+        .fa
+          margin-right:10px
+  
+#sidebar-cover
+  display:none
+  position:absolute
+  top:0px
+  left:300px
+  right:0px
+  bottom:0px
+  z-index:3
+  cursor:pointer
   
 #actions
   margin:15px 15px 15px 15px
   box-shadow:none
   border:0
   
-#dropdown-toggle
+.dropdown-toggle
   line-height:50px
-  padding:0px 20px
+  padding:0px 15px
 
 .dropdown-menu
   display:block
@@ -200,7 +230,6 @@ sidebar
 
 .new.show
   margin:0px 15px
-
 
 #notes, #new-note
   margin:0px 15px
@@ -307,7 +336,7 @@ sidebar
           
 .note-animate
   opacity:1
-  transition: 0.3s
+  transition: 0.3s ease-out
   transform: translate3d(0px, 0px, 0px) scale(1, 1)
   &.animate
     opacity:0
