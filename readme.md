@@ -15,7 +15,14 @@ slide for menu
 loading style
 sortable notes
 
+Notification
+  userId
+  noteId
+  sharedBy
+
 notifications??
+  separate notification from userNote
+  add sharedBy id to user notes
   userNote where accepted = false
   create notification when you share if user exists
   left of search, notificaitons button
