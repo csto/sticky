@@ -163,42 +163,10 @@ Template.notes.events({
   
 });
 
-Template.note_item.events({
-  'change .task input, blur .task input': function (e) {
-    e.preventDefault();
-
-    var task = {
-      content: $(e.target).closest('form').find('[name=content]').val()
-    }
-
-    Meteor.call('updateTask', this._id, task);
-  },
-  
-  'focus .task input': function (e) {
-    e.preventDefault();
-    $('.delete').hide();
-    $(e.target).parent().find('.delete').show();
-  },
-  
-  'click .task .delete': function (e) {
-    Tasks.remove(this._id);
-  },
-
-  'click .task .fa-check-square, click .task .fa-square-o': function (e) {
-    e.preventDefault();
-    
-    var task = {
-      completed: !this.completed
-    }
-
-    Meteor.call('updateTask', this._id, task);
-  }
-});
-
 Template.notes.created = function () {
   Session.set('note', null);
   Session.set('newNote', null);
-  Session.set('archive', false);
+  Session.setDefault('archive', false);
 };
 
 currentNote = function () {
@@ -214,21 +182,22 @@ Template.notes.helpers({
   notes: function () {
     var search = Session.get('search');
     
-    var noteIds = _.pluck(Tasks.find({ content: new RegExp(search, 'i') }, {  _id: 1 } ).fetch(), 'noteId');
+    var noteIds = _.pluck(UserNotes.find({ accepted: true }).fetch(), 'noteId');
+    var matchedIds = _.pluck(Tasks.find({ content: new RegExp(search, 'i') }).fetch(), 'noteId');
     
     var notes = Notes.find(
       { 
+        _id: { $in: noteIds },
         archived: Session.get('archive'),
         $or: [
           { title: new RegExp(search, 'i') }, 
           { content: new RegExp(search, 'i') }, 
-          { _id: { $in: noteIds } }
+          { _id: { $in: matchedIds } }
         ]
       }, 
       { sort: { position: 1 } }
     );
     
-    Session.set('notesCount', notes.count());
     return notes;
   },
   
@@ -239,10 +208,6 @@ Template.notes.helpers({
   
   search: function () {
     return Session.get('search');
-  },
-  
-  archive: function () {
-    return Session.get('archive');
   },
   
   newNote: function () {
@@ -262,6 +227,10 @@ Template.notes.helpers({
     if (note || newNote) {
       return 'active';
     }
+  },
+
+  archive: function () {
+    return Session.get('archive');
   }
 });
 
@@ -274,120 +243,3 @@ Meteor.active = function () {
     return false;
   }
 }
-
-Template.note_item.rendered = function () {
-  
-  $('textarea').autosize();
-  
-  var self = this;
-  
-  // $(this.firstNode).closest('.note-animate').removeClass('animate');
-  self.$('.tasks').sortable({
-    axis: 'y',
-    handle: '.fa-bars',
-    placeholder: 'task-placeholder',
-    stop: function(e, ui) {
-      // get the dragged html element and the one before
-      //   and after it
-      el = ui.item.get(0)
-      before = ui.item.prev().get(0)
-      after = ui.item.next().get(0)
-
-      // Here is the part that blew my mind!
-      //  Blaze.getData takes as a parameter an html element
-      //    and will return the data context that was bound when
-      //    that html element was rendered!
-      if(!before) {
-        //if it was dragged into the first position grab the
-        // next element's data context and subtract one from the rank
-        position = Blaze.getData(after).position + 1
-      } else if(!after) {
-        //if it was dragged into the last position grab the
-        //  previous element's data context and add one to the rank
-        position = Blaze.getData(before).position - 1
-      }
-      else
-        //else take the average of the two ranks of the previous
-        // and next elements
-        position = (Blaze.getData(after).position +
-                   Blaze.getData(before).position)/2
-
-      //update the dragged Item's rank
-      var task = {
-        position: position
-      }
-      Meteor.call('updateTask', Blaze.getData(el)._id, task);
-    }
-  });
-}
-
-Template.note_item.helpers({
-  active: function (context) {
-    var self = this;
-    if (context) {
-      self = context;
-    }
-    // User currentNote() here
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    return ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id)));
-  },
-  
-  activeClass: function (context) {
-    var self = this;
-    if (context) {
-      self = context;
-    }
-    // User currentNote() here
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    if ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id))) {
-      return 'active';
-    }
-  },
-  
-  showTitle: function () {
-    return this.title || currentNote() === this._id || currentNote() === 'note' || currentNote() === 'list';
-  },
-  
-  // note: function () {
-  //   if (!! Session.get('note')) {
-  //     return Session.get('note');
-  //   }
-  // },
-  
-  kindMatches: function (kind) {
-    var note = Session.get('note');
-    if (note === 'new') {
-      return Session.get('kind') === kind;
-    }else{
-      return this.kind === kind;
-    }
-  },
-  
-  tasks: function () {
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    var limit;
-    if ((note && this._id === note) || ((newNote && !this._id) || (newNote === this._id))) {
-      limit = 0;
-    }else{
-      limit = 3;
-    }
-    
-    return Tasks.find({ noteId: this._id }, { sort: { position: -1, createdAt: 1 }, limit: limit });
-  },
-  
-  moreTasks: function () {
-    return Tasks.find({ noteId: this._id }).count() > 3;
-  },
-  
-  timeInWords: function (time) {
-    return moment(time).format('MMM Do');
-  },
-  
-  completedClass: function () {
-    return this.completed ? 'completed' : ''
-  }
-});
-

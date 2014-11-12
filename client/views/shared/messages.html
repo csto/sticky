@@ -9,5 +9,8 @@
 <template name='message'>
   <div class='message'>
     {{content}}
+    {{#if undo}}
+      | <a class='undo'>Undo</a>
+    {{/if}}
   </div>
 </template>

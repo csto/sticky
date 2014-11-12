@@ -1,12 +1,14 @@
 <template name='notifications'>
-  <div id='notifications'>
+  <ul id='notifications' class='list-group'>
     {{#each notifications}}
       {{> notification}}
     {{/each}}
-  </div>
+  </ul>
 </template>
 
 <template name='notification'>
-  <a class='accept btn btn-primary'>Accept</a>
-  <a class='decline btn btn-primary'>Decline</a>
+  <li class='list-group-item'>
+    <a class='accept'><i class='fa fa-check'></i></a>
+    <a class='decline'><i class='fa fa-remove'></i></a>
+  </li>
 </template>

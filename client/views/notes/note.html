@@ -1,0 +1,53 @@
+<template name='note'>
+  <div class='note well {{activeClass}}' data-id='{{_id}}'>
+    <div class='cover {{activeClass}}'></div>
+    <form>
+      <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
+      {{#if showTitle}}
+        <div class='form-group title'>
+          <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='form-control' />
+        </div>
+      {{/if}}
+      {{#if kindMatches 'note'}}
+        <textarea name='content' placeholder='Note' rows='1' tabindex='-1' class='content form-control'>{{content}}</textarea>
+      {{/if}}
+    </form>
+    {{#if kindMatches 'list'}}
+      <div class='tasks'>
+        {{#each tasks}}
+          <div class='task {{activeClass ..}}' data-id={{_id}}>
+            <form>
+              <i class='fa fa-bars {{activeClass ..}}'></i>
+              {{#if completed}}
+                <i class='fa fa-check-square'></i>
+              {{else}}
+                <i class='fa fa-square-o'></i>
+              {{/if}}
+              <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{completedClass}}'>
+              {{#if active ..}}
+                <span class='delete'>
+                  X
+                </span>
+              {{/if}}
+            </form>
+          </div>
+        {{/each}}
+      </div>
+      {{#if active}}
+        <div class='form-group create'>
+          <i class='fa fa-plus'></i>
+          <form class='create-task'>
+            <input type='text' name='create' placeholder='Add Task' class='form-control' />
+          </form>
+        </div>
+      {{else}}
+        {{#if moreTasks}}
+          <div>...</div>
+        {{/if}}
+      {{/if}}
+    {{/if}}
+    {{#if active}}
+      <span class='small pull-right'>Edited {{timeInWords updatedAt}}</span>
+    {{/if}}
+  </div>
+</template>

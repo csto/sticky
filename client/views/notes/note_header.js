@@ -1,3 +1,12 @@
+closeNote = function () {
+  Session.set('note', null);
+  Session.set('newNote', null);
+  $('.note').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
+  Meteor.setTimeout(function () {
+    $('textarea').trigger('autosize.resizeIncludeStyle');
+  }, 0); 
+}
+
 Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
@@ -6,12 +15,7 @@ Template.note_header.events({
     if (newNote && (newNote === 'note' || newNote === 'list')) {
       Messages.insert({content: 'Empty note discarded.'});
     }
-    Session.set('note', null);
-    Session.set('newNote', null);
-    $('.note').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
-    Meteor.setTimeout(function () {
-      $('textarea').trigger('autosize.resizeIncludeStyle');
-    }, 0); 
+    closeNote();
   },
 
   'click #delete': function (e) {
@@ -21,7 +25,7 @@ Template.note_header.events({
     if (note) {
       Session.set('note', null);
       Notes.remove({ _id: note });
-      Messages.insert({content: 'Note deleted.'});
+      Messages.insert({content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
     }
   },
   
@@ -29,22 +33,21 @@ Template.note_header.events({
     e.preventDefault();
     var note = Session.get('note');
     if (note) {
-      Session.set('note', null);
-      Meteor.call('archive', note);
-      Messages.insert({content: 'Note archived.'});
-    }
-  },
+      closeNote();
 
-  'click .dropdown-toggle': function (e) {
-    e.preventDefault();
-    $(e.currentTarget).next().toggleClass('active');
+      if (Session.get('archive')) {
+        Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
+      } else {
+        Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
+      }
+      Meteor.call('archive', note);
+    }
   },
 
   'click #share': function (e) {
     e.preventDefault();
 
     $('.modal').modal('show');  
-    // close modal and display message
   },
 
   'click #send-share': function (e) {
@@ -59,8 +62,10 @@ Template.note_header.events({
 
 Template.note_header.helpers({
   notePresent: function () {
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    return (note || newNote) ? 'show' : 'hide';
+    return currentNote() ? 'show' : '';
+  },
+
+  archive: function () {
+    return Session.get('archive');
   }
 });

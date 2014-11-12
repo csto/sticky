@@ -7,14 +7,14 @@ account
   change password
   change email settings?
 
-sidebar background color and icons
-dropdown close on click elsewhere
-message undo
+remove archive method and switch to updateNote
+permissions?
+add more message undos
+  - delete
 slide for menu
-slide to archive
 loading style
-animate - slide sideways
 sortable notes
+
 notifications??
   userNote where accepted = false
   create notification when you share if user exists
@@ -34,6 +34,12 @@ email
     wait 10 minutes and add task?
 resizing width
 
+pick colors, apply design
+
 kadira
 
-Take (name)
+splash screen
+icons
+favicon
+
+Names: Take, Jot, Blot
