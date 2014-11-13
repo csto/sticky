@@ -4,18 +4,20 @@ Template.note.rendered = function () {
   
   $('textarea').autosize();
   
-  self.$('.cover').draggable({
+  self.$('.note').draggable({
     axis: 'x',
+    revert: true,
     drag: function (event, ui) {
       var opacity = (100 - (ui.offset.left / 2)) / 100;
       opacity = opacity > 0.5 ? opacity : 0.5;
       self.$('.note').animate({ left: ui.offset.left, opacity: opacity }, 0);
     },
     stop: function (event, ui) {
+      
       if (ui.offset.left > 100) {
         var note = self.$('.note').data('id');
         Session.set('note', null);
-        
+
         Meteor.call('archive', note, function (error) {
           return false;
         });
@@ -24,7 +26,7 @@ Template.note.rendered = function () {
         } else {
           Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
         }
-        
+
       } else {
         self.$('.note').animate({ left: 0, opacity: 1 }, 200);
       }

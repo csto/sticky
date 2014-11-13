@@ -10,18 +10,21 @@ closeNote = function () {
 Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
+    
     var newNote = Session.get('newNote');
 
     if (newNote && (newNote === 'note' || newNote === 'list')) {
       Messages.insert({content: 'Empty note discarded.'});
     }
+    
     closeNote();
   },
 
   'click #delete': function (e) {
     e.preventDefault();
+    
     var note = Session.get('note');
-    console.log('deleting', note);
+    
     if (note) {
       Session.set('note', null);
       Notes.remove({ _id: note });
@@ -31,7 +34,9 @@ Template.note_header.events({
   
   'click #archive': function (e) {
     e.preventDefault();
+    
     var note = Session.get('note');
+    
     if (note) {
       closeNote();
 
@@ -40,6 +45,7 @@ Template.note_header.events({
       } else {
         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
       }
+      
       Meteor.call('archive', note);
     }
   },

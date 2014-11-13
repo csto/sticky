@@ -1,11 +1,17 @@
-Template.notes.rendered = function () {
-  $(window).resize(function () {
-    $activeNote = $('.note.active');
-    if ($activeNote.length > 0) {
-      $activeNote.height($(window).height() - 98);
-    }
-  });
-}
+Template.notes.created = function () {
+  Session.set('note', null);
+  Session.set('newNote', null);
+  Session.setDefault('archive', false);
+};
+
+// Template.notes.rendered = function () {
+//   $(window).resize(function () {
+//     $activeNote = $('.note.active');
+//     if ($activeNote.length > 0) {
+//       $activeNote.height($(window).height() - 98);
+//     }
+//   });
+// }
 
 Template.notes.events({
   
@@ -35,7 +41,7 @@ Template.notes.events({
     }, 0);
   },
   
-  'click .note:not(.active)': function (e) {
+  'mouseup .note:not(.active)': function (e) {
     if (!Session.get('note') && !Session.get('newNote')) {
       e.preventDefault();
       var $currentTarget = $(e.currentTarget);
@@ -151,27 +157,8 @@ Template.notes.events({
     
   }
   
-  // 'click #notes-list': function (e) {
-  //   Session.set('archive', false);
-  //   $('#notes-wrapper').removeClass('slide');
-  // },
-  
-  // 'click #archive-list': function (e) {
-  //   Session.set('archive', true);
-  //   $('#notes-wrapper').removeClass('slide');
-  // },
-  
 });
 
-Template.notes.created = function () {
-  Session.set('note', null);
-  Session.set('newNote', null);
-  Session.setDefault('archive', false);
-};
-
-currentNote = function () {
-  return Session.get('note') || Session.get('newNote');
-}
 
 Template.notes.helpers({
   showNew: function () {
@@ -197,6 +184,8 @@ Template.notes.helpers({
       }, 
       { sort: { position: 1 } }
     );
+    
+    Session.set('notesCount', notes.count());
     
     return notes;
   },
@@ -234,12 +223,16 @@ Template.notes.helpers({
   }
 });
 
-Meteor.active = function () {
-  var note = Session.get('note');
-  var newNote = Session.get('newNote');
-  if ((!! note && this._id === note) || (newNote && !this._id)) {
-    return true;
-  }else{
-    return false;
-  }
+// Meteor.active = function () {
+//   var note = Session.get('note');
+//   var newNote = Session.get('newNote');
+//   if ((!! note && this._id === note) || (newNote && !this._id)) {
+//     return true;
+//   }else{
+//     return false;
+//   }
+// }
+
+currentNote = function () {
+  return Session.get('note') || Session.get('newNote');
 }
