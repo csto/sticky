@@ -69,13 +69,14 @@ Template.notes.events({
       content: $(e.target).closest('form').find('[name=content]').val(),
     }
     
-    if (!noteAttributes.title && !noteAttributes.content) {
-      console.log('error')
-      return;
-    }
+    // if (!noteAttributes.title && !noteAttributes.content) {
+    //   console.log('error')
+    //   return;
+    // }
     
     var note = Session.get('note');
     var newNote = Session.get('newNote');
+
     
     if (newNote && _.contains(['note', 'list'], newNote)) {
       noteAttributes = _.extend(noteAttributes, { kind: newNote })

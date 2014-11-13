@@ -12,9 +12,9 @@ mrt:smart-publish
 mrt:moment
 frozeman:animation-helper
 email
-aldeed:collection2
 ground:db
 mizzao:bootstrap-3
 stylus
 multiply:iron-router-progress
+aldeed:collection2
 
