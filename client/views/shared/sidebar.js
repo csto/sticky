@@ -1,7 +1,16 @@
+// Template.sidebar.rendered = function () {
+//   $('#sidebar-cover').draggable({
+//     axis: 'x',
+//     drag: function (event, ui) {
+//       $('#wrapper').animate({ left: ui.offset.left, leaveTransforms: true });
+//     }
+//   });
+// }
+
 Template.sidebar.events({
   'click sidebar a': function (e) {
-    $('#wrapper').removeClass('slide');
     $('#sidebar-cover').hide();
+    $('#wrapper').removeClass('slide');
   },
   
   'click #sign-out': function (e) {

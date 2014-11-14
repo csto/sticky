@@ -4,34 +4,34 @@ Template.note.rendered = function () {
   
   $('textarea').autosize();
   
-  self.$('.note').draggable({
-    axis: 'x',
-    revert: true,
-    drag: function (event, ui) {
-      var opacity = (100 - (ui.offset.left / 2)) / 100;
-      opacity = opacity > 0.5 ? opacity : 0.5;
-      self.$('.note').animate({ left: ui.offset.left, opacity: opacity }, 0);
-    },
-    stop: function (event, ui) {
-      
-      if (ui.offset.left > 100) {
-        var note = self.$('.note').data('id');
-        Session.set('note', null);
-
-        Meteor.call('archive', note, function (error) {
-          return false;
-        });
-        if (Session.get('archive')) {
-          Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
-        } else {
-          Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
-        }
-
-      } else {
-        self.$('.note').animate({ left: 0, opacity: 1 }, 200);
-      }
-    }
-  });
+  // self.$('.note').draggable({
+  //   axis: 'x',
+  //   revert: true,
+  //   drag: function (event, ui) {
+  //     var opacity = (100 - (ui.offset.left / 2)) / 100;
+  //     opacity = opacity > 0.5 ? opacity : 0.5;
+  //     self.$('.note').animate({ left: ui.offset.left, opacity: opacity }, 0);
+  //   },
+  //   stop: function (event, ui) {
+  //
+  //     if (ui.offset.left > 100) {
+  //       var note = self.$('.note').data('id');
+  //       Session.set('note', null);
+  //
+  //       Meteor.call('archive', note, function (error) {
+  //         return false;
+  //       });
+  //       if (Session.get('archive')) {
+  //         Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
+  //       } else {
+  //         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
+  //       }
+  //
+  //     } else {
+  //       self.$('.note').animate({ left: 0, opacity: 1 }, 200);
+  //     }
+  //   }
+  // });
 
   self.$('.tasks').sortable({
     axis: 'y',
@@ -74,6 +74,26 @@ Template.note.rendered = function () {
 
 
 Template.note.events({
+  'click .cover': function (e) {
+    if (!Session.get('note') && !Session.get('newNote')) {
+      e.preventDefault();
+      var $note = $(e.currentTarget).closest('.note');
+      Session.set('note', this._id);
+      var pageTop = -$note.offset().top + 60;
+      $note.height($('#content').height());
+      $note.animate(
+        {
+          top: pageTop,
+          left: -15,
+          width: $(window).width()
+        }, 200, 'ease-out', function () {
+          $('textarea').trigger('autosize.resizeIncludeStyle');
+          $note.addClass('max');
+        }
+      );
+    }
+  },
+  
   'change .task input, blur .task input': function (e) {
     e.preventDefault();
 

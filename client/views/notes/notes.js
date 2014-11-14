@@ -41,26 +41,6 @@ Template.notes.events({
     }, 0);
   },
   
-  'mouseup .note:not(.active)': function (e) {
-    if (!Session.get('note') && !Session.get('newNote')) {
-      e.preventDefault();
-      var $currentTarget = $(e.currentTarget);
-      Session.set('note', this._id);
-      var pageTop = -$currentTarget.offset().top + 60;
-      $currentTarget.height($('#content').height());
-      $currentTarget.animate(
-        {
-          top: pageTop,
-          left: -15,
-          width: $(window).width()
-        }, 200, 'ease-out', function () {
-          $('textarea').trigger('autosize.resizeIncludeStyle');
-        }
-      );
-      
-    }
-  },
-  
   'blur .note input:not(.task-input), blur .note textarea': function (e) {
     e.preventDefault();
     

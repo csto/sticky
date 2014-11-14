@@ -2,8 +2,8 @@ Template.header.events({
   'click #menu': function (e) {
     e.preventDefault();
     e.stopPropagation();
-    $('#wrapper').toggleClass('slide');
     $('#sidebar-cover').show();
+    $('#wrapper').toggleClass('slide');
   },
 
   'keyup #search': function (e) {
