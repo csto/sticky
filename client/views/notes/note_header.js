@@ -41,7 +41,7 @@ Template.note_header.events({
   'click #archive': function (e) {
     e.preventDefault();
     
-    var note = Session.get('note');
+    var note = Notes.findOne(Session.get('note'));
     
     if (note) {
       $('.dropdown-menu').removeClass('active');
@@ -53,7 +53,7 @@ Template.note_header.events({
         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
       }
       
-      Meteor.call('archive', note);
+      Meteor.call('updateNote', note._id, { archived: !note.archived });
     }
   },
 
@@ -69,8 +69,14 @@ Template.note_header.events({
     // validate email in call, error if invalid email or share token exists
 
     Meteor.call('sendShare', currentNote(), email);
+    closeNote();
     $('#share-email').val('');
     $('.modal').modal('hide');
+  },
+
+  'click #delete-completed': function (e) {
+    var noteId = Session.get('note');
+    Tasks.remove({ noteId: noteId });
   }
 });
 

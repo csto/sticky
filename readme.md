@@ -9,7 +9,6 @@ account
     email
     name
 
-remove archive method and switch to updateNote
 permissions?
 add more message undos
   - delete
@@ -18,13 +17,12 @@ loading style
 sortable notes
 add data to routes and quit using helpers
 
-Notification
+UserNote
   userId
   noteId
   sharedBy
 
 notifications??
-  separate notification from userNote
   add sharedBy id to user notes
   userNote where accepted = false
   create notification when you share if user exists
@@ -33,6 +31,7 @@ notifications??
     [Image] Corey shared Title with you [√][x]
 shared user list at bottom of note
 delete completed tasks
+transition page loading (slide) js animate in router
 
 email
   - share
