@@ -9,7 +9,6 @@ Template.signIn.events({
 
     // If validation passes, supply the appropriate fields to the
     // Meteor.loginWithPassword() function.
-    console.log(email, password);
     Meteor.loginWithPassword(email, password, function(error){
       if (error) {
         console.log(error);
@@ -20,7 +19,7 @@ Template.signIn.events({
       }else{
         console.log('success')
         Messages.insert({ content: 'Signed in successfully.' });
-        Router.go('/notes');
+        Router.go('/notes', {}, { replaceState: true });
       }
     });
     return false; 
@@ -60,25 +59,10 @@ Template.register.events({
         Messages.insert({ content: error.reason });
       } else {
         Messages.insert({ content: 'Welcome!' });
-        Router.go('/notes');
+        Router.go('/notes', {}, { replaceState: true });
       }
     });
 
     return false;
-  }
-});
-
-Template.sessionLinks.helpers({
-  show: function (template) {
-    path = Router.current().route._path;
-    if (template === 'sign-in' && path !== '/sign-in' && path !== 'landing') {
-      return true;
-    }
-    if (template === 'register' && path !== '/register') {
-      return true;
-    }
-    if (template === 'forgot-password' && path !== '/forgot-password') {
-      return true;
-    }
   }
 });

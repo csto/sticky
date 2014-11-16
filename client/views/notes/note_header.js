@@ -19,6 +19,11 @@ Template.note_header.events({
     
     closeNote();
   },
+  
+  'click .dropdown-toggle': function (e) {
+    $(e.currentTarget).next().toggleClass('active');
+    return false;
+  },
 
   'click #delete': function (e) {
     e.preventDefault();
@@ -26,6 +31,7 @@ Template.note_header.events({
     var note = Session.get('note');
     
     if (note) {
+      $('.dropdown-menu').removeClass('active');
       Session.set('note', null);
       Notes.remove({ _id: note });
       Messages.insert({content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
@@ -38,6 +44,7 @@ Template.note_header.events({
     var note = Session.get('note');
     
     if (note) {
+      $('.dropdown-menu').removeClass('active');
       closeNote();
 
       if (Session.get('archive')) {
@@ -52,7 +59,8 @@ Template.note_header.events({
 
   'click #share': function (e) {
     e.preventDefault();
-
+    
+    $('.dropdown-menu').removeClass('active');
     $('.modal').modal('show');  
   },
 

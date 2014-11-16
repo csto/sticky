@@ -92,6 +92,12 @@ a
 a, a:visited, a:hover
   text-decoration:none
   
+ul, ul.dropdown-menu
+  li
+    a
+      line-height:60px
+      font-size:18px
+  
 .noselect
   -webkit-touch-callout: none
   -webkit-user-select: none
@@ -99,7 +105,7 @@ a, a:visited, a:hover
   -moz-user-select: none
   -ms-user-select: none
   user-select: none
-  
+
 header
   position:absolute
   top:-60px
@@ -110,25 +116,29 @@ header
   background:dark
   border-radius:0
   border:0
-  z-index:20
+  font-family:'open-sans'
+  font-weight:700
+  &#main-header
+    overflow:hidden
   &#note-header
     transition:0.2s ease-out
     transform: translate3d(0px, -60px, 0px)
     background:gray
+    z-index:20
     &.show
       transform: translate3d(0px, 0px, 0px)
   .nav-link, .search-link
     line-height:60px
-    padding:0px 15px
+    padding:0px 20px
     position:absolute
+    cursor:pointer
     &.nav-left
       left:0px
     &.nav-right
       right:0px
     > a
-      cursor:pointer
       position:relative
-      top:3px
+      top:1px
       font-size:28px
       color:white
       text-shadow:none
@@ -136,9 +146,12 @@ header
         font-size:28px
         color:white
         text-shadow:none
+        &.fa-ellipsis-v
+          padding:0px 5px
   #logo
     color:white
     font-size:24px
+    text-transform:uppercase
   #search-wrapper
     position:relative
     height:60px
@@ -146,13 +159,12 @@ header
     transition:0.3s ease-out
     transform: translate3d(0px, -60px, 0px)
     &.search
-      overflow:hidden
       transform: translate3d(0px, 0px, 0px)
     .nav-link, .search-link
       top:60px
       &.centered
-        right:56px
-        left:56px
+        right:110px
+        left:110px
         text-align:center
         > a
           top:0px
@@ -216,19 +228,26 @@ sidebar
   cursor:pointer
   
 #actions
-  margin:15px 15px 15px 15px
+  margin:15px 15px 20px 15px
   box-shadow:none
   border:0
-  
-.dropdown-toggle
-  line-height:50px
-  padding:0px 15px
+  font-family:'open-sans'
+  font-size:20px
+  .col-xs-6
+    text-align:center
+    &:last-child
+      a
+        border-left:1px solid #AAAAAA
+    a
+      display:block
+      i
+        font-size:24px
 
 .dropdown-menu
   display:block
   transform: scale(0.5, 0) translate(40px, -40px)
   opacity:0
-  left:-150px
+  left:-170px
   &.active
     transition: 0.2s ease-out
     transform-origin: right 0px

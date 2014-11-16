@@ -1,5 +1,5 @@
 @font-face {
-    font-family: 'open_sans';
+    font-family: 'open-sans';
     src: url('fonts/opensans-regular.eot');
     src: url('fonts/opensans-regular.eot?#iefix') format('embedded-opentype'),
          url('fonts/opensans-regular.woff2') format('woff2'),
@@ -12,7 +12,7 @@
 }
 
 @font-face {
-    font-family: 'open_sans';
+    font-family: 'open-sans';
     src: url('fonts/opensans-light.eot');
     src: url('fonts/opensans-light.eot?#iefix') format('embedded-opentype'),
          url('fonts/opensans-light.woff2') format('woff2'),
@@ -25,7 +25,7 @@
 }
 
 @font-face {
-    font-family: 'open_sans';
+    font-family: 'open-sans';
     src: url('fonts/opensans-bold.eot');
     src: url('fonts/opensans-bold.eot?#iefix') format('embedded-opentype'),
          url('fonts/opensans-bold.woff2') format('woff2'),

@@ -3,16 +3,20 @@
   {{> note_header}}
 
   <div id='content' class='{{activeClass}}'>
-    
     {{#unless archive}}
-      <div id='actions' class='well'>
-        <a class='build-note' data-kind='note'>
-          New
-          <i class='fa fa-file-text-o'></i>
-        </a>
-        <a class='build-note' data-kind='list'>
-          <i class='fa fa-list-ul'></i>
-        </a>
+      <div id='actions' class='well clearfix'>
+        <div class='col-xs-6'>
+          <a class='build-note' data-kind='note'>
+            <i class='fa fa-file-text-o'></i>
+            New Note
+          </a>
+        </div>
+        <div class='col-xs-6'>
+          <a class='build-note' data-kind='list'>
+            <i class='fa fa-list-ul'></i>
+            New List
+          </a>
+        </div>
       </div>
     {{/unless}}
 

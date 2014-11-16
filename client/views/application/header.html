@@ -1,5 +1,5 @@
 <template name='header'>
-  <header>
+  <header id='main-header'>
     <div id='search-wrapper'>
       <div class='search-link search-left'>
         <a>
@@ -13,7 +13,7 @@
       
       <div id='close-search' class='search-link search-right'>
         <a>
-          <i class='fa fa-times'></i>
+          X
         </a>
       </div>
 
@@ -34,16 +34,6 @@
             {{/if}}
           </div>
         </a>
-      </div>
-
-      <div class='nav-link nav-right' style='right:50px;'>
-        <a class='dropdown-toggle no-select'>
-          <i class='fa fa-ellipsis-v no-select'></i>
-        </a>
-
-        <div class='dropdown-menu'>
-          {{> notifications}}
-        </div>
       </div>
     
       <div id='search-button' class='nav-link nav-right'>

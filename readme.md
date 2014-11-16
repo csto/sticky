@@ -16,6 +16,7 @@ add more message undos
 slide for menu
 loading style
 sortable notes
+add data to routes and quit using helpers
 
 Notification
   userId
