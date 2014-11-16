@@ -3,5 +3,12 @@ Template.logged_in.events({
     if ($(e.target).parents('.dropdown-menu').length === 0 && !$(e.target).hasClass('.dropdown-menu')) {
       $('.dropdown-menu').removeClass('active');
     }
-  }
+  },
+  
+  // 'focus': function (e) {
+  //   $target = $(e.currentTarget);
+  //   if ($target.parents('.note').length > 0) {
+  //     $target.parents('.note').scrollTop($target.position().top);
+  //   }
+  // }
 });

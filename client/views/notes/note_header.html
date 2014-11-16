@@ -4,7 +4,7 @@
       <a id='close-note'>X</a>
     </div>
     <div class='nav-link nav-right'>
-      <a class='button dropdown-toggle'>
+      <a class='dropdown-toggle'>
         <i class='fa fa-ellipsis-v no-select'></i>
       </a>
       <ul class='dropdown-menu'>
@@ -23,9 +23,11 @@
         <li id='delete'>
           <a>Delete</a>
         </li>
-        <li id='delete-completed'>
-          <a>Remove Completed</a>
-        </li>
+        {{#if isList}}
+          <li id='delete-completed'>
+            <a>Remove Completed</a>
+          </li>
+        {{/if}}
       </ul>
     </div>
   </header>

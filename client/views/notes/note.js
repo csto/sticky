@@ -2,7 +2,7 @@ Template.note.rendered = function () {
 
   var self = this;
   
-  $('textarea').autosize();
+  this.$('textarea').autosize({ append: false });
   
   // self.$('.note').draggable({
   //   axis: 'x',

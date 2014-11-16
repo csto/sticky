@@ -4,14 +4,11 @@ Template.notes.created = function () {
   Session.setDefault('archive', false);
 };
 
-// Template.notes.rendered = function () {
-//   $(window).resize(function () {
-//     $activeNote = $('.note.active');
-//     if ($activeNote.length > 0) {
-//       $activeNote.height($(window).height() - 98);
-//     }
-//   });
-// }
+Template.notes.rendered = function () {
+  $(window).resize(function () {
+    $('textarea').trigger('autosize.resizeIncludeStyle');
+  });
+}
 
 Template.notes.events({
   
@@ -20,24 +17,26 @@ Template.notes.events({
     var kind = $(e.currentTarget).data('kind');
     Session.set('newNote', kind);
     Meteor.setTimeout( function () {
-      var $currentTarget = $('#new-note .note');
-      var pageTop = -$currentTarget.offset().top + 60
-      $currentTarget.animate(
+      var $note = $('#new-note .note');
+      var pageTop = -$note.offset().top + 60;
+      $note.height($('#content').height());
+      $note.animate(
         {
           top: pageTop,
           left: -15,
-          height: ($('#content').height()),
           width: $(window).width()
-        }, 200, 'ease-out'
+        }, 200, 'ease-out', function () {
+          $('textarea').trigger('autosize.resizeIncludeStyle');
+          $note.addClass('max');
+        }
       );
       if (kind === 'note') {
-        $currentTarget.find('textarea').focus();
+        $note.find('textarea').focus();
       }else{
-        $currentTarget.find('input').last().focus();
+        $note.find('input').last().focus();
       }
       $('input, textarea').attr('tabindex', -1)
-      $currentTarget.find('input, textarea').attr('tabindex', 1);
-      
+      $note.find('input, textarea').attr('tabindex', 1);    
     }, 0);
   },
   
@@ -49,10 +48,10 @@ Template.notes.events({
       content: $(e.target).closest('form').find('[name=content]').val(),
     }
     
-    // if (!noteAttributes.title && !noteAttributes.content) {
-    //   console.log('error')
-    //   return;
-    // }
+    // Discard note with no title or content
+    if (!noteAttributes.title && !noteAttributes.content) {
+      return;
+    }
     
     var note = Session.get('note');
     var newNote = Session.get('newNote');

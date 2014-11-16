@@ -76,7 +76,9 @@ Template.note_header.events({
 
   'click #delete-completed': function (e) {
     var noteId = Session.get('note');
-    Tasks.remove({ noteId: noteId });
+    $('.dropdown-menu').removeClass('active');
+    Messages.insert({ content: 'Completed tasks deleted.' })
+    Meteor.call('deleteCompleted', noteId);
   }
 });
 
@@ -87,5 +89,13 @@ Template.note_header.helpers({
 
   archive: function () {
     return Session.get('archive');
+  },
+  
+  isList: function () {
+    note = Notes.findOne(Session.get('note'));
+    console.log(note)
+    if (note) {
+      return note.kind === 'list';
+    }
   }
 });

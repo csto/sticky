@@ -2,16 +2,12 @@ TODO
 
 schema
 
-account
-  sign in only with google?
-  change password
-  change email settings?
-    email
-    name
+fix scroll to focus on mobile
 
 permissions?
 add more message undos
   - delete
+  - deleteCompleted
 slide for menu
 loading style
 sortable notes
@@ -30,7 +26,7 @@ notifications??
   dropdown with notifications
     [Image] Corey shared Title with you [√][x]
 shared user list at bottom of note
-delete completed tasks
+
 transition page loading (slide) js animate in router
 
 email
@@ -50,4 +46,4 @@ splash screen
 icons
 favicon
 
-Names: Take, Jot, Blot
+Names: Take, Jot, Blot, Check

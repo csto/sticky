@@ -8,8 +8,16 @@ Template.header.events({
 
   'keyup #search': function (e) {
     if (Meteor.isClient) {
-      Session.set('search', $(e.target).val())
+      Session.set('search', $(e.target).val());
     }
+  },
+  
+  'focus #search': function (e) {
+    $('#notes').addClass('animatable');
+  },
+  
+  'blur #search': function (e) {
+    $('#notes').removeClass('animatable');
   },
   
   'click #search-button': function (e) {

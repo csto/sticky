@@ -128,8 +128,6 @@ header
     &.show
       transform: translate3d(0px, 0px, 0px)
   .nav-link, .search-link
-    line-height:60px
-    padding:0px 20px
     position:absolute
     cursor:pointer
     &.nav-left
@@ -137,6 +135,8 @@ header
     &.nav-right
       right:0px
     > a
+      line-height:60px
+      padding:0px 20px
       position:relative
       top:1px
       font-size:28px
@@ -163,6 +163,7 @@ header
     .nav-link, .search-link
       top:60px
       &.centered
+        top:-4px
         right:110px
         left:110px
         text-align:center
@@ -202,6 +203,7 @@ sidebar
   width:300px
   background:darken(dark, 15%)
   box-shadow:inset -10px 0px 10px -10px black
+  font-family:'open-sans'
   .list-group
     .list-group-item
       border-radius:0px
@@ -229,11 +231,14 @@ sidebar
   
 #actions
   margin:15px 15px 20px 15px
+  padding:15px 5px
   box-shadow:none
   border:0
   font-family:'open-sans'
   font-size:20px
-  .col-xs-6
+  .action
+    width:50%
+    float:left
     text-align:center
     &:last-child
       a
@@ -247,7 +252,7 @@ sidebar
   display:block
   transform: scale(0.5, 0) translate(40px, -40px)
   opacity:0
-  left:-170px
+  left:-130px
   &.active
     transition: 0.2s ease-out
     transform-origin: right 0px
@@ -269,6 +274,7 @@ sidebar
     border-radius:2px
     margin:0
     -webkit-overflow-scrolling: touch
+    transform: transition3d(0px, 0px, 0px)
     &.max
       position:absolute !important
       top:0 !important
@@ -276,7 +282,9 @@ sidebar
       right:0 !important
       bottom:0 !important
       height:auto !important
+      width:auto !important
       transform: none !important
+      z-index:5 !important
     .cover
       display:block
       position:absolute
@@ -296,7 +304,7 @@ sidebar
     .form-group, .content
       margin:0px -10px
     .content
-      margin-bottom:-18px
+      // margin-bottom:-18px
     input, textarea
       background:none
       border:0
@@ -310,7 +318,7 @@ sidebar
       resize:none !important
     &.active
       position:relative
-      z-index:2
+      z-index:3
       font-size:18px
       input, textarea
         font-size:18px
@@ -367,20 +375,21 @@ sidebar
         &.active
           transition: 0.3s ease-out
           transform: scale(1,1)
-          -webkit-transform-origin: 100% 50%
+          transform-origin: 100% 50%
       .delete
         position:absolute
         display:none
         top:4px
         right:-20px
-          
-.note-animate
-  opacity:1
-  transition: 0.3s ease-out
-  transform: translate3d(0px, 0px, 0px) scale(1, 1)
-  &.animate
-    opacity:0
-    transform: translate3d(500px, 100px, 0px) scale(1, 0.5)
+
+.animatable
+  .note-animate
+    opacity:1
+    transition: 0.3s ease-out
+    transform: translate3d(0px, 0px, 0px) scale(1, 1)
+    &.animate
+      opacity:0
+      transform: translate3d(500px, 100px, 0px) scale(1, 0.5)
 
 for num in (0..20)
   .note-animate:nth-child({num})
@@ -401,17 +410,6 @@ for num in (0..20)
     border-radius:30px
     color:white
     animation: fadeOut 2700ms ease-in 0s 1 forwards
-    -webkit-animation: fadeOut 2700ms ease-in 0s 1 forwards
-    -moz-animation: fadeOut 2700ms ease-in 0s 1 forwards
-
-
-
-@-webkit-keyframes fadeOut {
-  0% {opacity: 0;}
-  10% {opacity: 1;}
-  90% {opacity: 1;}
-  100% {opacity: 0;}
-}
 
 @keyframes fadeOut {
   0% {opacity: 0;}

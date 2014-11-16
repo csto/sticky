@@ -5,13 +5,13 @@
   <div id='content' class='{{activeClass}}'>
     {{#unless archive}}
       <div id='actions' class='well clearfix'>
-        <div class='col-xs-6'>
+        <div class='action'>
           <a class='build-note' data-kind='note'>
             <i class='fa fa-file-text-o'></i>
             New Note
           </a>
         </div>
-        <div class='col-xs-6'>
+        <div class='action'>
           <a class='build-note' data-kind='list'>
             <i class='fa fa-list-ul'></i>
             New List
@@ -28,11 +28,11 @@
 
     <div id='notes'> 
       {{#each notes}}
-<!--         {{#Animate}}
-          <div class='note-animate animate'> -->
+        {{#Animate}}
+          <div class='note-animate animate'>
             {{> note}}
-<!--           </div>
-        {{/Animate}} -->
+          </div>
+        {{/Animate}}
       {{/each}}
       {{#if noNotes}}
         No notes
