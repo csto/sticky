@@ -40,7 +40,6 @@ Template.notes.events({
   },
   
   'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea': function (e) {
-    console.log('noting')
     e.preventDefault();
     
     var noteAttributes = {
@@ -59,7 +58,6 @@ Template.notes.events({
     
     if (newNote && _.contains(['note', 'list'], newNote)) {
       noteAttributes = _.extend(noteAttributes, { kind: newNote })
-      console.log('creating')
       Meteor.call('createNote', noteAttributes, function (error, noteId) {
         console.log(noteId)
         if (error) {
@@ -69,11 +67,12 @@ Template.notes.events({
         }
       });
     }else{
-      Meteor.call('updateNote', this._id, noteAttributes, function (error) {
-        if (error) {
-          Messages.insert({ content: error.reason });
-        }
-      });
+      Notes.update(this._id, { $set: noteAttributes });
+      // Meteor.call('updateNote', this._id, noteAttributes, function (error) {
+      //   if (error) {
+      //     Messages.insert({ content: error.reason });
+      //   }
+      // });
     }
   },
   

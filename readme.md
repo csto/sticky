@@ -2,22 +2,20 @@ TODO
 
 schema
 
-fix scroll to focus on mobile
+ensure_index
 
-add trim to schema
 permissions?
 add more message undos
   - delete
   - deleteCompleted
-slide for menu
+
 loading style
-sortable notes
+
+note priority should be on userNote, not note
+
 add data to routes and quit using helpers
 
-UserNote
-  userId
-  noteId
-  sharedBy
+add fast-render
 
 notifications??
   add sharedBy id to user notes
@@ -39,6 +37,8 @@ email
   - task added
     wait 10 minutes and add task?
 
+account page layout
+
 pick colors, apply design
 
 kadira
@@ -47,4 +47,17 @@ splash screen
 icons
 favicon
 
+landing page design
+
+add google analytics
+setup email
+make google crawl site
+
 Names: Take, Jot, Blot, Check
+
+Future:
+fix scroll to focus on mobile
+sortable notes
+slide to show / hide menu
+slide to archive
+images

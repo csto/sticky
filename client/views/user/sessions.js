@@ -59,6 +59,10 @@ Template.register.events({
         Messages.insert({ content: error.reason });
       } else {
         Messages.insert({ content: 'Welcome!' });
+        token = Session.get('token');
+        if (token) {
+          UserNotes
+        }
         Router.go('/notes', {}, { replaceState: true });
       }
     });
