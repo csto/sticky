@@ -4,6 +4,7 @@ schema
 
 fix scroll to focus on mobile
 
+add trim to schema
 permissions?
 add more message undos
   - delete

@@ -1,12 +1,3 @@
-closeNote = function () {
-  Session.set('note', null);
-  Session.set('newNote', null);
-  $('.note').removeClass('max').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
-  Meteor.setTimeout(function () {
-    $('textarea').trigger('autosize.resizeIncludeStyle');
-  }, 0); 
-}
-
 Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
@@ -28,13 +19,13 @@ Template.note_header.events({
   'click #delete': function (e) {
     e.preventDefault();
     
-    var note = Session.get('note');
+    var noteId = Session.get('note');
     
     if (note) {
       $('.dropdown-menu').removeClass('active');
       Session.set('note', null);
-      Notes.remove({ _id: note });
-      Messages.insert({content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
+      Meteor.call('deleteNote', noteId);
+      Messages.insert({ content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
     }
   },
   
@@ -99,3 +90,12 @@ Template.note_header.helpers({
     }
   }
 });
+
+closeNote = function () {
+  Session.set('note', null);
+  Session.set('newNote', null);
+  $('.note').removeClass('max').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
+  Meteor.setTimeout(function () {
+    $('textarea').trigger('autosize.resizeIncludeStyle');
+  }, 0); 
+}

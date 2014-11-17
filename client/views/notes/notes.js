@@ -11,7 +11,6 @@ Template.notes.rendered = function () {
 }
 
 Template.notes.events({
-  
   'click .build-note': function (e) {
     e.preventDefault();
     var kind = $(e.currentTarget).data('kind');
@@ -40,7 +39,8 @@ Template.notes.events({
     }, 0);
   },
   
-  'blur .note input:not(.task-input), blur .note textarea': function (e) {
+  'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea': function (e) {
+    console.log('noting')
     e.preventDefault();
     
     var noteAttributes = {
@@ -59,23 +59,29 @@ Template.notes.events({
     
     if (newNote && _.contains(['note', 'list'], newNote)) {
       noteAttributes = _.extend(noteAttributes, { kind: newNote })
-      
+      console.log('creating')
       Meteor.call('createNote', noteAttributes, function (error, noteId) {
+        console.log(noteId)
         if (error) {
-          console.log('error2')
-          // throwError(error);
+          Messages.insert({ content: error.reason });
         }else{
           Session.set('newNote', noteId);
         }
       });
     }else{
-      Meteor.call('updateNote', this._id, noteAttributes);
+      Meteor.call('updateNote', this._id, noteAttributes, function (error) {
+        if (error) {
+          Messages.insert({ content: error.reason });
+        }
+      });
     }
   },
   
   'submit .create-task, blur .create-task': function (e) {
-    console.log('submit .create-task, blur .create-task');
     e.preventDefault();
+    
+    console.log('noteId', Session.get('noteId'));
+    console.log('newNote', Session.get('newNote'));
     
     var noteId = $(e.target).closest('.note').data('id');
     var newNote = Session.get('newNote');
@@ -102,17 +108,23 @@ Template.notes.events({
       }
       
       if (!task.content) {
-        console.log('errors')
         return;
       }
       
-      Meteor.call('createTask', task);
+      console.log('creating task')
+      
+      Meteor.call('createTask', task, function (error) {
+        if (error) {
+          Messages.insert({ content: error.reason });
+        }
+      });
   
       $(e.target).find('[name=create]').val('');
     }
     
     
-    if (newNote) {
+    if (newNote && newNote === 'list') {
+      console.log(newNote);
       console.log('create note and new task');
       
       var note = {
@@ -120,7 +132,6 @@ Template.notes.events({
       }
       
       if (!note.task) {
-        console.log('error?')
         return;
       }
       
