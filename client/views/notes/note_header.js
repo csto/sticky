@@ -84,7 +84,6 @@ Template.note_header.helpers({
   
   isList: function () {
     note = Notes.findOne(Session.get('note'));
-    console.log(note)
     if (note) {
       return note.kind === 'list';
     }

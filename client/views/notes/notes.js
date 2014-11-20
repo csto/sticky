@@ -4,11 +4,11 @@ Template.notes.created = function () {
   Session.setDefault('archive', false);
 };
 
-Template.notes.rendered = function () {
-  $(window).resize(function () {
-    $('textarea').trigger('autosize.resizeIncludeStyle');
-  });
-}
+// Template.notes.rendered = function () {
+//   $(window).resize(function () {
+//     $('textarea').trigger('autosize.resizeIncludeStyle');
+//   });
+// }
 
 Template.notes.events({
   'click .build-note': function (e) {
@@ -54,12 +54,10 @@ Template.notes.events({
     
     var note = Session.get('note');
     var newNote = Session.get('newNote');
-
     
     if (newNote && _.contains(['note', 'list'], newNote)) {
-      noteAttributes = _.extend(noteAttributes, { kind: newNote })
+      noteAttributes = _.extend(noteAttributes, { kind: newNote });
       Meteor.call('createNote', noteAttributes, function (error, noteId) {
-        console.log(noteId)
         if (error) {
           Messages.insert({ content: error.reason });
         }else{
@@ -79,27 +77,13 @@ Template.notes.events({
   'submit .create-task, blur .create-task': function (e) {
     e.preventDefault();
     
-    console.log('noteId', Session.get('noteId'));
-    console.log('newNote', Session.get('newNote'));
-    
     var noteId = $(e.target).closest('.note').data('id');
     var newNote = Session.get('newNote');
-    var errors = {};
     
     if (noteId) {
-      var tasks = Tasks.find({noteId: noteId}).fetch();
-      var position;
+      var topTask = Tasks.findOne({noteId: noteId}, { sort: { position: 1 } });
+      var position = topTask.position - 1 || 0;
     
-      if (tasks.length === 0) {
-        position = 1;
-      }else{
-        position = _.min(
-          _.map(tasks, function (task) {
-            return task.position;
-          })
-        ) - 1;
-      }
-      
       var task = {
         noteId: this._id,
         content: $(e.target).find('[name=create]').val(),
@@ -109,8 +93,6 @@ Template.notes.events({
       if (!task.content) {
         return;
       }
-      
-      console.log('creating task')
       
       Meteor.call('createTask', task, function (error) {
         if (error) {
@@ -123,9 +105,6 @@ Template.notes.events({
     
     
     if (newNote && newNote === 'list') {
-      console.log(newNote);
-      console.log('create note and new task');
-      
       var note = {
         task: $(e.target).find('[name=create]').val()
       }
@@ -136,8 +115,7 @@ Template.notes.events({
       
       Meteor.call('createNote', note, function (error, id) {
         if (error) {
-          console.log('error2')
-          // throwError(error);
+          Messages.insert({ content: error.reason });
         }else{
           $(e.target).find('[name=create]').val('');
           Session.set('newNote', id);
@@ -171,11 +149,15 @@ Template.notes.helpers({
           { content: new RegExp(search, 'i') }, 
           { _id: { $in: matchedIds } }
         ]
-      }, 
-      { sort: { position: 1 } }
+      }
     );
     
-    Session.set('notesCount', notes.count());
+    notes = _.sortBy(notes.fetch(), function (note) {
+      var position = UserNotes.findOne({ userId: Meteor.userId(), noteId: note._id });
+      return position;
+    }).reverse();
+    
+    Session.set('notesCount', notes.length);
     
     return notes;
   },

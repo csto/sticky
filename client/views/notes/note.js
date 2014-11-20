@@ -67,7 +67,7 @@ Template.note.rendered = function () {
       var task = {
         position: position
       }
-      Meteor.call('updateTask', Blaze.getData(el)._id, task);
+      Tasks.update(Blaze.getData(el)._id, { $set: task });
     }
   });
 }
@@ -101,7 +101,7 @@ Template.note.events({
       content: $(e.target).closest('form').find('[name=content]').val()
     }
 
-    Meteor.call('updateTask', this._id, task);
+    Tasks.update(this._id, { $set: task });
   },
   
   'focus .task input': function (e) {
@@ -121,7 +121,7 @@ Template.note.events({
       completed: !this.completed
     }
 
-    Meteor.call('updateTask', this._id, task);
+    Tasks.update(this._id, { $set: task });
   }
 });
 

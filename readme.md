@@ -1,21 +1,10 @@
 TODO
 
-schema
-
-ensure_index
-
-permissions?
-add more message undos
-  - delete
-  - deleteCompleted
-
 loading style
 
 note priority should be on userNote, not note
 
 add data to routes and quit using helpers
-
-add fast-render
 
 notifications??
   add sharedBy id to user notes
@@ -56,6 +45,9 @@ make google crawl site
 Names: Take, Jot, Blot, Check
 
 Future:
+add more message undos
+  - delete
+  - deleteCompleted
 fix scroll to focus on mobile
 sortable notes
 slide to show / hide menu

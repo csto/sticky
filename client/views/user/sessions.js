@@ -11,13 +11,11 @@ Template.signIn.events({
     // Meteor.loginWithPassword() function.
     Meteor.loginWithPassword(email, password, function(error){
       if (error) {
-        console.log(error);
         Messages.insert({ content: 'Incorrect email or password' });
         // The user might not have been found, or their passwword
         // could be incorrect. Inform the user that their
         // login attempt has failed. 
       }else{
-        console.log('success')
         Messages.insert({ content: 'Signed in successfully.' });
         Router.go('/notes', {}, { replaceState: true });
       }
@@ -54,7 +52,6 @@ Template.register.events({
     }
 
     Accounts.createUser({ email: email, password : password }, function(error){
-      console.log(error)
       if (error) {
         Messages.insert({ content: error.reason });
       } else {
