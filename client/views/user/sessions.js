@@ -56,9 +56,18 @@ Template.register.events({
         Messages.insert({ content: error.reason });
       } else {
         Messages.insert({ content: 'Welcome!' });
-        token = Session.get('token');
+        var token = Session.get('token');
+        
         if (token) {
-          UserNotes
+          var shareToken = ShareTokens.findOne({ token: token });
+          if (shareToken) {
+            UserNotes.insert({
+              userId: Meteor.userId(),
+              noteId: shareToken.noteId,
+              accepted: true
+            });
+            ShareTokens.remove(shareToken._id);
+          }
         }
         Router.go('/notes', {}, { replaceState: true });
       }

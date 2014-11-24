@@ -1,26 +1,15 @@
-<template name='signIn'>  
-  <div class='panel panel-default'>
-    <div class='panel-heading'>
-      Sign in
+<template name='signIn'>
+  <div id='large-logo' class='text-center'>Jot.</div>
+  <form id="login-form" action="action">
+    <div class='form-group'>
+      <input type="email" placeholder='Email' id="email" class='form-control' />
+      <i class='fa fa-user'></i>
     </div>
-    <div class='panel-body'>
-      <form id="login-form" action="action">
-        <div class='form-group'>
-          <label for='email'>Email:</label>
-          <input type="email" placeholder='Email' id="email" class='form-control' />
-          <i class='fa fa-user'></i>
-        </div>
-        <div class='form-group'>
-          <label for='password'>Password:</label>
-          <input type="password" placeholder='Password' id="password" class='form-control' />
-          <i class='fa fa-lock'></i>
-        </div>
-        <br />
-        <div class='pull-right'>
-          <input type="submit" id="login-button" value="Sign in" class='btn btn-primary' />
-        </div>
-      </form>
+    <div class='form-group'>
+      <input type="password" placeholder='Password' id="password" class='form-control' />
+      <i class='fa fa-lock'></i>
     </div>
-  </div>
+    <input type='submit' id='login-button' value='Log in' class='btn btn-primary btn-lg btn-block' />
+  </form>
   {{> sessionLinks}}
 </template>

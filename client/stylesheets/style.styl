@@ -1,8 +1,12 @@
 @import 'nib'
 
-dark = #2D2E3B
+dark = #3b454b
+dark = #4a434d
 light = white
-gold = #E4A100
+yellow = #FFE981
+// yellow = #f2bc51
+gray = #8F9495
+gray = #D6DAD8
 
 html
   width:100%
@@ -16,7 +20,9 @@ body
   overflow:hidden
   font-size:16px
   font-family:'merriweather'
-  
+  // background:radial-gradient(lighten(dark, 10%), dark)
+  background:dark
+  color:dark
 
 // Global
 
@@ -26,19 +32,33 @@ input:focus
 a, a:visited, a:hover
   cursor:pointer
   text-decoration:none
+  font-family:'open-sans'
+  color:gray
   &:hover
     transition:0.4s ease-out
   
-.btn-primary
-  min-width:200px
+.btn, .btn:active, .btn:focus
   border:0
-  background:gold
+  background:yellow
+  font-family:'open-sans'
+  color:dark
+  &:hover
+    background:lighten(yellow, 5%)
+    color:dark
+  &:focus
+    box-shadow:red 0px 0px 10px
+    outline:0
   
 ul, ul.dropdown-menu
   li
     a
       line-height:60px
       font-size:18px
+      
+.form-control
+  color:dark
+  font-family:'open-sans'
+  
 
 .noselect
   -webkit-touch-callout: none
@@ -47,6 +67,19 @@ ul, ul.dropdown-menu
   -moz-user-select: none
   -ms-user-select: none
   user-select: none
+  
+#large-logo
+  font-family:'yellowtail'
+  font-weight:900
+  font-size:160px
+  margin-bottom:60px
+  color:white
+  @media screen and (max-width: 600px)
+    font-size:100px
+    
+#iron-router-progress
+  background:yellow
+  box-shadow:none
 
 #wrapper
   position:absolute
@@ -57,7 +90,7 @@ ul, ul.dropdown-menu
   transition: 0.1s ease-out
   transform: translate3d(0px, 0px, 0px)
   z-index:1
-  background:#C2C2C2
+  background:gray
   &.slide
     transition: 0.15s ease-out
     transform: translate3d(300px, 0px, 0px)
@@ -76,30 +109,29 @@ ul, ul.dropdown-menu
 // Layouts
 
 #simple-layout
-  background:url('pw_maze_white.png')
-  min-height:100%
-  .panel
-    margin:0 auto
-    max-width:500px
-    margin-top:80px
-    border:1px solid #B8B8BC
-    box-shadow:inset #FCFCFF 0px 0px 0px 1px, #8C8E90 0px 1px 3px
-    border-radius:2px
-    .panel-heading
-      background:#fafafc
-      font-weight:bold
-      text-transform:uppercase
-    .panel-body
-      background:#f1f1f3
+  height:100%
+  position:relative
+  overflow:auto
+  .container
+    height:100%
+    max-width:400px
     .form-control
+      background:white
+      border:0
       box-shadow:none
+      padding:12px 12px 10px 12px
+      height:auto
+      font-family:'open-sans'
+      margin-bottom:20px
+      &::-webkit-input-placeholder
+        color:lighten(dark, 20%)
     .form-group
       position:relative
       i.fa
         position:absolute
         right:14px
-        top:33px
-        color:#CDCDD0
+        top:13px
+        color:lighten(dark, 20%)
         font-size:18px
 
 
@@ -122,7 +154,8 @@ header
   &#note-header
     transition:0.2s ease-out
     transform: translate3d(0px, -60px, 0px)
-    background:gray
+    background:yellow
+    color:dark
     z-index:20
     &.show
       transform: translate3d(0px, 0px, 0px)
@@ -385,9 +418,11 @@ sidebar
     opacity:1
     transition: 0.3s ease-out
     transform: translate3d(0px, 0px, 0px) scale(1, 1)
+    max-height:500px
     &.animate
       opacity:0
       transform: translate3d(500px, 100px, 0px) scale(1, 0.5)
+      max-height:0px
 
 for num in (0..20)
   .note-animate:nth-child({num})
@@ -398,11 +433,12 @@ for num in (0..20)
   left:0px
   right:0px
   bottom:0px
-  padding:30px
+  padding:0px 30px
   .message
     position:relative
+    top:-10px
     z-index:2
-    margin-top:10px
+    margin-bottom:10px
     padding:20px
     background:#383838
     border-radius:30px
@@ -413,6 +449,12 @@ for num in (0..20)
   margin-top:20px
   font-size:14px
   color:#717480
+  margin-bottom:40px
+  .col-xs-6
+    text-align:right
+    &:last-child
+      text-align:left
+      border-left:1px solid gray
 
 
 // Keyframes    

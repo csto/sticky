@@ -11,14 +11,6 @@ Template.header.events({
     }
   },
   
-  'focus #search': function (e) {
-    $('#notes').addClass('animatable');
-  },
-  
-  'blur #search': function (e) {
-    $('#notes').removeClass('animatable');
-  },
-  
   'click #search-button': function (e) {
     $('#search-wrapper').addClass('search');
     $('#search-form input').focus();

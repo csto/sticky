@@ -1,5 +1,16 @@
 TODO
 
+
+landing:
+  Jot
+  Sharable notes and lists made beautiful.
+  Play Store | App Store
+  
+  List
+    sharable
+    syncs instantly
+    
+
 loading style
 
 note priority should be on userNote, not note

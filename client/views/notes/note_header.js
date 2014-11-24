@@ -1,6 +1,7 @@
 Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
+    $('#notes').addClass('animatable');
     
     var newNote = Session.get('newNote');
 

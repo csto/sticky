@@ -77,6 +77,7 @@ Template.note.events({
   'click .cover': function (e) {
     if (!Session.get('note') && !Session.get('newNote')) {
       e.preventDefault();
+      $('#notes').removeClass('animatable');
       var $note = $(e.currentTarget).closest('.note');
       Session.set('note', this._id);
       var pageTop = -$note.offset().top + 60;

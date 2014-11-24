@@ -1,18 +1,18 @@
 <template name='sessionLinks'>
-  <div id='session-links' class='text-center'>
+  <div id='session-links' class='text-center clearfix'>
     {{#if show 'sign-in'}}
-      <div>
-        Already a member? <a href='{{pathFor "signIn"}}'>Sign in here.</a>
+      <div class='col-xs-6'>
+        <a href='{{pathFor "signIn"}}'>Log in</a>
       </div>
     {{/if}}
     {{#if show 'register'}}
-      <div>
-        Don't have an account? <a href='{{pathFor "register"}}'>Create one here.</a>
+      <div class='col-xs-6'>
+        <a href='{{pathFor "register"}}'>Register</a>
       </div>
     {{/if}}
     {{#if show 'forgot-password'}}
-      <div>
-        Forgot your password? <a href='{{pathFor "forgotPassword"}}'>Reset it here.</a>
+      <div class='col-xs-6'>
+        <a href='{{pathFor "forgotPassword"}}'>Password</a>
       </div>
     {{/if}}
   </div>
