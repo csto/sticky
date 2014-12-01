@@ -74,8 +74,9 @@ Template.notes.events({
     }
   },
   
-  'submit .create-task, blur .create-task': function (e) {
+  'submit .create-task, blur .create-task, click .create .fa-plus': function (e) {
     e.preventDefault();
+    console.log('click')
     
     var noteId = $(e.target).closest('.note').data('id');
     var newNote = Session.get('newNote');

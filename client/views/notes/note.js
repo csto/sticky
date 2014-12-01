@@ -85,7 +85,7 @@ Template.note.events({
       $note.animate(
         {
           top: pageTop,
-          left: -15,
+          left: -10,
           width: $(window).width()
         }, 200, 'ease-out', function () {
           $('textarea').trigger('autosize.resizeIncludeStyle');

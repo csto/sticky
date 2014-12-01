@@ -7,6 +7,7 @@ yellow = #FFE981
 // yellow = #f2bc51
 gray = #8F9495
 gray = #D6DAD8
+darkgray = #696E73
 
 html
   width:100%
@@ -69,9 +70,9 @@ ul, ul.dropdown-menu
   user-select: none
   
 #large-logo
-  font-family:'yellowtail'
-  font-weight:900
-  font-size:160px
+  font-family:'bariol'
+  font-weight:100
+  font-size:200px
   margin-bottom:60px
   color:white
   @media screen and (max-width: 600px)
@@ -90,7 +91,7 @@ ul, ul.dropdown-menu
   transition: 0.1s ease-out
   transform: translate3d(0px, 0px, 0px)
   z-index:1
-  background:gray
+  background:#EDEDED
   &.slide
     transition: 0.15s ease-out
     transform: translate3d(300px, 0px, 0px)
@@ -144,46 +145,82 @@ header
   right:0px
   height:60px
   line-height:60px
-  background:dark
-  border-radius:0
-  border:0
-  font-family:'open-sans'
-  font-weight:700
+  background:yellow
+  font-weight:900
+  box-shadow:#C9C9C9 0px 2px 3px, inset lighten(yellow, 30%) 0px 0px 0px 1px
+  // text-shadow:0px -1px darken(darkgray, 20%)
+  color:darkgray
   &#main-header
     overflow:hidden
   &#note-header
     transition:0.2s ease-out
-    transform: translate3d(0px, -60px, 0px)
+    transform: translate3d(0px, -70px, 0px)
     background:yellow
     color:dark
     z-index:20
     &.show
       transform: translate3d(0px, 0px, 0px)
-  .nav-link, .search-link
-    position:absolute
+  .nav-link
+    float:left
     cursor:pointer
-    &.nav-left
-      left:0px
+    height:60px
     &.nav-right
-      right:0px
+      float:right
     > a
-      line-height:60px
+      display:block
       padding:0px 20px
       position:relative
       top:1px
       font-size:28px
-      color:white
-      text-shadow:none
+      color:inherit
       i.fa
+        min-width:20px
+        text-align:center
         font-size:28px
-        color:white
-        text-shadow:none
+        color:inherit
         &.fa-ellipsis-v
-          padding:0px 5px
+          padding:0px 10px
+  .bar
+    background:darkgray
+    width:28px
+    height:4px
+    margin-bottom:4px
+    line-height:0px
+    position:relative
+    top:19px
+    border-radius:2px
+    transform:translate3d(0px, 0px, 0px)
+  .close-icon
+    .bar
+      top:20px
+      left:6px
+    .bar:first-child
+      transform-origin:0% 0%
+      transform:rotate(45deg) translate3d(-1px, -1px, 0px)
+      margin-bottom:12px
+    .bar:nth-child(2)
+      transform-origin:0% 100%
+      transform:rotate(-45deg) translate3d(-1px, 1px, 0px)
+  #menu
+    .bar
+      transition:0.3s ease-out
+    &.active
+      .bar:first-child
+        transform-origin:0% 0%
+        transform:rotate(45deg) translate3d(-1px, -1px, 0px)
+      .bar:nth-child(2)
+        opacity:0
+        transform:rotate(135deg)
+      .bar:nth-child(3)
+        transform-origin:0% 100%
+        transform:rotate(-45deg) translate3d(-1px, 1px, 0px)
   #logo
-    color:white
+    margin-left:-28px
+    font-family:'bariol'
     font-size:24px
-    text-transform:uppercase
+  //   color:inherit
+  //   font-size:24px
+  //   text-transform:uppercase
   #search-wrapper
     position:relative
     height:60px
@@ -192,49 +229,59 @@ header
     transform: translate3d(0px, -60px, 0px)
     &.search
       transform: translate3d(0px, 0px, 0px)
-    .nav-link, .search-link
-      top:60px
-      &.centered
-        top:-4px
-        right:110px
-        left:110px
-        text-align:center
-        > a
-          top:0px  
-    .search-link
-      position:absolute
+    #search-links
+      position:relative
       top:0px
-      &.search-left
-        left:0px
-      &.search-right
-        right:0px
+      height:60px
+      overflow:hidden
+    // .nav-link, .search-link
+    //   top:60px
+    //   &.centered
+    //     top:-4px
+    //     right:110px
+    //     left:110px
+    //     text-align:center
+    //     > a
+    //       top:0px
+    // .search-link
+    //   position:absolute
+    //   top:0px
+    //   &.search-left
+    //     left:0px
+    //   &.search-right
+    //     right:0px
     #search-form
+      position:absolute
       height:60px
       left:60px
       right:60px
       input
         width:100%
-        background:none
-        border:none
-        border-radius:0px
+        border:0
+        border-radius:4px
         outline:none
         box-shadow:none
         font-size:18px
         padding:18px 12px
-        margin-top:10px
-        color:white
+        margin-top:12px
+        color:#616161
+        font-weight:400
         &:focus
-          border-bottom:2px solid #473A53
-  .dropdown-menu
-    display:block
-    transform: scale(0.5, 0) translate(40px, -40px)
-    opacity:0
-    left:-130px
-    &.active
-      transition: 0.2s ease-out
-      transform-origin: right 0px
-      transform: scale(1, 1) translate(0px, 0px)
-      opacity:1
+          transition:0s
+  .dropdown-toggle
+    position:relative
+    .dropdown-menu
+      position:absolute
+      display:block
+      width:220px
+      transform: scale(0.5, 0) translate(40px, -40px)
+      opacity:0
+      left:-170px
+      &.active
+        transition: 0.2s ease-out
+        transform-origin: right 0px
+        transform: scale(1, 1) translate(0px, 0px)
+        opacity:1
       
 sidebar
   position:absolute
@@ -242,9 +289,10 @@ sidebar
   top:0px
   bottom:0px
   width:300px
-  background:darken(dark, 15%)
+  background:darken(darkgray, 30%)
   box-shadow:inset -10px 0px 10px -10px black
-  font-family:'open-sans'
+  *
+    font-family:'bariol'
   .list-group
     .list-group-item
       border-radius:0px
@@ -255,8 +303,9 @@ sidebar
         display:block
         line-height:60px
         padding:0px 15px
+        color:darken(darkgrey, 10%)
         &:hover
-          background:gray
+          background:none
         .fa
           margin-right:10px
   
@@ -274,8 +323,15 @@ sidebar
 // .new.show
 //   margin:0px 15px
 
+.well
+  border:0
+  border-radius:2px
+  margin:0
+  background:#FEFEFE
+  box-shadow:inset white 0px 0px 0px 1px, #D2D2D2 0px 0px 3px
+
 #actions
-  margin:15px 15px 20px 15px
+  margin:10px 10px 10px 10px
   padding:15px 5px
   box-shadow:none
   border:0
@@ -289,23 +345,21 @@ sidebar
       a
         border-left:1px solid #AAAAAA
     a
+      color:black
       display:block
       i
         font-size:24px
 
 #notes, #new-note
-  margin:0px 15px
+  margin:0px 10px
   .note-wrapper
-    margin-bottom:20px
+    margin-bottom:10px
   .note
     overflow:auto
     position:relative
-    box-shadow:none
-    border:0
-    border-radius:2px
-    margin:0
     -webkit-overflow-scrolling: touch
     transform: transition3d(0px, 0px, 0px)
+    box-shadow:inset white 0px 0px 0px 1px, #D2D2D2 0px 0px 3px
     &.max
       position:absolute !important
       top:0 !important

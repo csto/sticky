@@ -23,6 +23,7 @@ Template.sidebar.events({
   
   'click #sidebar-cover': function (e) {
     $('#wrapper').removeClass('slide');
+    $('#menu').removeClass('active');
     $(e.target).hide();
   }
 });

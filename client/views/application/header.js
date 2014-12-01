@@ -2,6 +2,7 @@ Template.header.events({
   'click #menu': function (e) {
     $('#sidebar-cover').show();
     $('#wrapper').toggleClass('slide');
+    $('#menu').addClass('active');
     return false;
   },
 

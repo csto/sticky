@@ -1,25 +1,31 @@
 <template name='header'>
   <header id='main-header'>
     <div id='search-wrapper'>
-      <div class='search-link search-left'>
-        <a>
-          <i class='fa fa-search'></i>
-        </a>
-      </div>
+      <div id='search-links'>
+        <div class='nav-link nav-left'>
+          <a>
+            <i class='fa fa-search'></i>
+          </a>
+        </div>
       
-      <div id='search-form' class='search-link'>
-        <input id='search' type='text' name='search' placeholder='Search' class='form-control' />
-      </div>
+        <div id='search-form' class='nav-link'>
+          <input id='search' type='text' name='search' placeholder='Search' class='form-control' />
+        </div>
       
-      <div id='close-search' class='search-link search-right'>
-        <a>
-          X
-        </a>
+        <div id='close-search' class='nav-link nav-right close-icon'>
+          <a>
+            <div class='bar'></div>
+            <div class='bar'></div>
+          </a>
+        </div>
       </div>
 
       <div id='menu' class='nav-link nav-left'>
         <a>
-          <i class='fa fa-bars'></i>
+          <div class='bar'></div>
+          <div class='bar'></div>
+          <div class='bar'></div>
+          <!-- <i class='fa fa-bars'></i> -->
         </a>
       </div>
     

@@ -12,7 +12,7 @@ Template.note_header.events({
     closeNote();
   },
   
-  'click .dropdown-toggle': function (e) {
+  'click .dropdown-toggle a': function (e) {
     $(e.currentTarget).next().toggleClass('active');
     return false;
   },
