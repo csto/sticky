@@ -148,7 +148,6 @@ header
   background:yellow
   font-weight:900
   box-shadow:#C9C9C9 0px 2px 3px, inset lighten(yellow, 30%) 0px 0px 0px 1px
-  // text-shadow:0px -1px darken(darkgray, 20%)
   color:darkgray
   &#main-header
     overflow:hidden
@@ -331,19 +330,37 @@ sidebar
   box-shadow:inset white 0px 0px 0px 1px, #D2D2D2 0px 0px 3px
 
 #actions
-  margin:10px 10px 10px 10px
-  padding:15px 5px
-  box-shadow:none
-  border:0
-  font-family:'open-sans'
-  font-size:20px
+  // margin:10px 10px 10px 10px
+  // padding:15px 5px
+  // box-shadow:none
+  // border:0
+  // font-family:'open-sans'
+  // font-size:20px
+  // padding:30px
+  border-radius:40px
+  position:absolute
+  top:100%
+  left:100%
+  margin:-100px 0px 0px -100px
+  background:red
+  box-shadow:black 0px 1px 3px
+  z-index:1
+  // height:60px
+  width:60px
+  text-align:center
+  i
+    font-size:28px
+    line-height:60px
   .action
-    width:50%
-    float:left
-    text-align:center
-    &:last-child
-      a
-        border-left:1px solid #AAAAAA
+    // width:50%
+    // float:left
+    // text-align:center
+    // &:last-child
+    //   a
+    //     border-left:1px solid #AAAAAA
+    display:none
+    height:20px
+    width:20px
     a
       color:black
       display:block
@@ -351,7 +368,7 @@ sidebar
         font-size:24px
 
 #notes, #new-note
-  margin:0px 10px
+  margin:10px 10px
   .note-wrapper
     margin-bottom:10px
   .note
@@ -360,6 +377,13 @@ sidebar
     -webkit-overflow-scrolling: touch
     transform: transition3d(0px, 0px, 0px)
     box-shadow:inset white 0px 0px 0px 1px, #D2D2D2 0px 0px 3px
+    &.active
+      position:absolute
+      z-index:5
+      font-size:18px
+      overflow:hidden
+      input, textarea
+        font-size:18px
     &.max
       position:absolute !important
       top:0 !important
@@ -401,12 +425,6 @@ sidebar
       height:auto
       width:100%
       resize:none !important
-    &.active
-      position:relative
-      z-index:3
-      font-size:18px
-      input, textarea
-        font-size:18px
     .form-group.create
       position:relative
       margin-top:20px
@@ -431,7 +449,7 @@ sidebar
       margin:0px 40px 0px 32px
       &.active
         height:40px
-        transition: 0.3s ease-out
+        // transition: 0.3s ease-out
         transform: translate(18px, 0px)
         margin-left:38px
         i.fa
@@ -458,7 +476,6 @@ sidebar
         color:#CECECE
         z-index:3
         &.active
-          transition: 0.3s ease-out
           transform: scale(1,1)
           transform-origin: 100% 50%
       .delete

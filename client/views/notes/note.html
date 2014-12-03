@@ -1,7 +1,7 @@
 <template name='note'>
   <div class='note-wrapper'>
-    <div class='note well {{activeClass}}' data-id='{{_id}}'>
-      <div class='cover {{activeClass}}'></div>
+    <div class='note well' data-id='{{_id}}'>
+      <a class='cover' href='/notes/{{_id}}'></a>
       <form>
         <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
         {{#if showTitle}}
@@ -25,30 +25,13 @@
                   <i class='fa fa-square-o'></i>
                 {{/if}}
                 <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{completedClass}}'>
-                {{#if active ..}}
-                  <span class='delete'>
-                    X  <!-- Make this an icon -->
-                  </span>
-                {{/if}}
               </form>
             </div>
           {{/each}}
         </div>
-        {{#if active}}
-          <div class='form-group create'>
-            <i class='fa fa-plus'></i>
-            <form class='create-task'>
-              <input type='text' name='create' placeholder='Add Task' class='create-task-input form-control' />
-            </form>
-          </div>
-        {{else}}
-          {{#if moreTasks}}
-            <div>...</div>
-          {{/if}}
+        {{#if moreTasks}}
+          <div>...</div>
         {{/if}}
-      {{/if}}
-      {{#if active}}
-        <span class='small pull-right'>Edited {{timeInWords updatedAt}}</span>
       {{/if}}
     </div>
   </div>

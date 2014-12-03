@@ -1,5 +1,15 @@
 TODO
 
+lidia
+7244644120
+
+
+
+use routes for show notes
+when show note param present
+  note rendered into cover
+  cover expands to fill window
+  upon closing, shrinks back to cover pos
 
 landing:
   Jot

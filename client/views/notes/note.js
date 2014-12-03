@@ -74,26 +74,26 @@ Template.note.rendered = function () {
 
 
 Template.note.events({
-  'click .cover': function (e) {
-    if (!Session.get('note') && !Session.get('newNote')) {
-      e.preventDefault();
-      $('#notes').removeClass('animatable');
-      var $note = $(e.currentTarget).closest('.note');
-      Session.set('note', this._id);
-      var pageTop = -$note.offset().top + 60;
-      $note.height($('#content').height());
-      $note.animate(
-        {
-          top: pageTop,
-          left: -10,
-          width: $(window).width()
-        }, 200, 'ease-out', function () {
-          $('textarea').trigger('autosize.resizeIncludeStyle');
-          $note.addClass('max');
-        }
-      );
-    }
-  },
+  // 'click .cover': function (e) {
+  //   if (!Session.get('note') && !Session.get('newNote')) {
+  //     e.preventDefault();
+  //     $('#notes').removeClass('animatable');
+  //     var $note = $(e.currentTarget).closest('.note');
+  //     Session.set('note', this._id);
+  //     var pageTop = -$note.offset().top + 60;
+  //     $note.height($('#content').height());
+  //     $note.animate(
+  //       {
+  //         top: pageTop,
+  //         left: -10,
+  //         width: $(window).width()
+  //       }, 200, 'ease-out', function () {
+  //         $('textarea').trigger('autosize.resizeIncludeStyle');
+  //         $note.addClass('max');
+  //       }
+  //     );
+  //   }
+  // },
   
   'change .task input, blur .task input': function (e) {
     e.preventDefault();

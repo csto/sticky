@@ -4,7 +4,11 @@
 
   <div id='content' class='{{activeClass}}'>
     {{#unless archive}}
-      <div id='actions' class='well clearfix'>
+      <div id='actions'>
+        <div class='close-icon'>
+          <div class='bar'></div>
+          <div class='bar'></div>
+        </div>
         <div class='action'>
           <a class='build-note' data-kind='note'>
             <i class='fa fa-file-text-o'></i>
@@ -37,6 +41,9 @@
       {{#if noNotes}}
         No notes
       {{/if}}
+      {{#with note}}
+        {{> noteForm}}
+      {{/with}}
     </div>
   </div>
   
