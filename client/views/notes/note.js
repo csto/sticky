@@ -153,7 +153,7 @@ Template.note.helpers({
   },
   
   showTitle: function () {
-    return this.title || currentNote() === this._id || currentNote() === 'note' || currentNote() === 'list';
+    return !! this.title;
   },
   
   kindMatches: function (kind) {
@@ -168,14 +168,8 @@ Template.note.helpers({
   tasks: function () {
     var note = Session.get('note');
     var newNote = Session.get('newNote');
-    var limit;
-    if ((note && this._id === note) || ((newNote && !this._id) || (newNote === this._id))) {
-      limit = 0;
-    }else{
-      limit = 3;
-    }
     
-    return Tasks.find({ noteId: this._id }, { sort: { position: -1, createdAt: 1 }, limit: limit });
+    return Tasks.find({ noteId: this._id }, { sort: { position: -1, createdAt: 1 }, limit: 3 });
   },
   
   moreTasks: function () {

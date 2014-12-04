@@ -16,9 +16,9 @@
       {{#if kindMatches 'list'}}
         <div class='tasks'>
           {{#each tasks}}
-            <div class='task {{activeClass ..}}' data-id={{_id}}>
+            <div class='task' data-id={{_id}}>
               <form>
-                <i class='fa fa-bars {{activeClass ..}}'></i>
+                <i class='fa fa-bars'></i>
                 {{#if completed}}
                   <i class='fa fa-check-square'></i>
                 {{else}}

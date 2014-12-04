@@ -92,10 +92,5 @@ Template.note_header.helpers({
 });
 
 closeNote = function () {
-  Session.set('note', null);
-  Session.set('newNote', null);
-  $('.note').removeClass('max').css({ top: 0, left: 0, width: 'auto', height: 'auto' });
-  Meteor.setTimeout(function () {
-    $('textarea').trigger('autosize.resizeIncludeStyle');
-  }, 0); 
+  
 }

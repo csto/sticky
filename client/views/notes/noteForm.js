@@ -1,7 +1,6 @@
 Template.noteForm.rendered = function () {
   var self = this;
   $note = $('.note-animate [data-id=' + this.data._id + ']');
-  console.log($note);
   this.$('.note').css({
     top: $note.offset().top - 60,
     left: 10,
@@ -9,14 +8,30 @@ Template.noteForm.rendered = function () {
     height: $note.outerHeight()
   });
   
-  Meteor.setTimeout(function () {
+  Meteor.setTimeout(function () {    
     self.$('.note').animate({
       top: 0,
       left: 0,
-      right: 0,
-      bottom: 0
-    });
+      width: $(window).width(),
+      height: $(window).height() - 60
+    }, 200, function () {
+    self.$('.note').addClass('max');
+  });
   }, 0);
+}
+
+Template.noteForm.destroyed = function () {
+  console.log('help');
+  Session.set('note', null);
+  Session.set('newNote', null);
+  $note = $('.note-animate [data-id=' + this.data._id + ']');
+  $('.note').removeClass('max');
+  this.$('.note').animate({
+    top: $note.offset().top - 60,
+    left: 10,
+    width: $note.outerWidth(),
+    height: $note.outerHeight()
+  }, 1000);
 }
 
 Template.noteForm.events({
