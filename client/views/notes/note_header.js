@@ -12,7 +12,7 @@ Template.note_header.events({
     closeNote();
   },
   
-  'click .dropdown-toggle a': function (e) {
+  'click .dropdown-toggle > a': function (e) {
     $(e.currentTarget).next().toggleClass('active');
     return false;
   },
@@ -39,21 +39,22 @@ Template.note_header.events({
       $('.dropdown-menu').removeClass('active');
       closeNote();
 
-      if (Session.get('archive')) {
+      if (this.archive) {
         Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
       } else {
         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
       }
       
-      Meteor.call('updateNote', note._id, { archived: !note.archived });
+      Notes.update(note._id, { $set: { archived: !note.archived } });
     }
   },
 
   'click #share': function (e) {
-    e.preventDefault();
-    
-    $('.dropdown-menu').removeClass('active');
-    $('.modal').modal('show');  
+    if (_.contains(['note', 'list'], currentNote())) {
+      e.preventDefault();
+      $('.dropdown-menu').removeClass('active');
+      Messages.insert({ content: "You can't share an empty note." });
+    }
   },
 
   'click #send-share': function (e) {
@@ -92,5 +93,26 @@ Template.note_header.helpers({
 });
 
 closeNote = function () {
-  
+  $note = $('.note-animate [data-id=' + Session.get('note') + ']');
+  $active = $('.note.active');
+  Session.set('note', null);
+  Session.set('newNote', null);
+  $('.note').removeClass('max');
+  if ($note.length > 0) {
+    if (! $note.find('[name=title]').val()) {
+      console.log('no title')
+    }
+    $active.animate({
+      top: $note.offset().top - 60,
+      left: 10,
+      width: $note.outerWidth(),
+      height: $note.outerHeight()
+    }, 200, 'ease-out', function () {
+      var query = '?archive=' + Session.get('archive');
+      Router.go('/notes/' + query);
+    });
+  } else {
+    var query = '?archive=' + Session.get('archive');
+    Router.go('/notes/' + query);
+  }
 }

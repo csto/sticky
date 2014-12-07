@@ -1,39 +1,37 @@
 <template name='notes'>
-
   {{> note_header}}
 
   <div id='content' class='{{activeClass}}'>
     {{#unless archive}}
       <div id='actions'>
-        <div class='close-icon'>
-          <div class='bar'></div>
-          <div class='bar'></div>
-        </div>
-        <div class='action'>
-          <a class='build-note' data-kind='note'>
-            <i class='fa fa-file-text-o'></i>
-            New Note
-          </a>
-        </div>
-        <div class='action'>
+        <div class='action delay'>
           <a class='build-note' data-kind='list'>
             <i class='fa fa-list-ul'></i>
-            New List
           </a>
+        </div>
+        
+        <div class='action delay'>
+          <a class='build-note' data-kind='note'>
+            <i class='fa fa-file-text-o'></i>
+          </a>
+        </div>
+        
+        <div id='new-menu'>
+          <i class='fa fa-remove no-select'></i>
         </div>
       </div>
     {{/unless}}
 
     <div id='new-note' class='{{showNew}}'>
       {{#with newNote}}
-        {{> note}}
+        {{> noteForm}}
       {{/with}}
     </div>
 
     <div id='notes' class='animatable'> 
       {{#each notes}}
         {{#Animate}}
-          <div class='note-animate animate'>
+          <div class='note-animate animate delay'>
             {{> note}}
           </div>
         {{/Animate}}

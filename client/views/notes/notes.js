@@ -1,7 +1,6 @@
 Template.notes.created = function () {
   Session.set('note', null);
   Session.set('newNote', null);
-  Session.setDefault('archive', false);
 };
 
 // Template.notes.rendered = function () {
@@ -11,6 +10,10 @@ Template.notes.created = function () {
 // }
 
 Template.notes.events({
+  'click #new-menu': function (e) {
+    $(e.currentTarget).parent().toggleClass('active');
+  },
+  
   'click .build-note': function (e) {
     e.preventDefault();
     var kind = $(e.currentTarget).data('kind');
@@ -72,58 +75,6 @@ Template.notes.events({
       //   }
       // });
     }
-  },
-  
-  'submit .create-task, blur .create-task, click .create .fa-plus': function (e) {
-    e.preventDefault();
-    console.log('click')
-    
-    var noteId = $(e.target).closest('.note').data('id');
-    var newNote = Session.get('newNote');
-    
-    if (noteId) {
-      var topTask = Tasks.findOne({noteId: noteId}, { sort: { position: 1 } });
-      var position = topTask.position - 1 || 0;
-    
-      var task = {
-        noteId: this._id,
-        content: $(e.target).find('[name=create]').val(),
-        position: position
-      }
-      
-      if (!task.content) {
-        return;
-      }
-      
-      Meteor.call('createTask', task, function (error) {
-        if (error) {
-          Messages.insert({ content: error.reason });
-        }
-      });
-  
-      $(e.target).find('[name=create]').val('');
-    }
-    
-    
-    if (newNote && newNote === 'list') {
-      var note = {
-        task: $(e.target).find('[name=create]').val()
-      }
-      
-      if (!note.task) {
-        return;
-      }
-      
-      Meteor.call('createNote', note, function (error, id) {
-        if (error) {
-          Messages.insert({ content: error.reason });
-        }else{
-          $(e.target).find('[name=create]').val('');
-          Session.set('newNote', id);
-        }
-      });
-    }
-    
   }
   
 });
@@ -144,7 +95,7 @@ Template.notes.helpers({
     var notes = Notes.find(
       { 
         _id: { $in: noteIds },
-        archived: Session.get('archive'),
+        archived: this.archive,
         $or: [
           { title: new RegExp(search, 'i') }, 
           { content: new RegExp(search, 'i') }, 
@@ -189,10 +140,6 @@ Template.notes.helpers({
     if (note || newNote) {
       return 'active';
     }
-  },
-
-  archive: function () {
-    return Session.get('archive');
   }
 });
 

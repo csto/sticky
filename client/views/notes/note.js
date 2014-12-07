@@ -1,75 +1,6 @@
 Template.note.rendered = function () {
 
-  var self = this;
   
-  this.$('textarea').autosize({ append: false });
-  
-  // self.$('.note').draggable({
-  //   axis: 'x',
-  //   revert: true,
-  //   drag: function (event, ui) {
-  //     var opacity = (100 - (ui.offset.left / 2)) / 100;
-  //     opacity = opacity > 0.5 ? opacity : 0.5;
-  //     self.$('.note').animate({ left: ui.offset.left, opacity: opacity }, 0);
-  //   },
-  //   stop: function (event, ui) {
-  //
-  //     if (ui.offset.left > 100) {
-  //       var note = self.$('.note').data('id');
-  //       Session.set('note', null);
-  //
-  //       Meteor.call('archive', note, function (error) {
-  //         return false;
-  //       });
-  //       if (Session.get('archive')) {
-  //         Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
-  //       } else {
-  //         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
-  //       }
-  //
-  //     } else {
-  //       self.$('.note').animate({ left: 0, opacity: 1 }, 200);
-  //     }
-  //   }
-  // });
-
-  self.$('.tasks').sortable({
-    axis: 'y',
-    handle: '.fa-bars',
-    placeholder: 'task-placeholder',
-    stop: function(e, ui) {
-      // get the dragged html element and the one before
-      //   and after it
-      el = ui.item.get(0)
-      before = ui.item.prev().get(0)
-      after = ui.item.next().get(0)
-
-      // Here is the part that blew my mind!
-      //  Blaze.getData takes as a parameter an html element
-      //    and will return the data context that was bound when
-      //    that html element was rendered!
-      if(!before) {
-        //if it was dragged into the first position grab the
-        // next element's data context and subtract one from the rank
-        position = Blaze.getData(after).position + 1
-      } else if(!after) {
-        //if it was dragged into the last position grab the
-        //  previous element's data context and add one to the rank
-        position = Blaze.getData(before).position - 1
-      }
-      else
-        //else take the average of the two ranks of the previous
-        // and next elements
-        position = (Blaze.getData(after).position +
-                   Blaze.getData(before).position)/2
-
-      //update the dragged Item's rank
-      var task = {
-        position: position
-      }
-      Tasks.update(Blaze.getData(el)._id, { $set: task });
-    }
-  });
 }
 
 
@@ -128,28 +59,8 @@ Template.note.events({
 
 
 Template.note.helpers({
-  active: function (context) {
-    var self = this;
-    if (context) {
-      self = context;
-    }
-    // User currentNote() here
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    return ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id)));
-  },
-  
-  activeClass: function (context) {
-    var self = this;
-    if (context) {
-      self = context;
-    }
-    // User currentNote() here
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    if ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id))) {
-      return 'active';
-    }
+  archive: function (parentContext) {
+    return parentContext.archive;
   },
   
   showTitle: function () {
@@ -174,10 +85,6 @@ Template.note.helpers({
   
   moreTasks: function () {
     return Tasks.find({ noteId: this._id }).count() > 3;
-  },
-  
-  timeInWords: function (time) {
-    return moment(time).format('MMM Do');
   },
   
   completedClass: function () {

@@ -1,7 +1,7 @@
 <template name='note'>
   <div class='note-wrapper'>
     <div class='note well' data-id='{{_id}}'>
-      <a class='cover' href='/notes/{{_id}}'></a>
+      <a class='cover' href='/notes/{{_id}}?archive={{archive ..}}'></a>
       <form>
         <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
         {{#if showTitle}}
@@ -24,7 +24,7 @@
                 {{else}}
                   <i class='fa fa-square-o'></i>
                 {{/if}}
-                <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{completedClass}}'>
+                <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{#if completed}}completed{{/if}}'>
               </form>
             </div>
           {{/each}}

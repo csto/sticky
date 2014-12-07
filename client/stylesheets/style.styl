@@ -61,7 +61,7 @@ ul, ul.dropdown-menu
   font-family:'open-sans'
   
 
-.noselect
+.no-select, i, .close-icon
   -webkit-touch-callout: none
   -webkit-user-select: none
   -khtml-user-select: none
@@ -152,6 +152,14 @@ header
   &#main-header
     overflow:hidden
   &#note-header
+    transition:0.2s ease-out
+    transform: translate3d(0px, -70px, 0px)
+    background:yellow
+    color:dark
+    z-index:20
+    &.show
+      transform: translate3d(0px, 0px, 0px)
+  &#share-header
     transition:0.2s ease-out
     transform: translate3d(0px, -70px, 0px)
     background:yellow
@@ -275,7 +283,9 @@ header
       width:220px
       transform: scale(0.5, 0) translate(40px, -40px)
       opacity:0
-      left:-170px
+      top:10px
+      left:-165px
+      z-index:9999
       &.active
         transition: 0.2s ease-out
         transform-origin: right 0px
@@ -290,21 +300,21 @@ sidebar
   width:300px
   background:darken(darkgray, 30%)
   box-shadow:inset -10px 0px 10px -10px black
-  *
-    font-family:'bariol'
   .list-group
     .list-group-item
       border-radius:0px
       padding:0px
       border:0px
       background:none
+      &:hover
+        background:#363636
       a
         display:block
         line-height:60px
         padding:0px 15px
         color:darken(darkgrey, 10%)
-        &:hover
-          background:none
+        font-family:'bariol'
+        
         .fa
           margin-right:10px
   
@@ -330,52 +340,59 @@ sidebar
   box-shadow:inset white 0px 0px 0px 1px, #D2D2D2 0px 0px 3px
 
 #actions
-  // margin:10px 10px 10px 10px
-  // padding:15px 5px
-  // box-shadow:none
-  // border:0
-  // font-family:'open-sans'
-  // font-size:20px
-  // padding:30px
-  border-radius:40px
   position:absolute
   top:100%
   left:100%
-  margin:-100px 0px 0px -100px
-  background:red
-  box-shadow:black 0px 1px 3px
-  z-index:1
-  // height:60px
-  width:60px
+  margin:-90px 0px 0px -90px
+  z-index:5
   text-align:center
+  &.active
+    #new-menu
+      i
+        transform:rotate(0deg);
+    .action
+      transform:translate3d(0px, -80px, 0px) scale(1, 1)
+      &:nth-child(2)
+        transform:translate3d(0px, -160px, 0px) scale(1, 1)
   i
     font-size:28px
     line-height:60px
   .action
-    // width:50%
-    // float:left
-    // text-align:center
-    // &:last-child
-    //   a
-    //     border-left:1px solid #AAAAAA
-    display:none
-    height:20px
-    width:20px
-    a
-      color:black
-      display:block
-      i
-        font-size:24px
-
+    height:60px
+    width:60px
+    background:yellow
+    border-radius:40px
+    position:absolute
+    top:0px
+    left:0px
+    transition:0.2s ease-out
+    transform:translate3d(0px, 0px, 0px) scale(0.5, 0.5)
+    box-shadow:rgba(0,0,0,0.3) 0px 1px 4px
+    i
+      color:#6F6F6F
+  #new-menu
+    position:relative
+    z-index:6
+    cursor:pointer
+    border-radius:40px
+    background:dark
+    color:white
+    box-shadow:rgba(0,0,0,0.3) 0px 1px 4px
+    height:60px
+    width:60px
+    i
+      transform:transition3d(0px, 0px, 0px)
+      transition:0.2s ease-out
+      transform:rotate(-135deg);
 #notes, #new-note
-  margin:10px 10px
+  margin:10px 10px 100px 10px
   .note-wrapper
     margin-bottom:10px
   .note
     overflow:auto
     position:relative
     -webkit-overflow-scrolling: touch
-    transform: transition3d(0px, 0px, 0px)
+    transform: translate3d(0px, 0px, 0px)
     box-shadow:inset white 0px 0px 0px 1px, #D2D2D2 0px 0px 3px
     &.active
       position:absolute
@@ -418,9 +435,10 @@ sidebar
       background:none
       border:0
       box-shadow:none
+      transition: 0.1s ease-out
       &.completed
         text-decoration:line-through
-        opacity:0.4
+        opacity:0.4 !important
     textarea
       height:auto
       width:100%
@@ -449,13 +467,18 @@ sidebar
       margin:0px 40px 0px 32px
       &.active
         height:40px
-        // transition: 0.3s ease-out
         transform: translate(18px, 0px)
         margin-left:38px
         i.fa
           font-size:22px
+        .fa-check-square
+          transition:0.1s ease-out
+          transform: scale(0,0)
       &.ui-sortable-helper
         transition: 0s
+      &.completed
+        .fa-check-square
+          transform: scale(1,1)
       i.fa
         position:absolute
         top:4px
@@ -464,7 +487,7 @@ sidebar
         padding:4px
         cursor:pointer
       .fa-check-square
-        color:blue
+        color:blue 
       .task-input
         opacity:1
         padding-left:2px
@@ -484,6 +507,17 @@ sidebar
         top:4px
         right:-20px
 
+// @keyframes grow {
+//   0% {
+//     transform: scale(0,0);
+//     opacity: 0.5
+//   }
+//   100% {
+//     transform: scale(1,1);
+//     opacity: 1;
+//   }
+// }
+
 .animatable
   .note-animate
     opacity:1
@@ -496,7 +530,7 @@ sidebar
       max-height:0px
 
 for num in (0..20)
-  .note-animate:nth-child({num})
+  .delay:nth-child({num})
     transition-delay: 0.05s * num
           
 #messages
@@ -510,10 +544,14 @@ for num in (0..20)
     top:-10px
     z-index:2
     margin-bottom:10px
-    padding:20px
-    background:#383838
+    padding:20px 30px
+    background:#242424
     border-radius:30px
     color:white
+    font-family:'open-sans'
+    text-align:center
+    box-shadow:black 0px 1px 6px
+    border:1px solid black
     animation: fadeOut 2700ms ease-in 0s 1 forwards
 
 #session-links
@@ -537,4 +575,59 @@ for num in (0..20)
   100% {opacity: 0;}
 }
     
-    
+
+/*
+ *  Usage:
+ *
+ *    <div class="sk-spinner sk-spinner-wave">
+ *      <div class="sk-rect1"></div>
+ *      <div class="sk-rect2"></div>
+ *      <div class="sk-rect3"></div>
+ *      <div class="sk-rect4"></div>
+ *      <div class="sk-rect5"></div>
+ *    </div>
+ *
+ */
+.sk-spinner-wave.sk-spinner {
+  margin: 0 auto;
+  width: 50px;
+  height: 30px;
+  text-align: center;
+  font-size: 10px; }
+.sk-spinner-wave div {
+  background-color: #333;
+  height: 100%;
+  width: 6px;
+  display: inline-block;
+  -webkit-animation: sk-waveStretchDelay 1.2s infinite ease-in-out;
+          animation: sk-waveStretchDelay 1.2s infinite ease-in-out; }
+.sk-spinner-wave .sk-rect2 {
+  -webkit-animation-delay: -1.1s;
+          animation-delay: -1.1s; }
+.sk-spinner-wave .sk-rect3 {
+  -webkit-animation-delay: -1s;
+          animation-delay: -1s; }
+.sk-spinner-wave .sk-rect4 {
+  -webkit-animation-delay: -0.9s;
+          animation-delay: -0.9s; }
+.sk-spinner-wave .sk-rect5 {
+  -webkit-animation-delay: -0.8s;
+          animation-delay: -0.8s; }
+
+@-webkit-keyframes sk-waveStretchDelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+            transform: scaleY(0.4); }
+
+  20% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1); } }
+
+@keyframes sk-waveStretchDelay {
+  0%, 40%, 100% {
+    -webkit-transform: scaleY(0.4);
+            transform: scaleY(0.4); }
+
+  20% {
+    -webkit-transform: scaleY(1);
+            transform: scaleY(1); } }

@@ -1,15 +1,18 @@
 <template name='note_header'>
   <header id='note-header' class='{{notePresent}}'>
-    <div class='nav-link nav-left'>
-      <a href='/notes'>X</a>
+    <div id='close-note' class='nav-link nav-left'>
+      <a class='close-icon'>
+        <div class='bar'></div>
+        <div class='bar'></div>
+      </a>
     </div>
     <div class='nav-link nav-right dropdown-toggle'>
       <a>
         <i class='fa fa-ellipsis-v no-select'></i>
       </a>
       <ul class='dropdown-menu'>
-        <li id='share'>
-          <a>Share</a>
+        <li>
+          <a href='/notes/{{note._id}}/share' id='share'>Share</a>
         </li>
         {{#if archive}}
           <li id='archive'>
@@ -36,6 +39,4 @@
       </a>
     </div>
   </header>
-
-  {{> modal}}
 </template>

@@ -18,6 +18,7 @@ Template.header.events({
   },
   
   'click #close-search': function (e) {
+    Session.set('search', '');
     $('#search-wrapper').removeClass('search');
   }
 });

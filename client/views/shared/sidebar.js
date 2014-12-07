@@ -13,14 +13,6 @@ Template.sidebar.events({
     $('#wrapper').removeClass('slide');
   },
   
-  'click #sign-out': function (e) {
-    e.preventDefault();
-    Meteor.logout(function () {
-      Router.go('/');
-      Messages.insert({ content: 'Signed out successfully.' });
-    });
-  },
-  
   'click #sidebar-cover': function (e) {
     $('#wrapper').removeClass('slide');
     $('#menu').removeClass('active');
