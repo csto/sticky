@@ -57,16 +57,6 @@ Template.note_header.events({
     }
   },
 
-  'click #send-share': function (e) {
-    var email = $('#share-email').val();
-    // validate email in call, error if invalid email or share token exists
-
-    Meteor.call('sendShare', currentNote(), email);
-    closeNote();
-    $('#share-email').val('');
-    $('.modal').modal('hide');
-  },
-
   'click #delete-completed': function (e) {
     var noteId = Session.get('note');
     $('.dropdown-menu').removeClass('active');
@@ -108,11 +98,17 @@ closeNote = function () {
       width: $note.outerWidth(),
       height: $note.outerHeight()
     }, 200, 'ease-out', function () {
-      var query = '?archive=' + Session.get('archive');
-      Router.go('/notes/' + query);
+      goBack();
     });
   } else {
-    var query = '?archive=' + Session.get('archive');
-    Router.go('/notes/' + query);
+    goBack();
+  }
+}
+
+goBack = function () {
+  if (Session.get('archive')) {
+    Router.go('/archive');
+  } else {
+    Router.go('/notes');
   }
 }
