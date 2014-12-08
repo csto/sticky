@@ -184,6 +184,10 @@ Template.noteForm.events({
 
 Template.noteForm.helpers({
   shade: function () {
+    if (! this.color) {
+      return 'light';
+    }
+    
     return this.color === '#fefefe' ? 'light' : 'dark';
   },
   

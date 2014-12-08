@@ -3,9 +3,10 @@
 light = #3b454b
 light = #4a434d
 light = white
-dark = #404D5B
+dark = #4A4250
 gray = #D6DAD8
 lightgray = #EDEDED
+yellow = #FFEA7E
 
 html
   width:100%
@@ -38,12 +39,12 @@ a, a:visited, a:hover
   
 .btn, .btn:active, .btn:focus
   border:0
-  background:dark
+  background:yellow
   font-family:'open-sans'
-  color:light
+  color:dark
   &:hover
-    background:lighten(dark, 5%)
-    color:light
+    background:lighten(yellow, 5%)
+    color:dark
   &:focus
     box-shadow:red 0px 0px 10px
     outline:0
@@ -71,10 +72,11 @@ ul, ul.dropdown-menu
   font-family:'bariol'
   font-weight:100
   font-size:200px
-  margin-bottom:60px
+  margin-bottom:20px
   color:white
   @media screen and (max-width: 600px)
     font-size:100px
+    margin-top:20px
     
 #iron-router-progress
   background:dark
@@ -111,10 +113,12 @@ ul, ul.dropdown-menu
   height:100%
   // position:relative
   overflow:auto
+  background:#4A4250
   .container
     min-height:100%
     max-width:400px
     .form-control
+      color:black
       background:white
       border:0
       box-shadow:none
@@ -123,7 +127,7 @@ ul, ul.dropdown-menu
       font-family:'open-sans'
       margin-bottom:20px
       &::-webkit-input-placeholder
-        color:lighten(light, 20%)
+        color:lighten(dark, 20%)
     .form-group
       position:relative
       i.fa
@@ -305,7 +309,7 @@ sidebar
   top:0px
   bottom:0px
   width:300px
-  background:lighten(lightgray, 30%)
+  background:darken(dark, 40%)
   box-shadow:inset -10px 0px 10px -10px black
   .list-group
     .list-group-item
@@ -314,7 +318,7 @@ sidebar
       border:0px
       background:none
       &:hover
-        background:#363636
+        background:darken(dark, 50%)
       a
         display:block
         line-height:60px
@@ -367,7 +371,7 @@ sidebar
   .action
     height:60px
     width:60px
-    background:dark
+    background:yellow
     border-radius:40px
     position:absolute
     top:0px
@@ -382,7 +386,7 @@ sidebar
     z-index:6
     cursor:pointer
     border-radius:40px
-    background:light
+    background:dark
     color:white
     box-shadow:rgba(0,0,0,0.3) 0px 1px 4px
     height:60px
@@ -404,7 +408,7 @@ sidebar
   .note-wrapper
     margin-bottom:10px
   .note
-    overflow:auto
+    overflow:auto !important
     position:relative
     -webkit-overflow-scrolling: touch
     transform: translate3d(0px, 0px, 0px)
@@ -617,7 +621,7 @@ for num in (0..20)
 .sk-spinner-wave.sk-spinner {
   position:absolute
   top:50%
-  margin: 0 auto;
+  margin: -30px auto 0px auto;
   width: 100%;
   height: 60px;
   text-align: center;

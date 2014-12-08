@@ -91,9 +91,11 @@ Template.note_header.helpers({
     ];
   },
   
-  activeColor: function (color) {
+  activeColor: function (color) {    
     var note = Notes.findOne(Session.get('note'));
-    return color === note.color;
+    if (note) {
+      return color === note.color;
+    }
   },
   
   notePresent: function () {

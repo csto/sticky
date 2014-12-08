@@ -60,7 +60,9 @@ Template.note.events({
 
 Template.note.helpers({
   shade: function () {
-    return this.color === '#fefefe' ? 'light' : 'dark';
+    if (this.color) {
+      return this.color === '#fefefe' ? 'light' : 'dark';
+    }
   },
   
   archive: function (parentContext) {
