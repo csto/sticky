@@ -183,6 +183,10 @@ Template.noteForm.events({
 });
 
 Template.noteForm.helpers({
+  shade: function () {
+    return this.color === '#fefefe' ? 'light' : 'dark';
+  },
+  
   kindMatches: function (kind) {
     var note = Session.get('note');
     if (note === 'new') {

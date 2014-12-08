@@ -16,6 +16,12 @@ Template.note_header.events({
     $(e.currentTarget).next().toggleClass('active');
     return false;
   },
+  
+  'click .color': function (e) {
+    e.preventDefault();
+    var color = $(e.currentTarget).data('color');
+    Notes.update(currentNote(), { $set: { color: color } });
+  },
 
   'click #delete': function (e) {
     e.preventDefault();
@@ -66,6 +72,30 @@ Template.note_header.events({
 });
 
 Template.note_header.helpers({
+  colors: function () {
+    var note = Notes.findOne(Session.get('note'));
+    return [
+      '#fefefe',
+      '#c54657',
+      '#d1694a',
+      '#d1904a',
+      // '#d1ab4a',
+      '#d1c54a',
+      '#b8c847',
+      '#67bb43',
+      '#41b691',
+      '#4182b6',
+      '#4149b6',
+      '#7641b6',
+      '#b741a7'
+    ];
+  },
+  
+  activeColor: function (color) {
+    var note = Notes.findOne(Session.get('note'));
+    return color === note.color;
+  },
+  
   notePresent: function () {
     return currentNote() ? 'show' : '';
   },
@@ -75,7 +105,7 @@ Template.note_header.helpers({
   },
   
   isList: function () {
-    note = Notes.findOne(Session.get('note'));
+    var note = Notes.findOne(Session.get('note'));
     if (note) {
       return note.kind === 'list';
     }
@@ -89,8 +119,8 @@ closeNote = function () {
   Session.set('newNote', null);
   $('.note').removeClass('max');
   if ($note.length > 0) {
-    if (! $note.find('[name=title]').val()) {
-      console.log('no title')
+    if (! $active.find('[name=title]').val()) {
+      $active.find('[name=title]').hide();
     }
     $active.animate({
       top: $note.offset().top - 60,

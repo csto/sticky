@@ -1,5 +1,5 @@
 <template name='noteForm'>
-  <div class='note well active' data-id={{_id}}>
+  <div class='note well active {{shade}}' data-id={{_id}}  style='background:{{color}}'>
     <form>
       <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
       <div class='form-group title'>

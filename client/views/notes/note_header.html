@@ -34,9 +34,19 @@
       </ul>
     </div>
     <div class='nav-link nav-right'>
-      <a id='share'>
-        <i class='fa fa-user'></i>
+      <a id='share' href='/notes/{{note._id}}/share'>
+        <i class='fa fa-share-alt'></i>
       </a>
+    </div>
+    <div class='nav-link nav-right dropdown-toggle'>
+      <a id='color'>
+        <i class='fa fa-share'></i>
+      </a>
+      <ul class='colors dropdown-menu'>
+        {{#each colors}}
+          <div class='color {{#if activeColor this}}active{{/if}}' style='background:{{this}}' data-color='{{this}}'></div>
+        {{/each}}
+      </ul>
     </div>
   </header>
 </template>
