@@ -42,8 +42,10 @@ Template.notes.events({
     }, 0);
   },
   
-  'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea': function (e) {
+  'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
     e.preventDefault();
+    console.log('save')
+    $('.close-note').removeClass('close-note');
     
     var noteAttributes = {
       title: $(e.target).closest('form').find('[name=title]').val(),
@@ -69,16 +71,10 @@ Template.notes.events({
       });
     }else{
       Notes.update(this._id, { $set: noteAttributes });
-      // Meteor.call('updateNote', this._id, noteAttributes, function (error) {
-      //   if (error) {
-      //     Messages.insert({ content: error.reason });
-      //   }
-      // });
     }
   }
   
 });
-
 
 Template.notes.helpers({
   showNew: function () {
@@ -140,6 +136,10 @@ Template.notes.helpers({
     if (note || newNote) {
       return 'active';
     }
+  },
+  
+  messages: function () {
+    return Messages.find().count() > 0;
   }
 });
 

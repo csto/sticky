@@ -28,9 +28,10 @@ Template.note_header.events({
     
     var noteId = Session.get('note');
     
-    if (note) {
+    if (noteId) {
       $('.dropdown-menu').removeClass('active');
       Session.set('note', null);
+      closeNote();
       Meteor.call('deleteNote', noteId);
       Messages.insert({ content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
     }

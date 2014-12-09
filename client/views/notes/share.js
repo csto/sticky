@@ -19,3 +19,7 @@ Template.share.helpers({
     return this.note._id;
   }
 });
+
+Template.share.rendered = function () {
+  this.$('input').focus();
+}

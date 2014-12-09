@@ -2,7 +2,7 @@
   <div class='note-wrapper'>
     <div class='note well {{shade}}' data-id='{{_id}}' style='background:{{color}}'>
       <a class='cover' href='/notes/{{_id}}?archive={{archive ..}}'></a>
-      <form>
+      <form class='active-form'>
         <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
         {{#if showTitle}}
           <div class='form-group title'>
