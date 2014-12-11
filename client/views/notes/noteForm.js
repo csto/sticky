@@ -100,8 +100,49 @@ Template.noteForm.rendered = function () {
 }
 
 Template.noteForm.events({
-  'submit .create-task, blur .create-task-input, click .create .fa-plus': function (e) {
+  'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
+    console.log(e);
     e.preventDefault();
+    
+    Session.set('saving', true);
+    console.log('save')
+    
+    var noteAttributes = {
+      title: $(e.target).closest('form').find('[name=title]').val(),
+      content: $(e.target).closest('form').find('[name=content]').val(),
+    }
+    
+    // Discard note with no title or content
+    if (!noteAttributes.title && !noteAttributes.content) {
+      return Messages.insert({ content: 'Empty note discarded.' });
+    }
+    
+    var note = Session.get('note');
+    var newNote = Session.get('newNote');
+    
+    if (newNote && _.contains(['note', 'list'], newNote)) {
+      noteAttributes = _.extend(noteAttributes, { kind: newNote });
+      Meteor.call('createNote', noteAttributes, function (error, noteId) {
+        if (error) {
+          Messages.insert({ content: error.reason });
+        }else{
+          Session.set('newNote', noteId);
+          Session.set('saving', null);
+          if (Session.get('closing')) {
+            Session.set('closing', null);
+            closeNote();
+          }
+          
+        }
+      });
+    }else{
+      Notes.update(currentNote(), { $set: noteAttributes });
+    }
+  },
+  
+  'submit .create-task, blur .create-task-input, click .create .fa-plus, click #close-note': function (e) {
+    e.preventDefault();
+    console.log('tasking')
     
     var noteId = $(e.target).closest('.note').data('id');
     var newNote = Session.get('newNote');
@@ -123,6 +164,11 @@ Template.noteForm.events({
       Meteor.call('createTask', task, function (error) {
         if (error) {
           Messages.insert({ content: error.reason });
+        } else {
+          if (Session.get('closing')) {
+            Session.set('closing', null);
+            closeNote();
+          }
         }
       });
   

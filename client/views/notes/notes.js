@@ -40,38 +40,6 @@ Template.notes.events({
       $('input, textarea').attr('tabindex', -1)
       $note.find('input, textarea').attr('tabindex', 1);    
     }, 0);
-  },
-  
-  'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
-    e.preventDefault();
-    console.log('save')
-    $('.close-note').removeClass('close-note');
-    
-    var noteAttributes = {
-      title: $(e.target).closest('form').find('[name=title]').val(),
-      content: $(e.target).closest('form').find('[name=content]').val(),
-    }
-    
-    // Discard note with no title or content
-    if (!noteAttributes.title && !noteAttributes.content) {
-      return;
-    }
-    
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    
-    if (newNote && _.contains(['note', 'list'], newNote)) {
-      noteAttributes = _.extend(noteAttributes, { kind: newNote });
-      Meteor.call('createNote', noteAttributes, function (error, noteId) {
-        if (error) {
-          Messages.insert({ content: error.reason });
-        }else{
-          Session.set('newNote', noteId);
-        }
-      });
-    }else{
-      Notes.update(this._id, { $set: noteAttributes });
-    }
   }
   
 });

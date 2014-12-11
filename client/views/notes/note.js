@@ -26,7 +26,7 @@ Template.note.events({
   //   }
   // },
   
-  'change .task input, blur .task input': function (e) {
+  'change .task input, blur .task input, click #close-note': function (e) {
     e.preventDefault();
 
     var task = {
@@ -34,6 +34,8 @@ Template.note.events({
     }
 
     Tasks.update(this._id, { $set: task });
+    
+    
   },
   
   'focus .task input': function (e) {

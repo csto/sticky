@@ -1,12 +1,30 @@
+// if id, close
+// if no id, see if empty, then close, otherwise, set closing, call to server, unset closing and closeNote after save
+
+emptyNote = function () {
+  var title = $('.active .title').val();
+  var content = $('.active .content').val();
+  return !title && !content;
+}
+
 Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
+    console.log('closing');
     $('#notes').addClass('animatable');
     
     var newNote = Session.get('newNote');
-
+    
+    if (!$('.active').title && !noteAttributes.content ) {
+      return Messages.insert({ content: 'Empty note discarded.' });
+    }
+    
     if (newNote && (newNote === 'note' || newNote === 'list')) {
-      Messages.insert({content: 'Empty note discarded.'});
+      if (emptyNote()) {
+      
+      } else {
+        
+      }
     }
     
     closeNote();

@@ -3,7 +3,7 @@
     <form>
       <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
       <div class='form-group title'>
-        <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='form-control' />
+        <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='title form-control' />
       </div>
       {{#if kindMatches 'note'}}
         <textarea name='content' placeholder='Note' rows='1' tabindex='-1' class='content form-control'>{{content}}</textarea>

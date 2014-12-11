@@ -15,7 +15,7 @@ Template.logged_in.events({
       Router.go('/');
       Messages.insert({ content: 'Signed out successfully.' });
     });
-  }
+  },
   
   // 'focus': function (e) {
   //   $target = $(e.currentTarget);
@@ -23,4 +23,5 @@ Template.logged_in.events({
   //     $target.parents('.note').scrollTop($target.position().top);
   //   }
   // }
+  
 });
