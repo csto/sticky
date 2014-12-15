@@ -1,31 +1,18 @@
 // if id, close
 // if no id, see if empty, then close, otherwise, set closing, call to server, unset closing and closeNote after save
 
-emptyNote = function () {
-  var title = $('.active .title').val();
-  var content = $('.active .content').val();
-  return !title && !content;
-}
+// unsaved = function () {
+//   var title = $('.active .title').val();
+//   var content = $('.active .content').val();
+//   console.log('unsaved')
+//   return title || content;
+// }
+//
+
 
 Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
-    console.log('closing');
-    $('#notes').addClass('animatable');
-    
-    var newNote = Session.get('newNote');
-    
-    if (!$('.active').title && !noteAttributes.content ) {
-      return Messages.insert({ content: 'Empty note discarded.' });
-    }
-    
-    if (newNote && (newNote === 'note' || newNote === 'list')) {
-      if (emptyNote()) {
-      
-      } else {
-        
-      }
-    }
     
     closeNote();
   },
@@ -133,27 +120,49 @@ Template.note_header.helpers({
   }
 });
 
+empty = function () {
+  var title = $('.active .title').val();
+  var content = $('.active .content').val();
+  var task = $('.active').find('.task').length > 0;
+  return !title && !content && !task;
+}
+
 closeNote = function () {
-  $note = $('.note-animate [data-id=' + Session.get('note') + ']');
-  $active = $('.note.active');
+  var $note = $('.note-animate [data-id=' + Session.get('note') + ']');
+  var $active = $('.note.active');
+  var title = $active.find('input[name=title]').val();
+  console.log(title)
+  var content = $active.find('.content').val();
+  var task = $active.find('.task').length > 0;
   Session.set('note', null);
   Session.set('newNote', null);
-  $('.note').removeClass('max');
-  if ($note.length > 0) {
-    if (! $active.find('[name=title]').val()) {
-      $active.find('[name=title]').hide();
-    }
-    $active.animate({
-      top: $note.offset().top - 60,
-      left: 10,
-      width: $note.outerWidth(),
-      height: $note.outerHeight()
-    }, 200, 'ease-out', function () {
-      goBack();
-    });
-  } else {
+  $active.removeClass('max').addClass('shrink');
+  $('textarea').trigger('autosize.resizeIncludeStyle');
+  if (!title && !content && !task) {
+    Messages.insert({ content: 'Empty note discarded.' });
+    Meteor.call('deleteNote', $note.data('id'));
+    // Notes.remove($note.data('id'));
+    $note.remove();
+    $active.remove();
     goBack();
+  } else {
+    if ($note.length > 0) {
+      if (! $active.find('input[name=title]').val()) {
+        $active.find('input[name=title]').hide();
+      }
+      $active.animate({
+        top: $note.offset().top - 60,
+        left: 10,
+        width: $note.outerWidth(),
+        height: $note.outerHeight()
+      }, 200, 'ease-out', function () {
+        goBack();
+      });
+    } else {
+      goBack();
+    }
   }
+  
 }
 
 goBack = function () {

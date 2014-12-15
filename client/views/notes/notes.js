@@ -12,35 +12,35 @@ Template.notes.created = function () {
 Template.notes.events({
   'click #new-menu': function (e) {
     $(e.currentTarget).parent().toggleClass('active');
-  },
-  
-  'click .build-note': function (e) {
-    e.preventDefault();
-    var kind = $(e.currentTarget).data('kind');
-    Session.set('newNote', kind);
-    Meteor.setTimeout( function () {
-      var $note = $('#new-note .note');
-      var pageTop = -$note.offset().top + 60;
-      $note.height($('#content').height());
-      $note.animate(
-        {
-          top: pageTop,
-          left: -15,
-          width: $(window).width()
-        }, 200, 'ease-out', function () {
-          $('textarea').trigger('autosize.resizeIncludeStyle');
-          $note.addClass('max');
-        }
-      );
-      if (kind === 'note') {
-        $note.find('textarea').focus();
-      }else{
-        $note.find('input').last().focus();
-      }
-      $('input, textarea').attr('tabindex', -1)
-      $note.find('input, textarea').attr('tabindex', 1);    
-    }, 0);
   }
+  
+  // 'click .build-note': function (e) {
+  //   e.preventDefault();
+  //   var kind = $(e.currentTarget).data('kind');
+  //   Session.set('newNote', kind);
+  //   Meteor.setTimeout( function () {
+  //     var $note = $('#new-note .note');
+  //     var pageTop = -$note.offset().top + 60;
+  //     $note.height($('#content').height());
+  //     $note.animate(
+  //       {
+  //         top: pageTop,
+  //         left: -15,
+  //         width: $(window).width()
+  //       }, 200, 'ease-out', function () {
+  //         $('textarea').trigger('autosize.resizeIncludeStyle');
+  //         $note.addClass('max');
+  //       }
+  //     );
+  //     if (kind === 'note') {
+  //       $note.find('textarea').focus();
+  //     }else{
+  //       $note.find('input').last().focus();
+  //     }
+  //     $('input, textarea').attr('tabindex', -1)
+  //     $note.find('input, textarea').attr('tabindex', 1);
+  //   }, 0);
+  // }
   
 });
 

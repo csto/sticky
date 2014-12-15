@@ -99,7 +99,7 @@ ul, ul.dropdown-menu
 #content
   height:100%
   width:100%
-  overflow:scroll
+  overflow:auto
   overflow-x:hidden
   -webkit-overflow-scrolling: touch
   transition: 0.1s ease-out
@@ -373,18 +373,19 @@ sidebar
     font-size:28px
     line-height:60px
   .action
-    height:60px
-    width:60px
-    background:yellow
-    border-radius:40px
-    position:absolute
-    top:0px
-    left:0px
     transition:0.2s ease-out
     transform:translate3d(0px, 0px, 0px) scale(0.5, 0.5)
-    box-shadow:rgba(0,0,0,0.3) 0px 1px 4px
-    i
-      color:#6F6F6F
+    a
+      height:60px
+      width:60px
+      background:yellow
+      border-radius:40px
+      position:absolute
+      top:0px
+      left:0px
+      box-shadow:rgba(0,0,0,0.3) 0px 1px 4px
+      i
+        color:#6F6F6F
   #new-menu
     position:relative
     z-index:6
@@ -433,6 +434,7 @@ sidebar
       font-size:18px
       overflow:hidden
       border-radius:0px
+      box-shadow:none !important
       input, textarea
         font-size:18px
     &.max
@@ -445,6 +447,15 @@ sidebar
       width:auto !important
       transform: none !important
       z-index:5 !important
+    &.shrink
+      input, textarea
+        font-size:14px
+      .task
+        height:34px !important
+        transition:0s !important
+        transform: translate3d(-6px, 0px, 0px) !important
+        i.fa
+          font-size:16px !important
     .cover
       display:block
       position:absolute
@@ -465,14 +476,12 @@ sidebar
       margin:0px -10px
     .content
       // margin-bottom:-18px
+    .more-tasks
+      color:black
     input, textarea
       background:none
       border:0
       box-shadow:none
-      transition: 0.1s ease-out
-      &.completed
-        text-decoration:line-through
-        opacity:0.5 !important
     textarea
       height:auto
       width:100%
@@ -499,6 +508,10 @@ sidebar
       position:relative
       transform: translate(0px, 0px)
       margin:0px 40px 0px 32px
+      transition: 0.1s ease-out
+      &.completed
+        text-decoration:line-through
+        opacity:0.5 !important
       &.active
         height:40px
         transform: translate(18px, 0px)

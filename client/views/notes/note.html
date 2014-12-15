@@ -1,7 +1,8 @@
 <template name='note'>
   <div class='note-wrapper'>
     <div class='note well {{shade}}' data-id='{{_id}}' style='background:{{color}}'>
-      <a class='cover' href='/notes/{{_id}}?archive={{archive ..}}'></a>
+      <!-- <a class='cover' href='/notes/{{_id}}?archive={{archive ..}}'></a> -->
+      <a class='cover'></a>
       <form class='active-form'>
         <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
         {{#if showTitle}}
@@ -30,7 +31,7 @@
           {{/each}}
         </div>
         {{#if moreTasks}}
-          <div>...</div>
+          <div class='more-tasks'>...</div>
         {{/if}}
       {{/if}}
     </div>

@@ -1,6 +1,64 @@
 Template.note.rendered = function () {
-
+  $('textarea').autosize({ append: false });
+  var self = this;
+  //
+  // var drag;
+  //
+  // self.$('.note').on('mousedown', function (e) {
+  //   drag = e.clientX;
+  // });
+  //
+  // self.$('.note').on('mousedown', function (e) {
+  //   if (e.clientX !== drag) {
+  //     e.preventDefault();
+  //   }
+  // });
+  //
+  // self.$('.note').on('mouseup', function () {
+  //   drag = false;
+  // });
   
+  // var start;
+  //
+  // self.$('.note').draggable({
+  //   axis: 'x',
+  //   // revert: true,
+  //   distance: 5,
+  //   scroll: false,
+  //   start: function (event, ui) {
+  //     start = ui.offset;
+  //   },
+  //   drag: function (event, ui) {
+  //     console.log(ui)
+  //     if (ui.offset.top < -10 || ui.offset.top > 10) {
+  //       // return false;
+  //     }
+  //     var opacity = (100 - (ui.offset.left / 2)) / 100;
+  //     opacity = opacity > 0.5 ? opacity : 0.5;
+  //     self.$('.note').animate({ left: ui.offset.left, opacity: opacity }, 0);
+  //   },
+  //   stop: function (event, ui) {
+  //     self.data.stop = true;
+  //     if (ui.offset.left > 100 || ui.offset.left < -100) {
+  //       if (this.archive) {
+  //         Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
+  //       } else {
+  //         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
+  //       }
+  //       Notes.update(self.data._id, { $set: { archived: !self.data.archived } });
+  //
+  //     } else {
+  //       self.$('.note').animate({ left: 0, opacity: 1 }, 200);
+  //     }
+  //     if (ui.offset.left < 10 && ui.offset.left > -10) {
+  //       Router.go('/notes/' + self.data._id);
+  //     }
+  //   }
+  // });
+  
+  self.$('.note').hammer().on("swiperight", function(event) {
+    alert('swiped')
+  });
 }
 
 
@@ -25,6 +83,14 @@ Template.note.events({
   //     );
   //   }
   // },
+  
+  'mouseup .note': function (e) {
+    console.log(this.stop);
+    if (!this.stop) {
+      console.log('clicked note')
+      Router.go('/notes/' + this._id);
+    }
+  },
   
   'change .task input, blur .task input, click #close-note': function (e) {
     e.preventDefault();

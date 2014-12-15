@@ -1,38 +1,10 @@
 Template.noteForm.rendered = function () {
   
   var self = this;
+  
   Session.set('note', Session.get('_id'));
   
   this.$('textarea').autosize({ append: false });
-  
-  // self.$('.note').draggable({
-  //   axis: 'x',
-  //   revert: true,
-  //   drag: function (event, ui) {
-  //     var opacity = (100 - (ui.offset.left / 2)) / 100;
-  //     opacity = opacity > 0.5 ? opacity : 0.5;
-  //     self.$('.note').animate({ left: ui.offset.left, opacity: opacity }, 0);
-  //   },
-  //   stop: function (event, ui) {
-  //
-  //     if (ui.offset.left > 100) {
-  //       var note = self.$('.note').data('id');
-  //       Session.set('note', null);
-  //
-  //       Meteor.call('archive', note, function (error) {
-  //         return false;
-  //       });
-  //       if (Session.get('archive')) {
-  //         Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
-  //       } else {
-  //         Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
-  //       }
-  //
-  //     } else {
-  //       self.$('.note').animate({ left: 0, opacity: 1 }, 200);
-  //     }
-  //   }
-  // });
 
   self.$('.tasks').sortable({
     axis: 'y',
@@ -94,18 +66,13 @@ Template.noteForm.rendered = function () {
   } else {
     self.$('.note').addClass('max');
   }
-  
-  
-  
 }
 
 Template.noteForm.events({
   'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
-    console.log(e);
     e.preventDefault();
     
-    Session.set('saving', true);
-    console.log('save')
+    // Session.set('saving', true);
     
     var noteAttributes = {
       title: $(e.target).closest('form').find('[name=title]').val(),
@@ -113,43 +80,41 @@ Template.noteForm.events({
     }
     
     // Discard note with no title or content
-    if (!noteAttributes.title && !noteAttributes.content) {
-      return Messages.insert({ content: 'Empty note discarded.' });
-    }
+    // if (!noteAttributes.title && !noteAttributes.content) {
+    //   return Messages.insert({ content: 'Empty note discarded.' });
+    // }
     
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    
-    if (newNote && _.contains(['note', 'list'], newNote)) {
-      noteAttributes = _.extend(noteAttributes, { kind: newNote });
-      Meteor.call('createNote', noteAttributes, function (error, noteId) {
-        if (error) {
-          Messages.insert({ content: error.reason });
-        }else{
-          Session.set('newNote', noteId);
-          Session.set('saving', null);
-          if (Session.get('closing')) {
-            Session.set('closing', null);
-            closeNote();
-          }
-          
-        }
-      });
-    }else{
-      Notes.update(currentNote(), { $set: noteAttributes });
-    }
+    // var note = Session.get('note');
+    // var newNote = Session.get('newNote');
+    //
+    // if (newNote && _.contains(['note', 'list'], newNote)) {
+    //   noteAttributes = _.extend(noteAttributes, { kind: newNote });
+    //   Notes.insert({ kind: 'note' });
+    //   // Meteor.call('createNote', noteAttributes, function (error, noteId) {
+    //   //   if (error) {
+    //   //     Messages.insert({ content: error.reason });
+    //   //   }else{
+    //   //     Session.set('newNote', noteId);
+    //   //     if (Session.get('closing')) {
+    //   //       Session.set('closing', null);
+    //   //       closeNote();
+    //   //     }
+    //   //   }
+    //   // });
+    // }else{
+    Notes.update(currentNote(), { $set: noteAttributes });
+    // }
   },
   
   'submit .create-task, blur .create-task-input, click .create .fa-plus, click #close-note': function (e) {
     e.preventDefault();
-    console.log('tasking')
     
     var noteId = $(e.target).closest('.note').data('id');
     var newNote = Session.get('newNote');
     
     if (noteId) {
       var topTask = Tasks.findOne({noteId: noteId}, { sort: { position: 1 } });
-      var position = topTask.position - 1 || 0;
+      var position = !! topTask ? topTask.position - 1 : 0;
       
       var task = {
         noteId: this._id,
