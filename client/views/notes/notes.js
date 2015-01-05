@@ -139,6 +139,6 @@ Template.notes.helpers({
 //   }
 // }
 
-currentNote = function () {
-  return Session.get('note');
-}
+// currentNote = function () {
+//   return Session.get('note');
+// }

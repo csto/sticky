@@ -70,6 +70,13 @@ Template.noteForm.rendered = function () {
 
 Template.noteForm.destroyed = function () {
   // Session.set('note', null);
+  var title = this.$('.title').val();
+  var content = this.$('.content').val();
+  var tasks = this.$('.task').length;
+  if (! title && ! content && tasks === 0) {
+    Messages.insert({ content: 'Empty note discarded.' });
+    Meteor.call('deleteNote', this.data._id);
+  }
 }
 
 Template.noteForm.events({
@@ -217,10 +224,17 @@ Template.noteForm.helpers({
   
   timeInWords: function (time) {
     return moment(time).format('MMM Do');
+  },
+  
+  showShare: function (self) {
+    return self.share;
   }
 });
 
 Template.task.helpers({
+  closing: function () {
+    return Session.get('closing');
+  }
   // active: function (context) {
   //   if (context) {
   //     self = context;

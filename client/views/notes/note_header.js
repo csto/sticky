@@ -22,43 +22,36 @@ Template.note_header.events({
     return false;
   },
   
-  'click .color': function (e) {
+  'click .color': function (e, parent) {
     e.preventDefault();
     var color = $(e.currentTarget).data('color');
-    Notes.update(this.note, { $set: { color: color } });
+    Notes.update(parent.data.note._id, { $set: { color: color } });
   },
 
   'click #delete': function (e) {
     e.preventDefault();
-    
-    var noteId = Session.get('note');
-    
-    if (noteId) {
-      $('.dropdown-menu').removeClass('active');
-      Session.set('note', null);
-      closeNote();
-      Meteor.call('deleteNote', noteId);
-      Messages.insert({ content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
-    }
+
+    $('.dropdown-menu').removeClass('active');
+    // closeNote();
+    Meteor.call('deleteNote', this.note._id);
+    Messages.insert({ content: 'Note deleted.' }); // undoId: note, call: 'updateNote', undo: { deletedAt: null }
+    goBack();
   },
   
   'click #archive': function (e) {
     e.preventDefault();
     
-    var note = Notes.findOne(Session.get('note'));
-    
-    if (note) {
-      $('.dropdown-menu').removeClass('active');
-      closeNote();
+    $('.dropdown-menu').removeClass('active');
 
-      if (this.archive) {
-        Messages.insert({ content: 'Note unarchived.', undoId: note, call: 'updateNote', undo: { archived: true } });
-      } else {
-        Messages.insert({ content: 'Note archived.', undoId: note, call: 'updateNote', undo: { archived: false } });
-      }
-      
-      Notes.update(note._id, { $set: { archived: !note.archived } });
+    if (this.note.archived) {
+      Messages.insert({ content: 'Note unarchived.', undoId: this.note._id, call: 'updateNote', undo: { archived: true } });
+    } else {
+      Messages.insert({ content: 'Note archived.', undoId: this.note._id, call: 'updateNote', undo: { archived: false } });
     }
+    
+    Notes.update(this.note._id, { $set: { archived: ! this.note.archived } });
+    
+    goBack();
   },
 
   // 'click #share': function (e) {
@@ -73,7 +66,7 @@ Template.note_header.events({
     // var noteId = Session.get('note');
     $('.dropdown-menu').removeClass('active');
     Messages.insert({ content: 'Completed tasks deleted.' })
-    Meteor.call('deleteCompleted', this.note);
+    Meteor.call('deleteCompleted', this.note._id);
   }
 });
 

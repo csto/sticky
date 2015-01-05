@@ -42,7 +42,7 @@
         <i class='fa fa-share'></i>
       </a>
       <ul class='colors dropdown-menu'>
-        {{#each colors}}
+        {{#each colors ..}}
           <div class='color {{#if activeColor this}}active{{/if}}' style='background:{{this}}' data-color='{{this}}'></div>
         {{/each}}
       </ul>

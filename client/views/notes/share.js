@@ -15,9 +15,11 @@ Template.share.events({
 });
 
 Template.share.helpers({
-  _id: function () {
-    return this.note._id;
-  }
+  // _id: function () {
+  //   console.log(this)
+  //   var note = Notes.find(this.note);
+  //   return this._id;
+  // }
 });
 
 Template.share.rendered = function () {

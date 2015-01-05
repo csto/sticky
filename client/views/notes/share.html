@@ -1,19 +1,22 @@
 <template name='share'>
-  <header id='share-header' class='{{#if share}}show{{/if}}'>
-    <div class='nav-link nav-left'>
-      <a href="/notes/{{_id}}">
-        <i class='fa fa-arrow-left'></i>
-      </a>
-    </div>
-  </header>
+  <div id='share-template'>
+    <header id='share-header'>
+      <div class='nav-link nav-left'>
+        <a class='close-icon' href="/notes/{{_id}}">
+          <div class='bar'></div>
+          <div class='bar'></div>
+        </a>
+      </div>
+    </header>
   
-  <div id='content'>
-    <div class='container'>
-      <label for='email'>Email</label>
-      <input id='share-email' type='email' placeholder='Email' class='form-control' />
+    <div id='share-content'>
+      <div class='container'>
+        <label for='email'>Email</label>
+        <input id='share-email' type='email' placeholder='Email' class='form-control' />
 
-      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-      <button type="button" id='send-share' class="btn btn-primary"><i class='fa fa-send'></i> Send</button>
+        <a href='/notes/{{_id}}' class='btn btn-default'>Cancel</a>
+        <button type='button' id='send-share' class='btn btn-primary'><i class='fa fa-send'></i> Send</button>
+      </div>
     </div>
   </div>
 </template>

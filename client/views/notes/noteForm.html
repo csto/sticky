@@ -15,7 +15,7 @@
           {{> task}}
         {{/each}}
       </div>
-      <div class='form-group create'>
+      <div class='form-group create {{#if closing}}hide{{/if}}'>
         <i class='fa fa-plus'></i>
         <form class='create-task'>
           <input type='text' name='create' placeholder='Add Task' class='create-task-input form-control' tabindex='1' />
@@ -24,12 +24,15 @@
     {{/if}}
     <span class='small pull-right'>Edited {{timeInWords updatedAt}}</span>
   </div>
+  {{#if showShare ..}}
+    {{> share}}
+  {{/if}}
 </template>
 
 <template name='task'>
   <div class='task active {{#if completed}}completed{{/if}}' data-id={{_id}}>
     <form>
-      <i class='fa fa-bars active'></i>
+      <i class='fa fa-bars {{#unless closing}}active{{/unless}}'></i>
       <i class='fa fa-square-o'></i>
       <i class='fa fa-check-square'></i>
       <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{#if completed}}completed{{/if}}'>

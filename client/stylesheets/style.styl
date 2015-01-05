@@ -172,13 +172,9 @@ header
         &.active
           border:2px solid blue
   &#share-header
-    transition:0.2s ease-out
-    transform: translate3d(0px, -70px, 0px)
     background:dark
     color:light
     z-index:20
-    &.show
-      transform: translate3d(0px, 0px, 0px)
   .nav-link
     float:left
     cursor:pointer
@@ -210,6 +206,8 @@ header
     border-radius:2px
     transform:translate3d(0px, 0px, 0px)
   .close-icon
+    height:100%
+    width:100%
     .bar
       top:20px
       left:6px
@@ -612,8 +610,35 @@ for num in (0..20)
       text-align:left
       border-left:1px solid gray
 
+#share-template
+  position:absolute
+  top:0px
+  left:0px
+  right:0px
+  bottom:0px
+  z-index:999999
+  transform: translate3d(0, 0, 0);
+  animation: grow 200ms ease-in
+  #share-content
+    height:100%
+    width:100%
+    background:#EDEDED
 
-// Keyframes    
+// Keyframes 
+
+@keyframes grow {
+  0% { 
+    opacity:0
+    transform: translate3d(0px, 100px, 0px) scale(0.9, 0.9) 
+  }
+  10% {
+    opacity:1
+  }
+  100% {
+    opacity:1
+    transform: scale(1, 1)
+  }
+}   
     
 @keyframes fadeOut {
   0% {opacity: 0;}
