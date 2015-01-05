@@ -68,6 +68,10 @@ Template.noteForm.rendered = function () {
   }
 }
 
+Template.noteForm.destroyed = function () {
+  Session.set('note', null);
+}
+
 Template.noteForm.events({
   'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
     e.preventDefault();

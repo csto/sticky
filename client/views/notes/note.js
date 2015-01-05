@@ -56,9 +56,9 @@ Template.note.rendered = function () {
   //   }
   // });
   
-  self.$('.note').hammer().on("swiperight", function(event) {
-    alert('swiped')
-  });
+  // self.$('.note').hammer().on("swiperight", function(event) {
+  //   alert('swiped')
+  // });
 }
 
 
