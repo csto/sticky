@@ -5,13 +5,13 @@
     {{#unless archive}}
       <div id='actions' class='{{#if messages}}bump{{/if}}'>
         <div class='action delay'>
-          <a href='/notes/new/list'>
+          <a data-kind='note'>
             <i class='fa fa-list-ul'></i>
           </a>
         </div>
         
         <div class='action delay'>
-          <a href='/notes/new/note'>
+          <a data-kind='list'>
             <i class='fa fa-file-text-o'></i>
           </a>
         </div>
@@ -22,11 +22,11 @@
       </div>
     {{/unless}}
 
-    <div id='new-note' class='{{showNew}}'>
+    <!-- <div id='new-note' class='{{showNew}}'>
       {{#with newNote}}
         {{> noteForm}}
       {{/with}}
-    </div>
+    </div> -->
 
     <div id='notes' class='animatable'> 
       {{#each notes}}

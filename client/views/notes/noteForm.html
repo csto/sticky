@@ -29,15 +29,13 @@
 <template name='task'>
   <div class='task active {{#if completed}}completed{{/if}}' data-id={{_id}}>
     <form>
-      <i class='fa fa-bars {{activeClass ..}}'></i>
+      <i class='fa fa-bars active'></i>
       <i class='fa fa-square-o'></i>
       <i class='fa fa-check-square'></i>
       <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{#if completed}}completed{{/if}}'>
-      {{#if active ..}}
-        <span class='delete'>
-          <i class='fa fa-remove'></i>  <!-- Make this an icon -->
-        </span>
-      {{/if}}
+      <span class='delete'>
+        <i class='fa fa-remove'></i>  <!-- Make this an icon -->
+      </span>
     </form>
   </div>
 </template>

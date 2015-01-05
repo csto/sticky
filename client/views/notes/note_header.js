@@ -14,7 +14,7 @@ Template.note_header.events({
   'click #close-note ': function (e) {
     e.preventDefault();
     
-    closeNote();
+    closeNote(this.note._id);
   },
   
   'click .dropdown-toggle > a': function (e) {
@@ -25,7 +25,7 @@ Template.note_header.events({
   'click .color': function (e) {
     e.preventDefault();
     var color = $(e.currentTarget).data('color');
-    Notes.update(currentNote(), { $set: { color: color } });
+    Notes.update(this.note, { $set: { color: color } });
   },
 
   'click #delete': function (e) {
@@ -61,19 +61,19 @@ Template.note_header.events({
     }
   },
 
-  'click #share': function (e) {
-    if (_.contains(['note', 'list'], currentNote())) {
-      e.preventDefault();
-      $('.dropdown-menu').removeClass('active');
-      Messages.insert({ content: "You can't share an empty note." });
-    }
-  },
+  // 'click #share': function (e) {
+  //   if (_.contains(['note', 'list'], currentNote())) {
+  //     e.preventDefault();
+  //     $('.dropdown-menu').removeClass('active');
+  //     Messages.insert({ content: "You can't share an empty note." });
+  //   }
+  // },
 
   'click #delete-completed': function (e) {
-    var noteId = Session.get('note');
+    // var noteId = Session.get('note');
     $('.dropdown-menu').removeClass('active');
     Messages.insert({ content: 'Completed tasks deleted.' })
-    Meteor.call('deleteCompleted', noteId);
+    Meteor.call('deleteCompleted', this.note);
   }
 });
 
@@ -98,14 +98,14 @@ Template.note_header.helpers({
   },
   
   activeColor: function (color) {    
-    var note = Notes.findOne(Session.get('note'));
+    var note = Notes.findOne(this.note);
     if (note) {
       return color === note.color;
     }
   },
   
-  notePresent: function () {
-    return currentNote() ? 'show' : '';
+  showHeader: function () {
+    return this.note && ! Session.get('closing');
   },
 
   archive: function () {
@@ -113,7 +113,7 @@ Template.note_header.helpers({
   },
   
   isList: function () {
-    var note = Notes.findOne(Session.get('note'));
+    var note = Notes.findOne(this.note);
     if (note) {
       return note.kind === 'list';
     }
@@ -127,41 +127,42 @@ empty = function () {
   return !title && !content && !task;
 }
 
-closeNote = function () {
-  var $note = $('.note-animate [data-id=' + Session.get('note') + ']');
+closeNote = function (noteId) {
+  var $note = $('.note-animate [data-id=' + noteId + ']');
   var $active = $('.note.active');
   var title = $active.find('input[name=title]').val();
-  console.log(title)
   var content = $active.find('.content').val();
   var task = $active.find('.task').length > 0;
-  Session.set('note', null);
-  Session.set('newNote', null);
+  // Session.set('note', null);
+  // Session.set('newNote', null);
+  this.note = null
+  Session.set('closing', true);
   $active.removeClass('max').addClass('shrink');
   $('textarea').trigger('autosize.resizeIncludeStyle');
-  if (!title && !content && !task) {
-    Messages.insert({ content: 'Empty note discarded.' });
-    Meteor.call('deleteNote', $note.data('id'));
-    // Notes.remove($note.data('id'));
-    $note.remove();
-    $active.remove();
-    goBack();
-  } else {
-    if ($note.length > 0) {
-      if (! $active.find('input[name=title]').val()) {
-        $active.find('input[name=title]').hide();
-      }
-      $active.animate({
-        top: $note.offset().top - 60,
-        left: 10,
-        width: $note.outerWidth(),
-        height: $note.outerHeight()
-      }, 200, 'ease-out', function () {
-        goBack();
-      });
-    } else {
-      goBack();
+  // if (!title && !content && !task) {
+  //   Messages.insert({ content: 'Empty note discarded.' });
+  //   Meteor.call('deleteNote', $note.data('id'));
+  //   // Notes.remove($note.data('id'));
+  //   $note.remove();
+  //   $active.remove();
+  //   goBack();
+  // } else {
+  if ($note.length > 0) {
+    if (! $active.find('input[name=title]').val()) {
+      $active.find('input[name=title]').hide();
     }
+    $active.animate({
+      top: $note.offset().top - 60,
+      left: 10,
+      width: $note.outerWidth(),
+      height: $note.outerHeight()
+    }, 200, 'ease-out', function () {
+      goBack();
+    });
+  } else {
+    goBack();
   }
+  // }
   
 }
 

@@ -1,6 +1,6 @@
 Template.notes.created = function () {
-  Session.set('note', null);
-  Session.set('newNote', null);
+  // Session.set('note', null);
+  // Session.set('newNote', null);
 };
 
 // Template.notes.rendered = function () {
@@ -12,6 +12,24 @@ Template.notes.created = function () {
 Template.notes.events({
   'click #new-menu': function (e) {
     $(e.currentTarget).parent().toggleClass('active');
+  },
+  
+  'click .action a': function (e) {
+    note = {
+      kind: $(e.currentTarget).data('kind')
+    }
+
+    noteId = Notes.insert(note);
+
+    userNoteId = UserNotes.insert({
+      userId: Meteor.userId(),
+      noteId: noteId,
+      accepted: true,
+      ownerId: Meteor.userId(),
+      position: userNotePosition()
+    });
+
+    Router.go('/notes/' + noteId, {});
   }
   
   // 'click .build-note': function (e) {
@@ -45,10 +63,10 @@ Template.notes.events({
 });
 
 Template.notes.helpers({
-  showNew: function () {
-    var newNote = Session.get('newNote');
-    return newNote ? 'show' : 'hide';
-  },
+  // showNew: function () {
+  //   var newNote = Session.get('newNote');
+  //   return newNote ? 'show' : 'hide';
+  // },
   
   notes: function () {
     var search = Session.get('search');
@@ -87,24 +105,24 @@ Template.notes.helpers({
     return Session.get('search');
   },
   
-  newNote: function () {
-    newNote = Session.get('newNote');
-    if (newNote) {
-      if (_.contains(['note', 'list'], newNote)) {
-        return { kind: newNote };
-      }else{
-        return Notes.findOne(newNote);
-      } 
-    }
-  },
+  // newNote: function () {
+  //   newNote = Session.get('newNote');
+  //   if (newNote) {
+  //     if (_.contains(['note', 'list'], newNote)) {
+  //       return { kind: newNote };
+  //     }else{
+  //       return Notes.findOne(newNote);
+  //     }
+  //   }
+  // },
   
-  activeClass: function () {
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    if (note || newNote) {
-      return 'active';
-    }
-  },
+  // activeClass: function () {
+  //   var note = Session.get('note');
+  //   var newNote = Session.get('newNote');
+  //   if (note || newNote) {
+  //     return 'active';
+  //   }
+  // },
   
   messages: function () {
     return Messages.find().count() > 0;
@@ -122,5 +140,5 @@ Template.notes.helpers({
 // }
 
 currentNote = function () {
-  return Session.get('note') || Session.get('newNote');
+  return Session.get('note');
 }

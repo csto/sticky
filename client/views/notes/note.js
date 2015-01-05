@@ -85,9 +85,7 @@ Template.note.events({
   // },
   
   'mouseup .note': function (e) {
-    console.log(this.stop);
     if (!this.stop) {
-      console.log('clicked note')
       Router.go('/notes/' + this._id);
     }
   },
@@ -142,18 +140,10 @@ Template.note.helpers({
   },
   
   kindMatches: function (kind) {
-    var note = Session.get('note');
-    if (note === 'new') {
-      return Session.get('kind') === kind;
-    }else{
-      return this.kind === kind;
-    }
+    return this.kind === kind;
   },
   
   tasks: function () {
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    
     return Tasks.find({ noteId: this._id }, { sort: { position: -1, createdAt: 1 }, limit: 3 });
   },
   

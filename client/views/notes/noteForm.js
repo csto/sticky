@@ -2,7 +2,7 @@ Template.noteForm.rendered = function () {
   
   var self = this;
   
-  Session.set('note', Session.get('_id'));
+  // Session.set('note', Session.get('_id'));
   
   this.$('textarea').autosize({ append: false });
 
@@ -69,12 +69,13 @@ Template.noteForm.rendered = function () {
 }
 
 Template.noteForm.destroyed = function () {
-  Session.set('note', null);
+  // Session.set('note', null);
 }
 
 Template.noteForm.events({
   'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
     e.preventDefault();
+    console.log('saving')
     
     // Session.set('saving', true);
     
@@ -106,7 +107,7 @@ Template.noteForm.events({
     //   //   }
     //   // });
     // }else{
-    Notes.update(currentNote(), { $set: noteAttributes });
+    Notes.update(this._id, { $set: noteAttributes });
     // }
   },
   
@@ -114,7 +115,7 @@ Template.noteForm.events({
     e.preventDefault();
     
     var noteId = $(e.target).closest('.note').data('id');
-    var newNote = Session.get('newNote');
+    // var newNote = Session.get('newNote');
     
     if (noteId) {
       var topTask = Tasks.findOne({noteId: noteId}, { sort: { position: 1 } });
@@ -145,24 +146,24 @@ Template.noteForm.events({
     }
     
     
-    if (newNote && newNote === 'list') {
-      var note = {
-        task: $(e.target).find('[name=create]').val()
-      }
-      
-      if (!note.task) {
-        return;
-      }
-      
-      Meteor.call('createNote', note, function (error, id) {
-        if (error) {
-          Messages.insert({ content: error.reason });
-        }else{
-          $(e.target).find('[name=create]').val('');
-          Session.set('newNote', id);
-        }
-      });
-    }
+    // if (newNote && newNote === 'list') {
+    //   var note = {
+    //     task: $(e.target).find('[name=create]').val()
+    //   }
+    //
+    //   if (!note.task) {
+    //     return;
+    //   }
+    //
+    //   Meteor.call('createNote', note, function (error, id) {
+    //     if (error) {
+    //       Messages.insert({ content: error.reason });
+    //     }else{
+    //       $(e.target).find('[name=create]').val('');
+    //       Session.set('newNote', id);
+    //     }
+    //   });
+    // }
     
   },
   
@@ -207,18 +208,10 @@ Template.noteForm.helpers({
   },
   
   kindMatches: function (kind) {
-    var note = Session.get('note');
-    if (note === 'new') {
-      return Session.get('kind') === kind;
-    }else{
-      return this.kind === kind;
-    }
+    return this.kind === kind;
   },
   
   tasks: function () {
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    
     return Tasks.find({ noteId: this._id }, { sort: { position: -1, createdAt: 1 } });
   },
   
@@ -228,27 +221,26 @@ Template.noteForm.helpers({
 });
 
 Template.task.helpers({
-  active: function (context) {
-    var self = this;
-    if (context) {
-      self = context;
-    }
-    // User currentNote() here
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    return ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id)));
-  },
-  
-  activeClass: function (context) {
-    var self = this;
-    if (context) {
-      self = context;
-    }
-    // User currentNote() here
-    var note = Session.get('note');
-    var newNote = Session.get('newNote');
-    if ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id))) {
-      return 'active';
-    }
-  }
+  // active: function (context) {
+  //   if (context) {
+  //     self = context;
+  //   }
+  //   // User currentNote() here
+  //   // var note = Session.get('note');
+  //   // var newNote = Session.get('newNote');
+  //   return this._id === this.note;
+  // },
+  //
+  // activeClass: function (context) {
+  //   var self = this;
+  //   if (context) {
+  //     self = context;
+  //   }
+  //   // User currentNote() here
+  //   var note = Session.get('note');
+  //   var newNote = Session.get('newNote');
+  //   if ((note && self._id === note) || ((newNote && !self._id) || (newNote === self._id))) {
+  //     return 'active';
+  //   }
+  // }
 });
