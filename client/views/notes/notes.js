@@ -1,6 +1,7 @@
 Template.notes.created = function () {
   // Session.set('note', null);
   // Session.set('newNote', null);
+  console.log(this.data)
 };
 
 // Template.notes.rendered = function () {
@@ -25,7 +26,7 @@ Template.notes.events({
       userId: Meteor.userId(),
       noteId: noteId,
       accepted: true,
-      ownerId: Meteor.userId(),
+      isOwner: true,
       position: userNotePosition()
     });
 

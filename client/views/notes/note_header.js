@@ -24,6 +24,8 @@ Template.note_header.events({
   
   'click .color': function (e, parent) {
     e.preventDefault();
+    
+    $('.dropdown-menu').removeClass('active');
     var color = $(e.currentTarget).data('color');
     Notes.update(parent.data.note._id, { $set: { color: color } });
   },

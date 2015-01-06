@@ -1,6 +1,6 @@
-Meteor.publish('shareTokens', function (options) {
-  return ShareTokens.find({}, options);
-});
+// Meteor.publish('shareTokens', function (userId) {
+//   return ShareTokens.find({});
+// });
 
 Meteor.smartPublish('smartUserNotes', function(userId) {
   this.addDependency('userNotes', 'notes', function (userNote) {
@@ -9,6 +9,16 @@ Meteor.smartPublish('smartUserNotes', function(userId) {
   
   this.addDependency('notes', 'tasks', function (note) {
     return Tasks.find({ noteId: note._id });
+  });
+  
+  this.addDependency('notes', 'userNotes', function (note) {
+    return UserNotes.find();
+  });
+  
+  this.addDependency('notes', 'users', function (note) {
+    var userNotes = UserNotes.find({ noteId: note._id }).fetch();
+    console.log(_.pluck(userNotes, 'userId'))
+    return Meteor.users.find({ _id: { $in: _.pluck(userNotes, 'userId')} });
   });
 
   return UserNotes.find({ userId: userId });

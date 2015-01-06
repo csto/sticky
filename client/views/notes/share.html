@@ -11,11 +11,13 @@
   
     <div id='share-content'>
       <div class='container'>
-        <label for='email'>Email</label>
-        <input id='share-email' type='email' placeholder='Email' class='form-control' />
+        <form id='send-share'>
+          <label for='email'>Email</label>
+          <input id='share-email' type='email' placeholder='Email' class='form-control' />
 
-        <a href='/notes/{{_id}}' class='btn btn-default'>Cancel</a>
-        <button type='button' id='send-share' class='btn btn-primary'><i class='fa fa-send'></i> Send</button>
+          <a href='/notes/{{_id}}' class='btn btn-default'>Cancel</a>
+          <button type='submit' class='btn btn-primary'><i class='fa fa-send'></i> Send</button>
+        </form>
       </div>
     </div>
   </div>

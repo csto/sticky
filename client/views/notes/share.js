@@ -1,16 +1,17 @@
 Template.share.events({
-  'click #send-share': function (e) {
+  'submit #send-share': function (e) {
+    e.preventDefault();
+    
+    var self = this;
     var email = $('#share-email').val();
-
-    Meteor.call('sendShare', currentNote(), email, function (error) {
+    Meteor.call('sendShare', self._id, email, function (error) {
       if (error) {
         Messages.insert({ content: error.reason });
       } else {
         Messages.insert({ content: 'Invite has been sent.' });
-        Router.go('/notes/' + currentNote());
+        Router.go('/notes/' + self._id);
       }
     });
-    
   }
 });
 

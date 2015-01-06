@@ -82,7 +82,6 @@ Template.noteForm.destroyed = function () {
 Template.noteForm.events({
   'blur .note input:not(.task-input):not(.create-task-input), blur .note textarea, submit .active .active-form': function (e) {
     e.preventDefault();
-    console.log('saving')
     
     // Session.set('saving', true);
     
@@ -234,7 +233,14 @@ Template.noteForm.helpers({
 Template.task.helpers({
   closing: function () {
     return Session.get('closing');
+  },
+  
+  users: function () {
+    var userNotes = UserNotes.find({ noteId: this._id });
+    var users = Users.find({ _id: _.pick(userNotes, 'userId') });
+    return users;
   }
+  
   // active: function (context) {
   //   if (context) {
   //     self = context;

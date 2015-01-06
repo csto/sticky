@@ -4,7 +4,7 @@ Template.sessionLinks.helpers({
     if (template === 'sign-in' && path !== '/sign-in' && path !== '/') {
       return true;
     }
-    if (template === 'register' && path !== '/register') {
+    if (template === 'register' && !/register/.exec(path)) {
       return true;
     }
     if (template === 'forgot-password' && path !== '/forgot-password') {
