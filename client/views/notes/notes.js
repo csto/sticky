@@ -1,7 +1,6 @@
 Template.notes.created = function () {
   // Session.set('note', null);
   // Session.set('newNote', null);
-  console.log(this.data)
 };
 
 // Template.notes.rendered = function () {

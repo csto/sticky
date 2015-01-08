@@ -22,9 +22,14 @@ body
   font-family:'merriweather'
   // background:radial-gradient(lighten(light, 10%), light)
   background:light
-  color:light
+  color:dark
+  // color:light
 
 // Global
+
+p
+  color:lighten(dark, 20%)
+  font-size:14px
 
 input:focus
   outline:0
@@ -32,7 +37,7 @@ input:focus
 a, a:visited, a:hover
   cursor:pointer
   text-decoration:none
-  font-family:'open-sans'
+  font-family:'bariol'
   color:gray
   &:hover
     transition:0.4s ease-out
@@ -40,14 +45,17 @@ a, a:visited, a:hover
 .btn, .btn:active, .btn:focus
   border:0
   background:yellow
-  font-family:'open-sans'
+  font-family:'bariol'
   color:dark
   &:hover
-    background:lighten(yellow, 5%)
     color:dark
+    background:lighten(yellow, 15%)
   &:focus
-    box-shadow:red 0px 0px 10px
     outline:0
+  &:active
+    color:dark
+    background:lighten(yellow, 10%)
+    box-shadow:inset rgba(0,0,0, 0.4) 0px 2px 4px
   
 ul, ul.dropdown-menu
   li
@@ -57,8 +65,7 @@ ul, ul.dropdown-menu
       
 .form-control
   color:dark
-  font-family:'open-sans'
-  
+  font-family:'merriweather'
 
 .no-select, i, .close-icon
   -webkit-touch-callout: none
@@ -124,7 +131,7 @@ ul, ul.dropdown-menu
       box-shadow:none
       padding:12px 12px 10px 12px
       height:auto
-      font-family:'open-sans'
+      font-family:'bariol'
       margin-bottom:20px
       &::-webkit-input-placeholder
         color:lighten(dark, 20%)
@@ -134,8 +141,26 @@ ul, ul.dropdown-menu
         position:absolute
         right:14px
         top:13px
-        color:lighten(light, 20%)
+        color:lighten(dark, 20%)
         font-size:18px
+  #messages
+    position:absolute
+    top:30px
+    bottom:auto
+    .message
+      position:relative
+      top:-10px
+      z-index:2
+      margin-bottom:10px
+      padding:20px 30px
+      background:darken(dark, 20%)
+      border-radius:30px
+      color:white
+      font-family:'bariol'
+      text-align:center
+      box-shadow:black 0px 1px 6px
+      border:1px solid darken(dark, 30%)
+      animation: fadeOut 2700ms ease-in 0s 1 forwards
 
 
 // Headers and Sidebars 
@@ -149,7 +174,7 @@ header
   line-height:60px
   background:dark
   font-weight:900
-  box-shadow:rgba(0,0,0,.2) 0px 2px 3px
+  box-shadow:rgba(0,0,0,.1) 0px 2px 3px
   color:lightgray
   &#main-header
     overflow:hidden
@@ -161,16 +186,27 @@ header
     z-index:20
     &.show
       transform: translate3d(0px, 0px, 0px)
-    .colors
+    .colors.dropdown-menu
       padding:10px
+      width:180px
+      left:-125px
       .color
         width:50px
         height:50px
         float:left
         margin:1px
         border-radius:40px
+        box-shadow:rgba(0,0,0,.2) 0px 0px 1px
         &.active
           border:2px solid blue
+    #close-note
+      font-weight:100
+      .fa
+        color:lighten(dark, 50%)
+        position:relative
+        top:3px
+      span
+        font-size:24px !important
   &#share-header
     background:dark
     color:light
@@ -184,11 +220,14 @@ header
     > a
       display:block
       padding:0px 16px
-      position:relative
-      top:1px
       font-size:28px
+      height:100%
       color:inherit
+      &:hover, &:active
+        background:darken(dark, 20%)
       i.fa
+        position:relative
+        top:4px
         min-width:20px
         text-align:center
         font-size:28px
@@ -233,7 +272,10 @@ header
         transform:rotate(-45deg) translate3d(-1px, 1px, 0px)
   #logo
     font-family:'bariol'
+    font-weight:100
     font-size:24px
+    position:relative
+    left:-3px
   //   color:inherit
   //   font-size:24px
   //   text-transform:uppercase
@@ -395,11 +437,12 @@ sidebar
     height:60px
     width:60px
     i
-      transform:transition3d(0px, 0px, 0px)
       transition:0.2s ease-out
-      transform:rotate(-135deg);
-#notes, #new-note
+      transform:rotate(-135deg) translate3d(-0.5px, -1px, 0px);
+#notes
   margin:10px 10px 100px 10px
+  color:black
+  font-family:'merriweather'
   .empty
     text-align:center
     color:#A9A9A9
@@ -420,12 +463,27 @@ sidebar
       a, i, input, textarea
         color:black
     &.dark
+      color:white
       input, textarea
         &::-webkit-input-placeholder
           color:rgba(255,255,255,.5)
       .task
-        .fa-check-square
-          color:white 
+        
+        .fa
+          color:inherit
+        .ui-sortable-handle
+          color:white
+          opacity:0.7
+      .form-control
+        color:white
+      .more-tasks
+        color:inherit
+      .task-placeholder
+        background:rgba(255,255,255,0.2)
+      textarea.form-control
+        color:rgba(255,255,255,0.8)
+      .small
+        color:rgba(255,255,255,0.5)
     &.active
       position:absolute
       z-index:5
@@ -468,22 +526,22 @@ sidebar
     .title
       position:relative
       margin-bottom:0px
+      color:dark
       input
         font-weight:bold
     .form-group, .content
       margin:0px -10px
-    .content
-      // margin-bottom:-18px
     .more-tasks
       color:black
     input, textarea
       background:none
       border:0
       box-shadow:none
-    textarea
+    textarea.form-control
       height:auto
       width:100%
       resize:none !important
+      color:lighten(dark, 5%)
     .form-group.create
       position:relative
       margin-top:20px
@@ -499,7 +557,7 @@ sidebar
       margin-top:20px
     .task-placeholder
       height:40px
-      background:rgba(255,255,255,0.2)
+      background:#F0F0F0
       margin:0 -15px
     .task
       height:34px
@@ -507,9 +565,6 @@ sidebar
       transform: translate(0px, 0px)
       margin:0px 40px 0px 32px
       transition: 0.1s ease-out
-      &.completed
-        text-decoration:line-through
-        opacity:0.5 !important
       &.active
         height:40px
         transform: translate(18px, 0px)
@@ -536,6 +591,11 @@ sidebar
       .task-input
         opacity:1
         padding-left:2px
+        padding-right:20px
+        margin-left:5px
+        &.completed
+          text-decoration:line-through
+          opacity:0.5 !important
       i.fa.fa-bars
         top:7px
         left:-56px
@@ -549,8 +609,10 @@ sidebar
       .delete
         position:absolute
         display:none
-        top:4px
+        top:-2px
         right:-20px
+  .user
+    position:relative
 
 // @keyframes grow {
 //   0% {
@@ -593,7 +655,7 @@ for num in (0..20)
     background:dark
     border-radius:30px
     color:white
-    font-family:'open-sans'
+    font-family:'bariol'
     text-align:center
     box-shadow:black 0px 1px 6px
     border:1px solid darken(dark, 30%)
@@ -619,10 +681,45 @@ for num in (0..20)
   z-index:999999
   transform: translate3d(0, 0, 0);
   animation: grow 200ms ease-in
+  
+#share-template, #account
+  h2
+    font-family:'bariol'
   #share-content
     height:100%
     width:100%
     background:#EDEDED
+    overflow:auto
+  .form-control
+    padding:0px
+    background:none
+    border:0
+    box-shadow:none
+    border-radius:0px
+    border-bottom:1px solid gray
+    &:focus
+      border-bottom:1px solid #646464
+  label
+    font-size:12px
+  .btn
+    color:white
+    background:dark
+  .users
+    margin:20px 0px
+  .user
+    font-size:14px
+    padding:6px 10px
+    background:white
+    border:1px solid gray
+    float:left
+    border-radius:4px
+    margin-right:2px
+      
+#account
+  .row
+    margin:30px 0px
+    .col-md-6:last-child
+      border-left:1px solid #DDDDDD
 
 // Keyframes 
 

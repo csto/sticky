@@ -227,18 +227,24 @@ Template.noteForm.helpers({
   
   showShare: function (self) {
     return self.share;
+  },
+  
+  showUsers: function () {
+    var userNotes = UserNotes.find({ noteId: this._id }).fetch();
+    return Meteor.users.find({ _id: { $in: _.pluck(userNotes, 'userId')} }).count() > 1;
+  },
+  
+  userCount: function () {
+    var userNotes = UserNotes.find({ noteId: this._id }).fetch();
+    return count = Meteor.users.find({ _id: { $in: _.pluck(userNotes, 'userId')} }).count();
   }
 });
+
+
 
 Template.task.helpers({
   closing: function () {
     return Session.get('closing');
-  },
-  
-  users: function () {
-    var userNotes = UserNotes.find({ noteId: this._id });
-    var users = Users.find({ _id: _.pick(userNotes, 'userId') });
-    return users;
   }
   
   // active: function (context) {
@@ -263,4 +269,11 @@ Template.task.helpers({
   //     return 'active';
   //   }
   // }
+});
+
+Template.user.helpers({
+  email: function () {
+    return this.emails[0].address;
+    // Meteor.users.findOne({ emails: { $elemMatch: { address: email } } })
+  }
 });

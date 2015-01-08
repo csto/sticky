@@ -12,6 +12,12 @@ Template.share.events({
         Router.go('/notes/' + self._id);
       }
     });
+  },
+  
+  'click .user .delete': function (e) {
+    e.preventDefault();
+    
+    UserNotes.remove({ userId: this._id });
   }
 });
 
@@ -21,8 +27,28 @@ Template.share.helpers({
   //   var note = Notes.find(this.note);
   //   return this._id;
   // }
+  userNotes: function () {
+    return UserNotes.find({ noteId: this._id });
+  },
+  
+  users: function () {
+    var userNotes = UserNotes.find({ noteId: this._id }).fetch();
+    var users = []
+    _.each(userNotes, function (userNote) {
+      var user = Meteor.users.findOne(userNote.userId);
+      user.deletable = userNote.isOwner;
+      users.push(user);
+    });
+    return users;
+  },
+  
+  isOwner: function (parent) {
+    return UserNotes.findOne({ userId: Meteor.userId() }).isOwner;
+  }
 });
 
 Template.share.rendered = function () {
-  this.$('input').focus();
+  if (!Meteor.isCordova) {
+    this.$('input').focus();
+  }
 }

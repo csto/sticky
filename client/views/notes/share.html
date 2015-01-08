@@ -11,14 +11,28 @@
   
     <div id='share-content'>
       <div class='container'>
+        <h2>Share</h2>
+        <p>Enter an email to share this note with your friends and family.</p>
+        <br />
         <form id='send-share'>
-          <label for='email'>Email</label>
-          <input id='share-email' type='email' placeholder='Email' class='form-control' />
-
-          <a href='/notes/{{_id}}' class='btn btn-default'>Cancel</a>
-          <button type='submit' class='btn btn-primary'><i class='fa fa-send'></i> Send</button>
+          <div class='form-group'>
+            <label for='email'>Email</label>
+            <input id='share-email' type='email' placeholder='Email' autocomplete='off' class='form-control' />
+          </div>
+          <button type='submit' class='btn btn-primary'><i class='fa fa-send'></i> SHARE</button>
+          <div class='users clearfix'>
+            {{#each users}}
+              {{> user}}
+            {{/each}}
+          </div>
         </form>
       </div>
     </div>
+  </div>
+</template>
+
+<template name='user'>
+  <div class='user'>
+    {{email}}
   </div>
 </template>

@@ -1,5 +1,6 @@
 TODO
 
+share email
 
 
 kadira
@@ -11,7 +12,6 @@ favicon
 landing page design
 
 add google analytics
-setup email
 make google crawl site
 
 Names: Take, Jot, Blot, Check

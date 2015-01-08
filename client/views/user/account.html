@@ -1,20 +1,31 @@
 <template name='account'>
-  <div class='container'>
-    <h1>Account</h1>
+  <div id='account' class='container'>
 
-    <form id='new-password-form'>
-      <div class='form-group'>
-        <label for='old-password'>Old Password</label>
-        <input type='password' id='old-password' placeholder='Old Password' class='form-control' />
+    <div class='row'>
+      <div class='col-md-6'>
+        <div class='user'>
+          {{email}}
+        </div>
+        <a id='sign-out' class='btn btn-default'>LOG OUT</a>
+        
+        <br /><br />
       </div>
+    
+      <div class='col-md-6'>
+        <form id='new-password-form'>
+          <div class='form-group'>
+            <label for='old-password'>Old Password</label>
+            <input type='password' id='old-password' placeholder='Old Password' class='form-control' />
+          </div>
 
-      <div class='form-group'>
-        <label for='new-password'>New Password</label>
-        <input type='password' id='new-password' placeholder='New Password' class='form-control' />
+          <div class='form-group'>
+            <label for='new-password'>New Password</label>
+            <input type='password' id='new-password' placeholder='New Password' class='form-control' />
+          </div>
+          <input type='submit' value='CHANGE' class='btn btn-primary' />
+        </form>
       </div>
-      <input type='submit' value='Change' class='btn btn-primary' />
-    </form>
-  
-    <a id='sign-out' class='btn btn-default'>Signout</a>
+    </div>
+    
   </div>
 </template>

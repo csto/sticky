@@ -1,9 +1,8 @@
 <template name='noteForm'>
   <div class='note well active {{shade}}' data-id={{_id}}  style='background:{{color}}'>
     <form>
-      <input type='hidden' name='kind' value='{{kind}}' tabindex='-1' />
       <div class='form-group title'>
-        <input type='text' name='title' value='{{title}}' tabindex='-1' placeholder='Title' class='title form-control' />
+        <input type='text' name='title' value='{{title}}' tabindex='-1' autocomplete='off' placeholder='Title' class='title form-control' />
       </div>
       {{#if kindMatches 'note'}}
         <textarea name='content' placeholder='Note' rows='1' tabindex='-1' class='content form-control'>{{content}}</textarea>
@@ -18,13 +17,10 @@
       <div class='form-group create {{#if closing}}hide{{/if}}'>
         <i class='fa fa-plus'></i>
         <form class='create-task'>
-          <input type='text' name='create' placeholder='Add Task' class='create-task-input form-control' tabindex='1' />
+          <input type='text' name='create' placeholder='Add Task' autocomplete='off' class='create-task-input form-control' tabindex='1' />
         </form>
       </div>
     {{/if}}
-    {{#each users}}
-      user
-    {{/each}}
     <span class='small pull-right'>Edited {{timeInWords updatedAt}}</span>
   </div>
   {{#if showShare ..}}
@@ -38,9 +34,9 @@
       <i class='fa fa-bars {{#unless closing}}active{{/unless}}'></i>
       <i class='fa fa-square-o'></i>
       <i class='fa fa-check-square'></i>
-      <input type='text' name='content' value='{{content}}' tabindex='-1' class='form-control task-input {{#if completed}}completed{{/if}}'>
+      <input type='text' name='content' value='{{content}}' tabindex='-1' autocomplete='off' class='form-control task-input {{#if completed}}completed{{/if}}'>
       <span class='delete'>
-        <i class='fa fa-remove'></i>  <!-- Make this an icon -->
+        <i class='fa fa-close'></i>
       </span>
     </form>
   </div>

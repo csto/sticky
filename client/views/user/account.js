@@ -10,7 +10,14 @@ Template.account.events({
         Messages.insert({ content: error.reason });
       } else {
         Messages.insert({ content: 'Password successfully changed.' });
+        $('#old-password, #new-password').val('');
       }
     });
+  }
+});
+
+Template.account.helpers({
+  email: function () {
+    return Meteor.user().emails[0].address;
   }
 });
